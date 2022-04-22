@@ -14,3 +14,16 @@ Un cop comenceu heu de canviar aquesta explicació amb la corresponent al vostre
  * Petita descripció
  * URL de producció (quan la tingueu)
  * Estat: (explicació de en quin punt està)
+
+# Nom dels integrants(No confiar)
+- Empanadas Don Camilo
+- Peronista Don Dylan
+- Chavista(Comunista) Don Marc
+
+# Projecte Peluqueria Happy
+
+# Descripció
+Local donde se vende productos y servicios relacionados con la peluqueria.
+
+# Estat
+BETA
