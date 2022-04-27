@@ -15,10 +15,10 @@ Un cop comenceu heu de canviar aquesta explicació amb la corresponent al vostre
  * URL de producció (quan la tingueu)
  * Estat: (explicació de en quin punt està)
 
-# Nom dels integrants(No confiar)
-- Empanadas Don Camilo
-- Peronista Don Dylan
-- Chavista(Comunista) Don Marc
+# Nom dels integrants
+- Camilo
+- Dylan
+- Marc Castro
 
 # Projecte Peluqueria Happy
 
