@@ -21,6 +21,7 @@ Un cop comenceu heu de canviar aquesta explicació amb la corresponent al vostre
 - Marc Castro
 
 # Projecte Peluqueria Happy
+- Figma: https://www.figma.com/file/FnQITUL47ts9ofVnkAsXV9/Projecto-final?node-id=0%3A1
 
 # Descripció
 Local donde se vende productos y servicios relacionados con la peluqueria.
