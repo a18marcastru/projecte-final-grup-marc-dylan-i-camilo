@@ -15,12 +15,13 @@ Un cop comenceu heu de canviar aquesta explicació amb la corresponent al vostre
  * URL de producció (quan la tingueu)
  * Estat: (explicació de en quin punt està)
 
-# Nom dels integrants(No confiar)
-- Empanadas Don Camilo
-- Peronista Don Dylan
-- Chavista(Comunista) Don Marc
+# Nom dels integrants
+- Camilo
+- Dylan
+- Marc Castro
 
 # Projecte Peluqueria Happy
+- Figma: https://www.figma.com/file/FnQITUL47ts9ofVnkAsXV9/Projecto-final?node-id=0%3A1
 
 # Descripció
 Local donde se vende productos y servicios relacionados con la peluqueria.
