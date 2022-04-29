@@ -1,0 +1,6 @@
+- Symfony PHP
+- VUE
+- JS
+- Bootstrap
+- CSS
+- MYSQL
