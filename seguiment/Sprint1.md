@@ -1,4 +1,11 @@
 # Peluqueria
 - Pagina principal
 - Login y Register
-- Perfil de usuario
+- Perfil de usuario:
+   - Nombre
+   - Apellido
+   - Telefono
+   - Correo
+   - Contraseña: Puede cambiar de contraseña
+   - Ver sus reservas
+   - Foto de perfil
