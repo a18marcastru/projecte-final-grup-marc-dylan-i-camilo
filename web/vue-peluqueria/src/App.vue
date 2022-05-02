@@ -1,6 +1,32 @@
-<script setup>
+<script>
 import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "@/components/HelloWorld.vue";
+export default {
+        data() {
+            return {
+                email: '',
+                contrasena: '',
+            }
+        },
+        methods: {
+            login() {
+                console.log(this.email+ " " +  this.contrasena + " " );
+                const datosEnvio = new FormData();
+                datosEnvio.append('email', this.email);
+                datosEnvio.append('contrasena', this.contrasena);
+
+
+                fetch('http://192.168.210.153:8000/usuarios/login', {
+                  method: 'POST',
+                  body: datosEnvio
+                }).then(function(res){
+                  return res.json();
+                }).then(function(data){
+                  console.log(data)
+                });
+            },
+        },
+}
 </script>
 
 
@@ -25,19 +51,19 @@ import HelloWorld from "@/components/HelloWorld.vue";
           <div class="modal-body">
             <form>
               <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <label for="email" class="form-label">Dirección de correo</label>
+                <input v-model="email" type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" required>
+                <div id="emailHelp" class="form-text">Nunca compartiremos su correo electrónico con nadie más.</div>
               </div>
               <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
+                <label for="contrasena" class="form-label">Contraseña</label>
+                <input v-model="contrasena" type="password" class="form-control" name="contrasena" id="contrasena" required>
               </div>
-              <button type="submit" class="btn btn-primary">Login</button>
+              <button type="submit" @click="login()" class="btn btn-primary">Login</button>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
           </div>
         </div>
       </div>
