@@ -56,25 +56,27 @@ class UsuariosController extends AbstractController
         return new JsonResponse($data, Response::HTTP_OK);
     }
 
-    #[Route('/login', name: 'app_usuarios_login', methods: ['GET','POST'])]
+    #[Route('/login', name: 'app_usuarios_login', methods: ['POST', 'GET'])]
     public function login(Request $request, UsuariosRepository $usuariosRepository): JsonResponse
     {
         $data = $request->request->all();
-
-        $email = "marc@gmail.com"; //$data['email'];
+        print_r($data);
+        $email = $data['email'];
+        $contra = $data['contrasena'];
         $data_usuario = $usuariosRepository->findOneBy(['email' => $email]);
-        $data_contras = $data_usuario->getContrasena();
-        //$data['contrasena'];
-
-        if (password_verify("Marcfv1302*?*", $data_contras)) {
-            $num = 1;
-            print_r('¡La contraseña es válida!');
-        } else {
-            $num = 2;
-            print_r('La contraseña no es válida.');
+        if(!empty($data_usuario)) {
+            $data_contras = $data_usuario->getContrasena();
+            if (password_verify($contra, $data_contras)) {
+                $num = 1;
+                print_r('¡La contraseña es válida!');
+            } else {
+                $num = 2;
+                print_r('La contraseña no es válida.');
+            }
+            return new JsonResponse($num, Response::HTTP_OK);
         }
-
-        return new JsonResponse($num, Response::HTTP_OK);
+        
+        return new JsonResponse("No existe usuario", Response::HTTP_OK);
     }
 
     #[Route('/perfil/{id}', name: 'app_usuarios_perfil', methods: ['GET'])]
