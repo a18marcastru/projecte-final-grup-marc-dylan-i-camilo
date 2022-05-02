@@ -40,18 +40,18 @@ class UsuariosController extends AbstractController
         ]);
     }
 
-    #[Route('/nuevo/usuario', name: 'app_usuarios_new2', methods: ['GET','POST'])]
+    #[Route('/nuevo/usuario', name: 'app_usuarios_new2', methods: ['POST','GET'])]
     public function new2(Request $request, UsuariosRepository $usuariosRepository): JsonResponse
     {
         $data = $request->request->all();
 
-        $nombre = "Marc"; //$data['nombre'];
-        $apellido = "Castro"; //$data['apellido'];
-        $email = "marc@gmail.com"; //$data['email'];
-        $contrasena = password_hash("Marcfv1302*?*", PASSWORD_DEFAULT);
-        //$data['contrasena'];
+        $nombre = $data['nombre'];
+        $apellido = $data['apellido'];
+        $email = $data['email'];
+        $telefono = $data['telefono'];
+        $contrasena = password_hash($data['contrasena'], PASSWORD_DEFAULT);
 
-        $usuariosRepository->save($nombre, $apellido, $email, $contrasena);
+        $usuariosRepository->save($nombre, $apellido, $email, $contrasena, $telefono);
 
         return new JsonResponse($data, Response::HTTP_OK);
     }
@@ -85,7 +85,8 @@ class UsuariosController extends AbstractController
         $data_usuario = [
             'nombre' => $restos->getNombre(),
             'apellido' => $restos->getApellido(),
-            'email' => $restos->getEmail()
+            'email' => $restos->getEmail(),
+            'telefono' => $restos->getTelefono()
         ];
 
         print_r($data_usuario);

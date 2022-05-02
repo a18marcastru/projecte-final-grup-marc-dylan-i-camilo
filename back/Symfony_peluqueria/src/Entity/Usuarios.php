@@ -25,6 +25,9 @@ class Usuarios
     #[ORM\Column(type: 'string', length: 255)]
     private $contrasena;
 
+    #[ORM\Column(type: 'integer')]
+    private $telefono;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,18 @@ class Usuarios
     public function setContrasena(string $contrasena): self
     {
         $this->contrasena = $contrasena;
+
+        return $this;
+    }
+
+    public function getTelefono(): ?int
+    {
+        return $this->telefono;
+    }
+
+    public function setTelefono(int $telefono): self
+    {
+        $this->telefono = $telefono;
 
         return $this;
     }
