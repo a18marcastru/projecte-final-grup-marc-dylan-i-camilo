@@ -41,7 +41,7 @@ class UsuariosRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function save($nombre, $apellido, $email, $contrasena): void
+    public function save($nombre, $apellido, $email, $contrasena, $telefono): void
     {
         $newUsusario = new Usuarios();
 
@@ -49,6 +49,7 @@ class UsuariosRepository extends ServiceEntityRepository
             ->setNombre($nombre)
             ->setApellido($apellido)
             ->setEmail($email)
+            ->setTelefono($telefono)
             ->setContrasena($contrasena);
 
         $this->manager->persist($newUsusario);
