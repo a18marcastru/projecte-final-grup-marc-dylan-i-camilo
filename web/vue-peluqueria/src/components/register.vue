@@ -13,7 +13,7 @@
     <br>
 
      <label for="telefono"><b>Telefono</b></label>
-    <input v-model="email" type="text" placeholder="Telefono" name="telefono" id="telefono" required>
+    <input v-model="telefono" type="text" placeholder="Telefono" name="telefono" id="telefono" required>
     <br>
     <br>
 
@@ -21,8 +21,8 @@
     <input v-model="email" type="text" placeholder="Email" name="email" id="email" required>
     <br>
     <br>
-  <label for="contra"><b>Contraseña</b></label>
-    <input v-model="email" type="text" placeholder="Contraseña" name="contrasena" id="contrasena" required>
+  <label for="contrasena"><b>Contraseña</b></label>
+    <input v-model="contrasena" type="text" placeholder="Contraseña" name="contrasena" id="contrasena" required>
     <br>
     <br>
 
@@ -42,24 +42,23 @@
             return {
                 nombre: '',
                 apellido: '',
+                telefono: '',
                 email: '',
-                contrasena: ''
+                contrasena: '',
             }
         },
         methods: {
             regist() {
-                console.log(this.nombre + " " + this.apellido + " " + this.email + " " + this.butacas+ " " +  this.fecha + " " +  this.precio_total + " " +  this.id_sesion + " " );
+                console.log(this.nombre + " " + this.apellido + " " + this.telefono + " " + this.email+ " " +  this.contrasena + " " );
                 const datosEnvio = new FormData();
                 datosEnvio.append('nombre', this.nombre);
                 datosEnvio.append('apellido', this.apellido);
+                datosEnvio.append('telefono', this.telefono);
                 datosEnvio.append('email', this.email);
-                datosEnvio.append('butacas', this.butacas);
-                datosEnvio.append('fecha', this.fecha);
-                datosEnvio.append('precio_total', this.precio_total);
-                datosEnvio.append('id_sesion', this.id_sesion);
+                datosEnvio.append('contrasena', this.contrasena);
 
 
-                fetch('http://cinema6back.alumnes.inspedralbes.cat/usuarios', {
+                fetch('http://192.168.210.153:8000/usuarios/nuevo/usuario', {
                   method: 'POST',
                   body: datosEnvio
                 }).then(function(res){
