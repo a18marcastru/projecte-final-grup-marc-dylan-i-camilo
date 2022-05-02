@@ -43,7 +43,7 @@
                 nombre: '',
                 apellido: '',
                 email: '',
-                contrasena
+                contrasena: ''
             }
         },
         methods: {
