@@ -4,7 +4,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title text-danger" id="exampleModalLabel">Login Form</h5>
+                        <h5 class="modal-title text-danger" id="exampleModalLabel">Identifícate</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -17,7 +17,10 @@
                                 <label for="contrasena" class="form-label">Contraseña</label>
                                 <input v-model="contrasena" type="password" class="form-control" name="contrasena" id="contrasena" required>
                             </div>
-                            <button @click="login()" class="btn btn-primary">Login</button>
+                            <button @click="login()" class="btn btn-primary">Iniciar sesión</button><br><br>
+                            <p>Al identificarse aceptas nuestras Condiciones de uso y venta. Consulta nuestro Aviso de privacidad y nuestras Aviso de Cookies y Aviso sobre publicidad basada en los intereses del usuario.</p>
+                            <hr>
+                            <p>No tienes cuenta ? <RouterLink class="btn btn-outline-primary" to="./register">Registrate</RouterLink></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
