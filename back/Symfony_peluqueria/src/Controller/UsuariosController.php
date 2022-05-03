@@ -67,13 +67,13 @@ class UsuariosController extends AbstractController
         if(!empty($data_usuario)) {
             $data_contras = $data_usuario->getContrasena();
             if (password_verify($contra, $data_contras)) {
-                $num = 1;
+                $id_usuario = $data_usuario->getId();
                 print_r('¡La contraseña es válida!');
             } else {
-                $num = 2;
+                $id_usuario = null;
                 print_r('La contraseña no es válida.');
             }
-            return new JsonResponse($num, Response::HTTP_OK);
+            return new JsonResponse($id_usuario, Response::HTTP_OK);
         }
         
         return new JsonResponse("No existe usuario", Response::HTTP_OK);
@@ -96,6 +96,20 @@ class UsuariosController extends AbstractController
         return new JsonResponse($data_usuario, Response::HTTP_OK);
     }
 
+    #[Route('/cambiar/contrasena/{id}', name: 'app_usuarios_perfil2', methods: ['POST','GET'])]
+    public function actual($id, Request $Request, UsuariosRepository $usuariosRepository): JsonResponse
+    {
+        $restos = $usuariosRepository->findOneBy(['id' => $id]);
+        $data = $Request->request->all();
+
+        $contrasena = password_hash($data['contrasena'], PASSWORD_DEFAULT);
+
+        empty($data['contrasena']) ? true : $restos->setContrasena($contrasena);
+
+        $usuariosRepository->update($restos);
+
+        return new JsonResponse("Fue cambiado la contraseña con exito", Response::HTTP_OK);
+    }
 
     #[Route('/{id}', name: 'app_usuarios_show', methods: ['GET'])]
     public function show(Usuarios $usuario): Response

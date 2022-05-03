@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Estilos{% endblock %}
+
+{% block body %}
+    <h1>Edit Estilos</h1>
+
+    {{ include('estilos/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_estilos_index') }}">back to list</a>
+
+    {{ include('estilos/_delete_form.html.twig') }}
+{% endblock %}

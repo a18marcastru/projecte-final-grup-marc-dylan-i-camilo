@@ -60,6 +60,34 @@ class UsuariosRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
+    public function coger_ids($id): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT e.nombre
+            FROM App\Entity\Usuarios e
+            WHERE e.id = :id'
+        )->setParameter('id',$id);
+
+        // returns an array of Product objects
+        return $query->getResult();
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function update(Usuarios $usuarios): void
+    {
+        $this->manager->persist($usuarios);
+        $this->manager->flush();
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
     public function remove(Usuarios $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);

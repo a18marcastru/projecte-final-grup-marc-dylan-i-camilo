@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Estilos{% endblock %}
+
+{% block body %}
+    <h1>Estilos</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ estilo.id }}</td>
+            </tr>
+            <tr>
+                <th>Imagen</th>
+                <td>{{ estilo.imagen }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_estilos_index') }}">back to list</a>
+
+    <a href="{{ path('app_estilos_edit', {'id': estilo.id}) }}">edit</a>
+
+    {{ include('estilos/_delete_form.html.twig') }}
+{% endblock %}

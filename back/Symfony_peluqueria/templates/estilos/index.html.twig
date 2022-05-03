@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Estilos index{% endblock %}
+
+{% block body %}
+    <h1>Estilos index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Imagen</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for estilo in estilos %}
+            <tr>
+                <td>{{ estilo.id }}</td>
+                <td>{{ estilo.imagen }}</td>
+                <td>
+                    <a href="{{ path('app_estilos_show', {'id': estilo.id}) }}">show</a>
+                    <a href="{{ path('app_estilos_edit', {'id': estilo.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_estilos_new') }}">Create new</a>
+{% endblock %}

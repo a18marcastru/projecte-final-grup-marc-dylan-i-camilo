@@ -6,6 +6,7 @@ use App\Entity\Productos;
 use App\Form\ProductosType;
 use App\Repository\ProductosRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,6 +38,29 @@ class ProductosController extends AbstractController
             'producto' => $producto,
             'form' => $form,
         ]);
+    }
+
+    #[Route('/catalogo', name: 'app_productos_mostrar', methods: ['GET'])]
+    public function show2(ProductosRepository $productosRepository): JsonResponse
+    {
+        $restos = $productosRepository->findAll();
+        $i = 0;
+
+        foreach ($restos as $res){
+            $data_producto[$i] = [
+                'id' => $res->getId(),
+                'nombre' => $res->getNombre(),
+                'descripcion' => $res->getDescripcion(),
+                'cantidad' => $res->getCantidad(),
+                'precio' => $res->getPrecio(),
+                'imagen' => $res->getImagen()
+            ];
+            $i++;
+        }
+
+        print_r($data_producto);
+
+        return new JsonResponse($data_producto, Response::HTTP_OK);
     }
 
     #[Route('/{id}', name: 'app_productos_show', methods: ['GET'])]

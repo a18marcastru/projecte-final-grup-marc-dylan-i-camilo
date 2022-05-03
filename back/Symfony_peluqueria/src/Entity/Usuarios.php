@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UsuariosRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UsuariosRepository::class)]
@@ -27,6 +29,14 @@ class Usuarios
 
     #[ORM\Column(type: 'integer')]
     private $telefono;
+
+    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Comentarios::class)]
+    private $comentarios;
+
+    public function __construct()
+    {
+        $this->comentarios = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,6 +99,36 @@ class Usuarios
     public function setTelefono(int $telefono): self
     {
         $this->telefono = $telefono;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comentarios>
+     */
+    public function getComentarios(): Collection
+    {
+        return $this->comentarios;
+    }
+
+    public function addComentario(Comentarios $comentario): self
+    {
+        if (!$this->comentarios->contains($comentario)) {
+            $this->comentarios[] = $comentario;
+            $comentario->setUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComentario(Comentarios $comentario): self
+    {
+        if ($this->comentarios->removeElement($comentario)) {
+            // set the owning side to null (unless already changed)
+            if ($comentario->getUsuario() === $this) {
+                $comentario->setUsuario(null);
+            }
+        }
 
         return $this;
     }
