@@ -7,7 +7,8 @@
       <label for="contrasena"><b>Contraseña</b></label>
       <input v-model="contrasena" type="password" id="contrasena" name="contrasena" required><br><br>     
       <button type="submit" @click="login()">Login</button>
-    </div>
+    </div><br>
+    <p>id {{this.datos}}</p>
   </div>
 </template>
 
@@ -17,8 +18,8 @@
       return {
           email: '',
           contrasena: '',
-          datos: [],
-      }
+          datos: '',
+      },
     },
     methods: {
       login() {
@@ -28,15 +29,10 @@
         datosEnvio.append('contrasena', this.contrasena); 
 
         fetch('http://192.168.210.153:8000/usuarios/login', {
-          method: 'POST',
-          body: datosEnvio
-        }).then(function(res){
-          console.log("hola");
-          return res.json();
-        }).then(function(data){
-          this.datos = data;
-          console.log(this.datos);    
-        });
+        method: 'POST',
+        body: datosEnvio
+        }).then(response => response.json())
+        .then(data => this.datos = data);
       },
     },
   }

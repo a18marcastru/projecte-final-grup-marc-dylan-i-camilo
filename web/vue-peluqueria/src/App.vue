@@ -12,7 +12,6 @@ import Login from "@/components/Login.vue";
         <RouterLink class="btn btn-outline-primary" to="/register">About</RouterLink>
         <button id="perfil" hidden>Perfil</button>
         <RouterLink class="btn btn-outline-primary" to="/login">Login</RouterLink>
-
       </nav>
   </header>
   <RouterView />
