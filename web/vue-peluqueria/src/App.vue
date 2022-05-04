@@ -11,12 +11,10 @@ import Login from "@/components/Login.vue";
         <RouterLink class="btn btn-outline-primary" to="/">Home</RouterLink>
         <RouterLink class="btn btn-outline-primary" to="/register">About</RouterLink>
         <button id="perfil" hidden>Perfil</button>
-        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          Login
-        </button>
+        <RouterLink class="btn btn-outline-primary" to="/login">Login</RouterLink>
+
       </nav>
   </header>
-  <Login />
   <RouterView />
 </template>
 
