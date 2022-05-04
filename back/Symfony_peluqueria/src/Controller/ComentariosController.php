@@ -43,23 +43,33 @@ class ComentariosController extends AbstractController
             $data_usuarios[] = $usuariosRepository->coger_ids($id_usuarios[$i]);
         }
 
-        $array_comentarios = [];
-        $i = 0;
-        foreach ($comentarios as $key){
-            array_push($array_comentarios, $data_comentarios[$key], $data_usuarios[$i][0]);
-            $i++;
+        for($i = 0;$i < count($comentarios);$i++) {
+            $array_comentarios[$i] = [
+                'nombre' => $data_usuarios[$i][0]['nombre'],
+                'descripcion' => $data_comentarios[$i]['descripcion'],
+                'valoracion' => $data_comentarios[$i]['valoracion']
+            ];
         }
-        print_r($array_comentarios);
 
         return new JsonResponse($array_comentarios,Response::HTTP_OK);
     }
 
-    #[Route('/nuevo/comentario', name: 'app_comentarios_index4', methods: ['GET'])]
-    public function anadir(ComentariosRepository $comentariosRepository): JsonResponse
+    #[Route('/nuevo/comentario', name: 'app_comentarios_index4', methods: ['POST','GET'])]
+    public function anadir(Request $request, ComentariosRepository $comentariosRepository, UsuariosRepository $usuariosRepository): JsonResponse
     {
+        $data = $request->request->all();
 
+        print_r($data);
 
-        return new JsonResponse(Response::HTTP_OK);
+        $email = $data['email'];
+        $descripcion = $data['descripcion'];
+        $valoracion = $data['valoracion'];
+
+        $data_usuario = $usuariosRepository->findOneBy(['email' => $email]);
+
+        $comentariosRepository->save($data_usuario, $descripcion, $valoracion);
+
+        return new JsonResponse("Buena",Response::HTTP_OK);
     }
 
     #[Route('/new', name: 'app_comentarios_new', methods: ['GET', 'POST'])]

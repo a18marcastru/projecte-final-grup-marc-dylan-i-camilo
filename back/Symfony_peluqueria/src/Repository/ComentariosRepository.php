@@ -41,6 +41,23 @@ class ComentariosRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
+    public function save($data_usuario, $descripcion, $valoracion): void
+    {
+        $newComentario = new Comentarios();
+
+        $newComentario
+            ->setUsuario($data_usuario)
+            ->setDescripcion($descripcion)
+            ->setValoracion($valoracion);
+
+        $this->manager->persist($newComentario);
+        $this->manager->flush();
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
     public function mostrarComentarios(): array
     {
         $conn = $this->getEntityManager()->getConnection();
