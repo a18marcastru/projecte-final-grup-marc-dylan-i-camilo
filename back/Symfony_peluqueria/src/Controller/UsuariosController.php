@@ -53,27 +53,25 @@ class UsuariosController extends AbstractController
 
         $usuariosRepository->save($nombre, $apellido, $email, $contrasena, $telefono);
 
-        return new JsonResponse($data, Response::HTTP_OK);
+        return new JsonResponse("Correcto", Response::HTTP_OK);
     }
 
     #[Route('/login', name: 'app_usuarios_login', methods: ['POST', 'GET'])]
     public function login(Request $request, UsuariosRepository $usuariosRepository): JsonResponse
     {
         $data = $request->request->all();
-        print_r($data);
         $email = $data['email'];
         $contra = $data['contrasena'];
         $data_usuario = $usuariosRepository->findOneBy(['email' => $email]);
         if(!empty($data_usuario)) {
             $data_contras = $data_usuario->getContrasena();
             if (password_verify($contra, $data_contras)) {
-                $id_usuario = [
-                    'id' => $data_usuario->getId()
-                ];
+                $id_usuario = $data_usuario->getId();
+                return new JsonResponse($id_usuario, Response::HTTP_OK);
             } else {
-                $id_usuario[] = null;
+                $id_usuario = null;
+                return new JsonResponse($id_usuario, Response::HTTP_OK);
             }
-            return new JsonResponse($id_usuario, Response::HTTP_OK);
         }
         
         return new JsonResponse("No existe usuario", Response::HTTP_OK);
