@@ -19,7 +19,7 @@
           email: '',
           contrasena: '',
           datos: '',
-      },
+      }
     },
     methods: {
       login() {
