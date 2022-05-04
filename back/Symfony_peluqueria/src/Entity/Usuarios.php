@@ -33,9 +33,13 @@ class Usuarios
     #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Comentarios::class)]
     private $comentarios;
 
+    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Comprar::class)]
+    private $comprars;
+
     public function __construct()
     {
         $this->comentarios = new ArrayCollection();
+        $this->comprars = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,6 +131,36 @@ class Usuarios
             // set the owning side to null (unless already changed)
             if ($comentario->getUsuario() === $this) {
                 $comentario->setUsuario(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comprar>
+     */
+    public function getComprars(): Collection
+    {
+        return $this->comprars;
+    }
+
+    public function addComprar(Comprar $comprar): self
+    {
+        if (!$this->comprars->contains($comprar)) {
+            $this->comprars[] = $comprar;
+            $comprar->setUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComprar(Comprar $comprar): self
+    {
+        if ($this->comprars->removeElement($comprar)) {
+            // set the owning side to null (unless already changed)
+            if ($comprar->getUsuario() === $this) {
+                $comprar->setUsuario(null);
             }
         }
 

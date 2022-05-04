@@ -43,24 +43,15 @@ class ComentariosController extends AbstractController
             $data_usuarios[] = $usuariosRepository->coger_ids($id_usuarios[$i]);
         }
 
-        $array_comentarios = [];
-        $i = 0;
-        foreach ($comentarios as $key){
-            array_push($array_comentarios, $data_comentarios[$key]);
-            $i++;
-        }
-
         for($i = 0;$i < count($comentarios);$i++) {
-            $array_comentarios_completo[$i] = [
+            $array_comentarios[$i] = [
                 'nombre' => $data_usuarios[$i][0]['nombre'],
                 'descripcion' => $data_comentarios[$i]['descripcion'],
                 'valoracion' => $data_comentarios[$i]['valoracion']
             ];
         }
 
-        print_r($array_comentarios_completo);
-
-        return new JsonResponse($array_comentarios_completo,Response::HTTP_OK);
+        return new JsonResponse($array_comentarios,Response::HTTP_OK);
     }
 
     #[Route('/nuevo/comentario', name: 'app_comentarios_index4', methods: ['POST','GET'])]

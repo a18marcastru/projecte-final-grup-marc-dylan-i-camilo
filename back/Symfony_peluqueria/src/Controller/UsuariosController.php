@@ -67,11 +67,11 @@ class UsuariosController extends AbstractController
         if(!empty($data_usuario)) {
             $data_contras = $data_usuario->getContrasena();
             if (password_verify($contra, $data_contras)) {
-                $id_usuario = $data_usuario->getId();
-                print_r('¡La contraseña es válida!');
+                $id_usuario = [
+                    'id' => $data_usuario->getId()
+                ];
             } else {
-                $id_usuario = null;
-                print_r('La contraseña no es válida.');
+                $id_usuario[] = null;
             }
             return new JsonResponse($id_usuario, Response::HTTP_OK);
         }
