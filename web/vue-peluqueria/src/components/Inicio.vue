@@ -19,9 +19,8 @@ body {
   background-color: aliceblue;
 
 }
-
 .hero-image {
-  background-image: url("../../../public/salon.jpg");
+  background-image: url("./salon.jpg");
   background-color: #cccccc;
   height: 500px;
   background-position: center;
