@@ -30,6 +30,14 @@ class Productos
     #[ORM\Column(type: 'string', length: 255)]
     private $imagen;
 
+    #[ORM\ManyToMany(targetEntity: Tiquets::class, mappedBy: 'producto')]
+    private $tiquets;
+
+    public function __construct()
+    {
+        $this->tiquets = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +99,33 @@ class Productos
     public function setImagen(string $imagen): self
     {
         $this->imagen = $imagen;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tiquets>
+     */
+    public function getTiquets(): Collection
+    {
+        return $this->tiquets;
+    }
+
+    public function addTiquet(Tiquets $tiquet): self
+    {
+        if (!$this->tiquets->contains($tiquet)) {
+            $this->tiquets[] = $tiquet;
+            $tiquet->addProducto($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTiquet(Tiquets $tiquet): self
+    {
+        if ($this->tiquets->removeElement($tiquet)) {
+            $tiquet->removeProducto($this);
+        }
 
         return $this;
     }

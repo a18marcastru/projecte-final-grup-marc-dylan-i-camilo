@@ -33,13 +33,13 @@ class Usuarios
     #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Comentarios::class)]
     private $comentarios;
 
-    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Comprar::class)]
-    private $comprars;
+    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Tiquets::class)]
+    private $tiquets;
 
     public function __construct()
     {
         $this->comentarios = new ArrayCollection();
-        $this->comprars = new ArrayCollection();
+        $this->tiquets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -138,32 +138,33 @@ class Usuarios
     }
 
     /**
-     * @return Collection<int, Comprar>
+     * @return Collection<int, Tiquets>
      */
-    public function getComprars(): Collection
+    public function getTiquets(): Collection
     {
-        return $this->comprars;
+        return $this->tiquets;
     }
 
-    public function addComprar(Comprar $comprar): self
+    public function addTiquet(Tiquets $tiquet): self
     {
-        if (!$this->comprars->contains($comprar)) {
-            $this->comprars[] = $comprar;
-            $comprar->setUsuario($this);
+        if (!$this->tiquets->contains($tiquet)) {
+            $this->tiquets[] = $tiquet;
+            $tiquet->setUsuario($this);
         }
 
         return $this;
     }
 
-    public function removeComprar(Comprar $comprar): self
+    public function removeTiquet(Tiquets $tiquet): self
     {
-        if ($this->comprars->removeElement($comprar)) {
+        if ($this->tiquets->removeElement($tiquet)) {
             // set the owning side to null (unless already changed)
-            if ($comprar->getUsuario() === $this) {
-                $comprar->setUsuario(null);
+            if ($tiquet->getUsuario() === $this) {
+                $tiquet->setUsuario(null);
             }
         }
 
         return $this;
     }
+
 }

@@ -70,7 +70,6 @@ class UsuariosRepository extends ServiceEntityRepository
             WHERE e.id = :id'
         )->setParameter('id',$id);
 
-        // returns an array of Product objects
         return $query->getResult();
     }
 
