@@ -67,9 +67,13 @@ class ComentariosController extends AbstractController
 
         $data_usuario = $usuariosRepository->findOneBy(['email' => $email]);
 
-        $comentariosRepository->save($data_usuario, $descripcion, $valoracion);
+        if(!empty($data_usuario)) {
+            $comentariosRepository->save($data_usuario, $descripcion, $valoracion);
 
-        return new JsonResponse("Buena",Response::HTTP_OK);
+            return new JsonResponse("Nuevo Comentario",Response::HTTP_OK);
+        }
+
+        return new JsonResponse("Tienes que ser nuevo usuario",Response::HTTP_OK);
     }
 
     #[Route('/new', name: 'app_comentarios_new', methods: ['GET', 'POST'])]

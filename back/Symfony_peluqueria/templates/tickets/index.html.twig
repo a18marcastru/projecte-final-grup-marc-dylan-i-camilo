@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tiquets index{% endblock %}
+{% block title %}Tickets index{% endblock %}
 
 {% block body %}
-    <h1>Tiquets index</h1>
+    <h1>Tickets index</h1>
 
     <table class="table">
         <thead>
@@ -15,14 +15,14 @@
             </tr>
         </thead>
         <tbody>
-        {% for tiquet in tiquets %}
+        {% for ticket in tickets %}
             <tr>
-                <td>{{ tiquet.id }}</td>
-                <td>{{ tiquet.fecha ? tiquet.fecha|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ tiquet.precioTotal }}</td>
+                <td>{{ ticket.id }}</td>
+                <td>{{ ticket.fecha }}</td>
+                <td>{{ ticket.precioTotal }}</td>
                 <td>
-                    <a href="{{ path('app_tiquets_show', {'id': tiquet.id}) }}">show</a>
-                    <a href="{{ path('app_tiquets_edit', {'id': tiquet.id}) }}">edit</a>
+                    <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}">show</a>
+                    <a href="{{ path('app_tickets_edit', {'id': ticket.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +33,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_tiquets_new') }}">Create new</a>
+    <a href="{{ path('app_tickets_new') }}">Create new</a>
 {% endblock %}

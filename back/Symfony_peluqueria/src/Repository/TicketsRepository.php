@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Tiquets;
+use App\Entity\Tickets;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\OptimisticLockException;
@@ -10,18 +10,18 @@ use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Tiquets>
+ * @extends ServiceEntityRepository<Tickets>
  *
- * @method Tiquets|null find($id, $lockMode = null, $lockVersion = null)
- * @method Tiquets|null findOneBy(array $criteria, array $orderBy = null)
- * @method Tiquets[]    findAll()
- * @method Tiquets[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Tickets|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Tickets|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Tickets[]    findAll()
+ * @method Tickets[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TiquetsRepository extends ServiceEntityRepository
+class TicketsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry, EntityManagerInterface $manager)
     {
-        parent::__construct($registry, Tiquets::class);
+        parent::__construct($registry, Tickets::class);
         $this->manager = $manager;
     }
 
@@ -29,7 +29,7 @@ class TiquetsRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Tiquets $entity, bool $flush = true): void
+    public function add(Tickets $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -43,14 +43,14 @@ class TiquetsRepository extends ServiceEntityRepository
      */
     public function save($data_usuario, $fecha, $precio_total): void
     {
-        $newTiquet = new Tiquets();
+        $newTicket = new Tickets();
 
-        $newTiquet
+        $newTicket
             ->setUsuario($data_usuario)
             ->setFecha($fecha)
             ->setPrecioTotal($precio_total);
 
-        $this->manager->persist($newTiquet);
+        $this->manager->persist($newTicket);
         $this->manager->flush();
     }
 
@@ -58,10 +58,10 @@ class TiquetsRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function coger_id_tiquet($id_usuario): array
+    public function coger_tiquet($fecha): array
     {
         $conn = $this->getEntityManager()->getConnection();
-        $sql = "SELECT Tiquets.id FROM Tiquets WHERE Tiquets.usuario_id = $id_usuario;";
+        $sql = "SELECT Tickets.id FROM Tickets WHERE Tickets.fecha = $fecha;";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
         return $resultSet->fetchAllAssociative();
@@ -71,18 +71,7 @@ class TiquetsRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function save2($id2, $id,  $cantidades): void
-    {
-        $conn = $this->getEntityManager()->getConnection();
-        $sql = "INSERT INTO `Tiquets_Productos` (`tiquets_id`, `productos_id`,`cantidades`) VALUES ($id2, $id,  $cantidades);";
-        $conn->prepare($sql);
-    }
-
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function remove(Tiquets $entity, bool $flush = true): void
+    public function remove(Tickets $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -91,7 +80,7 @@ class TiquetsRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Tiquets[] Returns an array of Tiquets objects
+    //  * @return Tickets[] Returns an array of Tickets objects
     //  */
     /*
     public function findByExampleField($value)
@@ -108,7 +97,7 @@ class TiquetsRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Tiquets
+    public function findOneBySomeField($value): ?Tickets
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.exampleField = :val')

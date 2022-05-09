@@ -2,12 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\Tiquets;
+use App\Entity\Tickets;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TiquetsType extends AbstractType
+class TicketsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -15,14 +15,13 @@ class TiquetsType extends AbstractType
             ->add('fecha')
             ->add('precio_total')
             ->add('usuario')
-            ->add('producto')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Tiquets::class,
+            'data_class' => Tickets::class,
         ]);
     }
 }

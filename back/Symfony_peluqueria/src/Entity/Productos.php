@@ -30,12 +30,12 @@ class Productos
     #[ORM\Column(type: 'string', length: 255)]
     private $imagen;
 
-    #[ORM\ManyToMany(targetEntity: Tiquets::class, mappedBy: 'producto')]
-    private $tiquets;
+    #[ORM\OneToMany(mappedBy: 'producto', targetEntity: Comprar::class)]
+    private $comprars;
 
     public function __construct()
     {
-        $this->tiquets = new ArrayCollection();
+        $this->comprars = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -104,29 +104,33 @@ class Productos
     }
 
     /**
-     * @return Collection<int, Tiquets>
+     * @return Collection<int, Comprar>
      */
-    public function getTiquets(): Collection
+    public function getComprars(): Collection
     {
-        return $this->tiquets;
+        return $this->comprars;
     }
 
-    public function addTiquet(Tiquets $tiquet): self
+    public function addComprar(Comprar $comprar): self
     {
-        if (!$this->tiquets->contains($tiquet)) {
-            $this->tiquets[] = $tiquet;
-            $tiquet->addProducto($this);
+        if (!$this->comprars->contains($comprar)) {
+            $this->comprars[] = $comprar;
+            $comprar->setProducto($this);
         }
 
         return $this;
     }
 
-    public function removeTiquet(Tiquets $tiquet): self
+    public function removeComprar(Comprar $comprar): self
     {
-        if ($this->tiquets->removeElement($tiquet)) {
-            $tiquet->removeProducto($this);
+        if ($this->comprars->removeElement($comprar)) {
+            // set the owning side to null (unless already changed)
+            if ($comprar->getProducto() === $this) {
+                $comprar->setProducto(null);
+            }
         }
 
         return $this;
     }
+
 }

@@ -33,13 +33,13 @@ class Usuarios
     #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Comentarios::class)]
     private $comentarios;
 
-    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Tiquets::class)]
-    private $tiquets;
+    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Tickets::class)]
+    private $tickets;
 
     public function __construct()
     {
         $this->comentarios = new ArrayCollection();
-        $this->tiquets = new ArrayCollection();
+        $this->tickets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -138,29 +138,29 @@ class Usuarios
     }
 
     /**
-     * @return Collection<int, Tiquets>
+     * @return Collection<int, Tickets>
      */
-    public function getTiquets(): Collection
+    public function getTickets(): Collection
     {
-        return $this->tiquets;
+        return $this->tickets;
     }
 
-    public function addTiquet(Tiquets $tiquet): self
+    public function addTicket(Tickets $ticket): self
     {
-        if (!$this->tiquets->contains($tiquet)) {
-            $this->tiquets[] = $tiquet;
-            $tiquet->setUsuario($this);
+        if (!$this->tickets->contains($ticket)) {
+            $this->tickets[] = $ticket;
+            $ticket->setUsuario($this);
         }
 
         return $this;
     }
 
-    public function removeTiquet(Tiquets $tiquet): self
+    public function removeTicket(Tickets $ticket): self
     {
-        if ($this->tiquets->removeElement($tiquet)) {
+        if ($this->tickets->removeElement($ticket)) {
             // set the owning side to null (unless already changed)
-            if ($tiquet->getUsuario() === $this) {
-                $tiquet->setUsuario(null);
+            if ($ticket->getUsuario() === $this) {
+                $ticket->setUsuario(null);
             }
         }
 

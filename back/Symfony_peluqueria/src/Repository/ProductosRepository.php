@@ -39,6 +39,19 @@ class ProductosRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
+    public function coger_producto($id_producto): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT Productos.* FROM Productos WHERE Productos.id = $id_producto;";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+        return $resultSet->fetchAllAssociative();
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
     public function remove(Productos $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
