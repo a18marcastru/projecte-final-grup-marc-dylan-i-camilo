@@ -58,7 +58,7 @@
                 datosEnvio.append('contrasena', this.contrasena);
 
 
-                fetch('http://peluqueriahappyback.alumnes.inspedralbes.cat/usuarios/nuevo/usuario', {
+                fetch('http://192.168.210.153:8000/usuarios/nuevo/usuario', {
                   method: 'POST',
                   body: datosEnvio
                 }).then(function(res){
