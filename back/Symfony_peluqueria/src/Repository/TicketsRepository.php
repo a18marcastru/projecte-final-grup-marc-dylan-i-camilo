@@ -58,13 +58,23 @@ class TicketsRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function coger_tiquet($fecha): array
+    public function coger_ticket($id_usuario, $fecha): int
     {
         $conn = $this->getEntityManager()->getConnection();
-        $sql = "SELECT Tickets.id FROM Tickets WHERE Tickets.fecha = $fecha;";
+        $sql = "SELECT tickets.* FROM tickets WHERE tickets.usuario_id = $id_usuario AND tickets.fecha = '$fecha';";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
-        return $resultSet->fetchAllAssociative();
+        return $resultSet->fetchOne();
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function update(Tickets $tickets): void
+    {
+        $this->manager->persist($tickets);
+        $this->manager->flush();
     }
 
     /**
