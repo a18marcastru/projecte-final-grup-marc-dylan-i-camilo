@@ -1,39 +1,41 @@
 <template>
-    <h1>Perfil de Usuario</h1>
     <div id="perfil">
-        <p>{{this.nombre}}</p>
+        <div v-if="error">
+            Hey, hay un error!!!!
+        </div>
+        <div v-else>
+            <div v-if="loading">loading...</div>
+            <div v-else>
+                <h1>Perfil de Usuario</h1>
+                {{registro}}    
+            </div>
+        </div>
     </div>
-    <button @click="datos()">Tus datos pesonales</button>
 </template>
 
 <script>
-    export default {
+    var perfil = new Vue({
+        el: '#perfil',
         data() {
             return {
-                nombre: '',
-                apellido: '',
-                telefono: '',
-                email: '',
-                contrasena: '',
-                datos: '',
-            }
+                registro: '',
+                loading: true,
+                error: false,
+            } 
         },
-        methods: {
-            datos() {
-                console.log(this.nombre + " " + this.apellido + " " + this.telefono + " " + this.email+ " " +  this.contrasena + " ");
-                const datosEnvio = new FormData();
-                datosEnvio.append('nombre', this.nombre);
-                datosEnvio.append('apellido', this.apellido);
-                datosEnvio.append('telefono', this.telefono);
-                datosEnvio.append('email', this.email);
-                datosEnvio.append('contrasena', this.contrasena);
-
-                fetch('http://192.168.210.153:8000/usuarios/nuevo/usuario', {
-                method: 'POST',
-                body: datosEnvio
-                }).then(response => response.json())
-                .then(data => this.datos = data);
-            },  
+        mounted() {
+            fetch(`http://192.168.210.153:8000/usuarios/perfil/${}`)
+            .then(response => {
+                this.registro = response.data.data[0]
+                console.log(response)
+            })
+            .catch(error => {
+                console.log(error)
+                this.error = true
+            })
+            .finally(() => {
+                this.loading = false
+            })
         }
-    }   
+    })
 </script>
