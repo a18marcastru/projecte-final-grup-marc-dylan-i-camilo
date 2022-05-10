@@ -42,14 +42,14 @@ class ComprarRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function save($data_ticket, $data_producto,  $cantidades): void
+    public function save($data_ticket, $data_producto,  $data_cantidades): void
     {
         $newComprar = new Comprar();
 
         $newComprar
             ->setTicket($data_ticket)
             ->setProducto($data_producto)
-            ->setCantidades($cantidades);
+            ->setCantidades($data_cantidades);
 
         $this->manager->persist($newComprar);
         $this->manager->flush();

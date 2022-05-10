@@ -27,7 +27,7 @@ class ComentariosController extends AbstractController
         $this->usuariosRepository = $usuariosRepository;
     }
 
-    #[Route('/mostracion', name: 'app_comentarios_index2', methods: ['GET'])]
+    #[Route('/mostrar/comentarios', name: 'app_comentarios_index2', methods: ['GET'])]
     public function mostrar(ComentariosRepository $comentariosRepository, UsuariosRepository $usuariosRepository): JsonResponse
     {
         $data_comentarios = $comentariosRepository->mostrarComentarios();
@@ -73,7 +73,7 @@ class ComentariosController extends AbstractController
             return new JsonResponse("Nuevo Comentario",Response::HTTP_OK);
         }
 
-        return new JsonResponse("Tienes que ser nuevo usuario",Response::HTTP_OK);
+        return new JsonResponse("Tienes que registrarte",Response::HTTP_OK);
     }
 
     #[Route('/new', name: 'app_comentarios_new', methods: ['GET', 'POST'])]

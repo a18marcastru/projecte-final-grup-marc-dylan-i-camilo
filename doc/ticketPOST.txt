@@ -1,0 +1,18 @@
+Ruta: ./nuevo/ticket
+
+Parametros:
+
+- email: 
+- precio:
+
+JSON:
+[
+  {
+    "nombre": "",
+    "cantidades": 
+  },
+  {
+    "nombre": "",
+    "cantidades": 
+  }
+]
