@@ -1,16 +1,14 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
-import Login from "@/components/Login.vue";
+  import { RouterLink, RouterView } from "vue-router";
+  import Login from "@/components/Login.vue";
 </script>
-
 
 <template>
   <header>
       <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
         <RouterLink class="btn btn-outline-primary" to="/">Home</RouterLink>
-        <RouterLink class="btn btn-outline-primary" to="/register">About</RouterLink>
-        <RouterLink class="btn btn-outline-primary" id="perfil" to="/perfil">Perfil</RouterLink>
-        <RouterLink class="btn btn-outline-primary" to="/login">Login</RouterLink>
+        <RouterLink class="btn btn-outline-primary" to="/register">Registro</RouterLink>
+        <Login />
       </nav>
   </header>
   <RouterView />
