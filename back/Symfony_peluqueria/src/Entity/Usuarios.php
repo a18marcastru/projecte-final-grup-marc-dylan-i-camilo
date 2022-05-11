@@ -36,10 +36,14 @@ class Usuarios
     #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Tickets::class)]
     private $tickets;
 
+    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Reservas::class)]
+    private $reservas;
+
     public function __construct()
     {
         $this->comentarios = new ArrayCollection();
         $this->tickets = new ArrayCollection();
+        $this->reservas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -161,6 +165,36 @@ class Usuarios
             // set the owning side to null (unless already changed)
             if ($ticket->getUsuario() === $this) {
                 $ticket->setUsuario(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservas>
+     */
+    public function getReservas(): Collection
+    {
+        return $this->reservas;
+    }
+
+    public function addReserva(Reservas $reserva): self
+    {
+        if (!$this->reservas->contains($reserva)) {
+            $this->reservas[] = $reserva;
+            $reserva->setUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReserva(Reservas $reserva): self
+    {
+        if ($this->reservas->removeElement($reserva)) {
+            // set the owning side to null (unless already changed)
+            if ($reserva->getUsuario() === $this) {
+                $reserva->setUsuario(null);
             }
         }
 

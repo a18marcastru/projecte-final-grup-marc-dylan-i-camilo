@@ -46,6 +46,7 @@ class ComentariosController extends AbstractController
         for($i = 0;$i < count($comentarios);$i++) {
             $array_comentarios[$i] = [
                 'nombre' => $data_usuarios[$i][0]['nombre'],
+                'apellido' => $data_usuarios[$i][0]['apellido'],
                 'descripcion' => $data_comentarios[$i]['descripcion'],
                 'valoracion' => $data_comentarios[$i]['valoracion']
             ];

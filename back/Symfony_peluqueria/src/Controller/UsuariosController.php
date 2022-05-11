@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 #[Route('/usuarios')]
 class UsuariosController extends AbstractController
 {
@@ -44,16 +45,18 @@ class UsuariosController extends AbstractController
     public function new2(Request $request, UsuariosRepository $usuariosRepository): JsonResponse
     {
         $data = $request->request->all();
-
         $nombre = $data['nombre'];
         $apellido = $data['apellido'];
         $email = $data['email'];
         $telefono = $data['telefono'];
         $contrasena = password_hash($data['contrasena'], PASSWORD_DEFAULT);
 
-        $usuariosRepository->save($nombre, $apellido, $email, $contrasena, $telefono);
-
-        return new JsonResponse("Correcto", Response::HTTP_OK);
+        $data_usuario = $usuariosRepository->findOneBy(['email' => $email]);
+        if(empty($data_usuario)) {
+            $usuariosRepository->save($nombre, $apellido, $email, $contrasena, $telefono);
+            return new JsonResponse("Bienvenido", Response::HTTP_OK);
+        }
+        return new JsonResponse("Existe un usuario", Response::HTTP_OK);
     }
 
     #[Route('/login', name: 'app_usuarios_login', methods: ['POST', 'GET'])]
@@ -69,8 +72,7 @@ class UsuariosController extends AbstractController
                 $id_usuario = $data_usuario->getId();
                 return new JsonResponse($id_usuario, Response::HTTP_OK);
             } else {
-                $id_usuario = null;
-                return new JsonResponse($id_usuario, Response::HTTP_OK);
+                return new JsonResponse("Contraseña incorrecta", Response::HTTP_OK);
             }
         }
         
@@ -80,18 +82,17 @@ class UsuariosController extends AbstractController
     #[Route('/perfil/{id}', name: 'app_usuarios_perfil', methods: ['GET'])]
     public function show2($id, UsuariosRepository $usuariosRepository): JsonResponse
     {
-        $restos = $usuariosRepository->findOneBy(['id' => $id]);
+            $restos = $usuariosRepository->findOneBy(['id' => $id]);
 
-        $data_usuario = [
-            'nombre' => $restos->getNombre(),
-            'apellido' => $restos->getApellido(),
-            'email' => $restos->getEmail(),
-            'telefono' => $restos->getTelefono()
-        ];
+            $data_usuario = [
+                'nombre' => $restos->getNombre(),
+                'apellido' => $restos->getApellido(),
+                'email' => $restos->getEmail(),
+                'telefono' => $restos->getTelefono()
+            ];
 
-        print_r($data_usuario);
+            return new JsonResponse($data_usuario, Response::HTTP_OK);
 
-        return new JsonResponse($data_usuario, Response::HTTP_OK);
     }
 
     #[Route('/cambiar/contrasena/{id}', name: 'app_usuarios_perfil2', methods: ['POST','GET'])]
