@@ -1,39 +1,45 @@
 <template>
-    <h1>Perfil de Usuario</h1>
     <div id="perfil">
-        <p>{{this.nombre}}</p>
+        <h1>Perfil del usuario {{$route.params.id}}</h1><br><br>
+        <h3>Nombre: {{this.datos.nombre}}</h3><br>
+        <h3>Apellido: {{this.datos.apellido}}</h3><br>
+        <h3>Teléfono: {{this.datos.telefono}}</h3><br>
+        <h3>Email: {{this.datos.email}}</h3><br><br>
+        <h3>Cambiar contraseña:</h3>
+        <input v-model="contrasena" type="password" id="pwd2" name="contrasena2" placeholder="introduce nueva contraseña" size="35" required><br><br><br>
+        <button class="btn btn-outline-primary" type="submit" id="perfilBtn" @click="cambios()">Guardar cambios<br> {{this.datos.nombre}}</button>
     </div>
-    <button @click="datos()">Tus datos pesonales</button>
 </template>
 
 <script>
     export default {
         data() {
             return {
+                datos: [],
                 nombre: '',
                 apellido: '',
                 telefono: '',
                 email: '',
-                contrasena: '',
-                datos: '',
             }
         },
         methods: {
-            datos() {
-                console.log(this.nombre + " " + this.apellido + " " + this.telefono + " " + this.email+ " " +  this.contrasena + " ");
+            cambios() {
+                console.log(this.contrasena + " ");
                 const datosEnvio = new FormData();
-                datosEnvio.append('nombre', this.nombre);
-                datosEnvio.append('apellido', this.apellido);
-                datosEnvio.append('telefono', this.telefono);
-                datosEnvio.append('email', this.email);
                 datosEnvio.append('contrasena', this.contrasena);
-
-                fetch('http://192.168.210.153:8000/usuarios/nuevo/usuario', {
-                method: 'POST',
-                body: datosEnvio
-                }).then(response => response.json())
-                .then(data => this.datos = data);
-            },  
+            },
+        },
+        mounted() {
+            console.log(this.$route.params.id);
+            fetch(`http://192.168.210.154:8000/usuarios/perfil/${this.$route.params.id}`)
+            .then(res => res.json())
+            .then((data) => {
+            this.datos = data;
+            });
         }
-    }   
+    }            
 </script>
+
+<style>
+    
+</style>
