@@ -70,18 +70,33 @@ class UsuariosController extends AbstractController
             $data_contras = $data_usuario->getContrasena();
             if (password_verify($contra, $data_contras)) {
                 $id_usuario = $data_usuario->getId();
+                session_start();
+                $_SESSION['comprobacion'] = $id_usuario;
                 return new JsonResponse($id_usuario, Response::HTTP_OK);
-            } else {
+            }
+            else {
                 return new JsonResponse("Contraseña incorrecta", Response::HTTP_OK);
             }
         }
-        
+
         return new JsonResponse("No existe usuario", Response::HTTP_OK);
+    }
+
+    #[Route('/logout', name: 'app_usuarios_logout', methods: ['GET'])]
+    public function logout(): JsonResponse
+    {
+        session_start();
+
+        session_destroy();
+
+        return new JsonResponse("Logout", Response::HTTP_OK);
     }
 
     #[Route('/perfil/{id}', name: 'app_usuarios_perfil', methods: ['GET'])]
     public function show2($id, UsuariosRepository $usuariosRepository): JsonResponse
     {
+        session_start();
+        if ($_SESSION['comprobacion'] == $id) {
             $restos = $usuariosRepository->findOneBy(['id' => $id]);
 
             $data_usuario = [
@@ -92,7 +107,9 @@ class UsuariosController extends AbstractController
             ];
 
             return new JsonResponse($data_usuario, Response::HTTP_OK);
+        }
 
+        return new JsonResponse("Inicia sesion", Response::HTTP_OK);
     }
 
     #[Route('/cambiar/contrasena/{id}', name: 'app_usuarios_perfil2', methods: ['POST','GET'])]
