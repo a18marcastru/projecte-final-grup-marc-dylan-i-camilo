@@ -61,7 +61,6 @@ class TicketsController extends AbstractController
             $ticketsRepository->save($data_usuario, $fecha, $precio_total);
             $id_usuario = $data_usuario->getId();
             $id_ticket = $ticketsRepository->coger_ticket($id_usuario, $fecha);
-            print_r($id_ticket);
             $data_ticket = $ticketsRepository->findOneBy(['id' => $id_ticket]);
             $data_producto = $productosRepository->findOneBy(['nombre' => $data_nombres]);
             $cantidad = $data_producto->getCantidad();

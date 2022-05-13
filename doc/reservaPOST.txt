@@ -1,0 +1,18 @@
+Ruta: reservas/nueva/reserva
+
+Parametros:
+
+- email: 
+- precio_total:
+- dia:
+- hora:
+
+JSON:
+[
+  {
+    "nombre_servicio": "Corte de pelo"
+  },
+  {
+    "nombre_servicio": "Teñir el pelo"
+  }
+]

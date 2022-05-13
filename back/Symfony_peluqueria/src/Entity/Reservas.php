@@ -15,12 +15,6 @@ class Reservas
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'date')]
-    private $fecha;
-
-    #[ORM\Column(type: 'time')]
-    private $hora;
-
     #[ORM\Column(type: 'integer')]
     private $telefono;
 
@@ -31,6 +25,15 @@ class Reservas
     #[ORM\OneToMany(mappedBy: 'reserva', targetEntity: ReservaServicio::class)]
     private $reservaServicios;
 
+    #[ORM\Column(type: 'integer')]
+    private $precio_total;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $fecha;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $hora;
+
     public function __construct()
     {
         $this->reservaServicios = new ArrayCollection();
@@ -39,30 +42,6 @@ class Reservas
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getFecha(): ?\DateTimeInterface
-    {
-        return $this->fecha;
-    }
-
-    public function setFecha(\DateTimeInterface $fecha): self
-    {
-        $this->fecha = $fecha;
-
-        return $this;
-    }
-
-    public function getHora(): ?\DateTimeInterface
-    {
-        return $this->hora;
-    }
-
-    public function setHora(\DateTimeInterface $hora): self
-    {
-        $this->hora = $hora;
-
-        return $this;
     }
 
     public function getTelefono(): ?int
@@ -115,6 +94,42 @@ class Reservas
                 $reservaServicio->setReserva(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPrecioTotal(): ?int
+    {
+        return $this->precio_total;
+    }
+
+    public function setPrecioTotal(int $precio_total): self
+    {
+        $this->precio_total = $precio_total;
+
+        return $this;
+    }
+
+    public function getFecha(): ?string
+    {
+        return $this->fecha;
+    }
+
+    public function setFecha(string $fecha): self
+    {
+        $this->fecha = $fecha;
+
+        return $this;
+    }
+
+    public function getHora(): ?string
+    {
+        return $this->hora;
+    }
+
+    public function setHora(string $hora): self
+    {
+        $this->hora = $hora;
 
         return $this;
     }

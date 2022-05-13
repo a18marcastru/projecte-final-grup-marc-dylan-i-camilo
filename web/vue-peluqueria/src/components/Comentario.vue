@@ -1,6 +1,3 @@
-<script setup>
-import Review from "@/components/Review.vue";
-</script>
 <template>
 
     <div>
@@ -43,30 +40,30 @@ import Review from "@/components/Review.vue";
 </template>
 
 <script>
-    export default {
-  components: { Review },
-        data() {
-            return {
-                email: '',
-                valoracion: '',
-                descripcion: '',
-                datos: [],
+  import Review from "@/components/Review.vue";
+  export default {
+    data() {
+      return {
+        email: '',
+        valoracion: '',
+        descripcion: '',
+        datos: [],
 
-            }
-        },
-          components: {
-            Review
-        },
-         mounted() {
-            fetch("http://192.168.210.154:8000/comentarios/mostrar/comentarios")
-            .then(res => res.json())
-            .then((data) => {
-                this.datos = data;
-                console.log(this.datos);
-            });
-        },
-        methods: {
-            comment() {
+      }
+    },
+    components: {
+      Review
+    },
+    mounted() {
+      fetch("http://192.168.210.154:8000/comentarios/mostrar/comentarios")
+      .then(res => res.json())
+      .then((data) => {
+        this.datos = data;
+        console.log(this.datos);
+      });
+    },
+    methods: {
+      comment() {
                 console.log(this.email + " " + this.valoracion + " " +  this.descripcion + " " );
                 const datosEnvio = new FormData();
                 datosEnvio.append('email', this.email);

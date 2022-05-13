@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\ReservaServicio;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -18,9 +19,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ReservaServicioRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $manager)
     {
         parent::__construct($registry, ReservaServicio::class);
+        $this->manager = $manager;
     }
 
     /**
@@ -33,6 +35,22 @@ class ReservaServicioRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function save($data_reserva, $data_servicio): void
+    {
+        $newReservaServicio = new ReservaServicio();
+
+        $newReservaServicio
+            ->setReserva($data_reserva)
+            ->setServicio($data_servicio);
+
+        $this->manager->persist($newReservaServicio);
+        $this->manager->flush();
     }
 
     /**

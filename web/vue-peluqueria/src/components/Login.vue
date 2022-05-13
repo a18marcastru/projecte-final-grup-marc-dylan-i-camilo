@@ -3,7 +3,7 @@
     <input v-model="email" type="text" id="email" name="email" placeholder="email" required>
     <input v-model="contrasena" type="password" id="pwd" name="contrasena" placeholder="contraseña" required> 
     <button class="btn btn-outline-primary" type="submit" id="loginBtn" @click="login()">Login</button><br> 
-    <a class="btn btn-outline-primary" :href="'/perfil/' + this.datos">Perfil</a>
+    <a class="btn btn-outline-primary" :href="'/perfil/' + this.datos" id="login" hidden>Perfil</a>
   </div>
 </template>
 
@@ -29,6 +29,9 @@
         }).then(response => response.json())
         .then(data => this.datos = data);
         console.log(this.datos);
+        if(this.datos != false) {
+           document.getElementById("login").removeAttribute("hidden");
+        }
       },
     },
   }

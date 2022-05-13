@@ -36,6 +36,7 @@
             .then((data) => {
             this.datos = data;
             });
+            console.log(this.datos);
         }
     }            
 </script>

@@ -71,11 +71,12 @@ class UsuariosController extends AbstractController
             if (password_verify($contra, $data_contras)) {
                 $id_usuario = $data_usuario->getId();
                 session_start();
-                $_SESSION['comprobacion'] = $id_usuario;
+                $_SESSION['inicio'] = $id_usuario;
                 return new JsonResponse($id_usuario, Response::HTTP_OK);
             }
             else {
-                return new JsonResponse("Contraseña incorrecta", Response::HTTP_OK);
+                $id_usuario = false;
+                return new JsonResponse($id_usuario, Response::HTTP_OK);
             }
         }
 
@@ -96,7 +97,7 @@ class UsuariosController extends AbstractController
     public function show2($id, UsuariosRepository $usuariosRepository): JsonResponse
     {
         session_start();
-        if ($_SESSION['comprobacion'] == $id) {
+        if ($_SESSION['inicio'] == $id) {
             $restos = $usuariosRepository->findOneBy(['id' => $id]);
 
             $data_usuario = [

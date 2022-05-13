@@ -48,7 +48,6 @@ class ProductosController extends AbstractController
 
         foreach ($restos as $res){
             $data_producto[$i] = [
-                'id' => $res->getId(),
                 'nombre' => $res->getNombre(),
                 'descripcion' => $res->getDescripcion(),
                 'cantidad' => $res->getCantidad(),
