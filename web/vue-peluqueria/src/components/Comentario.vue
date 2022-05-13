@@ -1,8 +1,97 @@
+<script setup>
+import Review from "@/components/Review.vue";
+</script>
 <template>
+
     <div>
-        <p></p>
+    <h2>Valoracion de usuario</h2>
+    <p></p>
+    <hr>
+
+      <label for="email"><b>email</b></label>
+    <input v-model="email" type="text" placeholder="email" name="email" id="email" required>
+    <br>
+    <br>
 
 
+   <label for="valoracion" class="form-label">Example range</label>
+    <input v-model="valoracion" type="range" class="form-range" min="0" max="5" step="0.5" id="valoracion" width="50%">  
+    <br>
+    <br>
+
+    <div class="container">
+      <span id="rateMe1"></span>
+    </div>
+
+
+
+    <label for="descripcion"><b>descripcion</b></label>
+    <textarea v-model="descripcion" type="text"  name="descripcion" id="descripcion" style="width:550px; height:200px;" ></textarea>
+    <br>
+    <br>
+
+    <button @click="comment()">Comentar</button>
+    <br><br>
+     <div v-for="ses in datos">
+          <Review :infoComent="ses"/>
+        </div>
 
     </div>
+
+    
+
 </template>
+
+<script>
+    export default {
+  components: { Review },
+        data() {
+            return {
+                email: '',
+                valoracion: '',
+                descripcion: '',
+                datos: [],
+
+            }
+        },
+          components: {
+            Review
+        },
+         mounted() {
+            fetch("http://192.168.210.154:8000/comentarios/mostrar/comentarios")
+            .then(res => res.json())
+            .then((data) => {
+                this.datos = data;
+                console.log(this.datos);
+            });
+        },
+        methods: {
+            comment() {
+                console.log(this.email + " " + this.valoracion + " " +  this.descripcion + " " );
+                const datosEnvio = new FormData();
+                datosEnvio.append('email', this.email);
+                datosEnvio.append('valoracion', this.valoracion);
+                datosEnvio.append('descripcion', this.descripcion);
+
+
+                fetch('http://192.168.210.154:8000/comentarios/nuevo/comentario', {
+                  method: 'POST',
+                  body: datosEnvio
+                }).then(function(res){
+                  return res.json();
+                }).then(function(data){
+                  console.log(data)
+                });
+            },
+        },
+    }
+
+
+</script> 
+
+<style>
+#valoracion{
+  width: 400px;
+}
+
+</style>
