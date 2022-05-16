@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Void_;
 
 /**
  * @extends ServiceEntityRepository<ReservaServicio>
@@ -35,6 +36,19 @@ class ReservaServicioRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function coger_id_reserva_servicio($id): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT reserva_servicio.* FROM reserva_servicio WHERE reserva_servicio.reserva_id = $id;";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+        return $resultSet->fetchAllAssociative();
     }
 
     /**

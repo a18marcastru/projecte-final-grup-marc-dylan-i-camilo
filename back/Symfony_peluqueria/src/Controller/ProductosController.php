@@ -41,7 +41,7 @@ class ProductosController extends AbstractController
     }
 
     #[Route('/catalogo', name: 'app_productos_mostrar', methods: ['GET'])]
-    public function show2(ProductosRepository $productosRepository): JsonResponse
+    public function mostrar(ProductosRepository $productosRepository): JsonResponse
     {
         $restos = $productosRepository->findAll();
         $i = 0;
@@ -56,8 +56,6 @@ class ProductosController extends AbstractController
             ];
             $i++;
         }
-
-        print_r($data_producto);
 
         return new JsonResponse($data_producto, Response::HTTP_OK);
     }

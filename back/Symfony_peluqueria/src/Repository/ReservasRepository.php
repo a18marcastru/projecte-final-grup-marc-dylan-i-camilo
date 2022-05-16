@@ -60,6 +60,19 @@ class ReservasRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
+    public function buscar_usuario_reservas($id): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT reservas.* FROM reservas WHERE reservas.usuario_id = $id;";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+        return $resultSet->fetchAllAssociative();
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
     public function coger_reserva($id_usuario, $dia, $hora): int
     {
         $conn = $this->getEntityManager()->getConnection();
