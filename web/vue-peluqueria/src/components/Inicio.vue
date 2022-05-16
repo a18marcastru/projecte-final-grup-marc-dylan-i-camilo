@@ -4,8 +4,52 @@
       <h1 style="font-size:50px">Peluquería Happy</h1>
     </div>
   </div>
-
+  <Comentario />
 </template>
+
+<script>
+import Comentario from "@/components/Comentario.vue";
+export default {
+    data() {
+      return {
+        email: '',
+        valoracion: '',
+        descripcion: '',
+        datos: [],
+
+      }
+    },
+    components: {
+      Comentario
+    },
+    mounted() {
+      fetch("http://192.168.210.154:8000/comentarios/mostrar/comentarios")
+      .then(res => res.json())
+      .then((data) => {
+        this.datos = data;
+        console.log(this.datos);
+      });
+    },
+    methods: {
+      comment() {
+        console.log(this.email + " " + this.valoracion + " " +  this.descripcion + " " );
+        const datosEnvio = new FormData();
+        datosEnvio.append('email', this.email);
+        datosEnvio.append('valoracion', this.valoracion);
+        datosEnvio.append('descripcion', this.descripcion);
+
+        fetch('http://192.168.210.154:8000/comentarios/nuevo/comentario', {
+        method: 'POST',
+        body: datosEnvio
+        }).then(function(res){
+        return res.json();
+        }).then(function(data){
+        console.log(data)
+        });
+      },
+    },
+  }
+</script>
 
 <style>
 body {

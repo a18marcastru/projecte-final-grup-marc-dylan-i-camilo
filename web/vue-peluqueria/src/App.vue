@@ -1,7 +1,6 @@
 <script setup>
   import { RouterLink, RouterView } from "vue-router";
   import Login from "@/components/Login.vue";
-  import Comentario from "@/components/Comentario.vue";
 </script>
 
 <template>
@@ -13,7 +12,6 @@
       </nav>
   </header>
   <RouterView />
-  <Comentario/>
 </template>
 
 <style>

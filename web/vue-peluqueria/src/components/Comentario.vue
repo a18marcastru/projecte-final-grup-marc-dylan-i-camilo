@@ -15,28 +15,21 @@
     <input v-model="valoracion" type="range" class="form-range" min="0" max="5" step="0.5" id="valoracion" width="50%">  
     <br>
     <br>
-
     <div class="container">
       <span id="rateMe1"></span>
     </div>
-
-
 
     <label for="descripcion"><b>descripcion</b></label>
     <textarea v-model="descripcion" type="text"  name="descripcion" id="descripcion" style="width:550px; height:200px;" ></textarea>
     <br>
     <br>
-
     <button @click="comment()">Comentar</button>
     <br><br>
-     <div v-for="ses in datos">
+    <div v-for="ses in datos">
           <Review :infoComent="ses"/>
-        </div>
-
     </div>
 
-    
-
+    </div>
 </template>
 
 <script>
