@@ -1,35 +1,24 @@
 <template>
-
-    <div>
+  <div>
     <h2>Valoracion de usuario</h2>
-    <p></p>
     <hr>
-
-      <label for="email"><b>email</b></label>
-    <input v-model="email" type="text" placeholder="email" name="email" id="email" required>
-    <br>
-    <br>
-
-
-   <label for="valoracion" class="form-label">Example range</label>
-    <input v-model="valoracion" type="range"  class="multi-range" min="0" max="5" step="0.5" id="valoracion" width="50%">  
-    <br>
-    <br>
+    <label for="email"><b>Email</b></label>
+    <input v-model="email" type="text" placeholder="email" name="email" id="email" required><br><br>
+    <label for="valoracion" class="form-label">Valoración:</label>
+    <input v-model="valoracion" type="range"  class="multi-range" min="0" max="5" step="0.5" id="valoracion" width="50%"><br><br>
+    
     <div class="container">
       <span id="rateMe1"></span>
     </div>
 
-    <label for="descripcion"><b>descripcion</b></label>
-    <textarea v-model="descripcion" type="text"  name="descripcion" id="descripcion" style="width:550px; height:200px;" ></textarea>
-    <br>
-    <br>
-    <button @click="comment()">Comentar</button>
-    <br><br>
+    <label for="descripcion"><b>Comentario</b></label>
+    <textarea v-model="descripcion" type="text"  name="descripcion" id="descripcion" style="width:550px; height:200px;" ></textarea><br><br>
+    <button @click="comment()">Enviar</button><br><br>
+
     <div v-for="ses in datos">
           <Review :infoComent="ses"/>
     </div>
-
-    </div>
+  </div>
 </template>
 
 <script>
