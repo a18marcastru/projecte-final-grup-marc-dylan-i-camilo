@@ -12,7 +12,7 @@
 
 
    <label for="valoracion" class="form-label">Example range</label>
-    <input v-model="valoracion" type="range" class="form-range" min="0" max="5" step="0.5" id="valoracion" width="50%">  
+    <input v-model="valoracion" type="range"  class="multi-range" min="0" max="5" step="0.5" id="valoracion" width="50%">  
     <br>
     <br>
     <div class="container">
