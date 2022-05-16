@@ -6,27 +6,21 @@
     <meta name="viewport" content=" classth=device- classth, initial-scale=1.0" />
     <title>Peluquería Happy</title>
     <style>
-      .grid-container {
-        display: grid;
-        grid-template-columns: auto auto auto auto;
-        margin-left: 200px;
-        margin-right: 200px;
-        margin-top: 40px;
+      td {
+        padding-left: 20px;
       }
-      .item-1, .item-2, .item-3, .item-4 {
+      .map-tit {
         text-align: center;
-        padding-bottom: 20px;
-        margin-top: 0px;
-        margin-left: 50px;
-        margin-right: 50px;
       }
     </style>
   </head>
   <body>
-    <div id="app"></div>
-   
-
-
+    <div id="app">
+    </div>
+    <div class="fullmap">
+    	<h4 class="map-tit text-uppercase" >Encuentra aquí nuestra peluquería:</h4>
+    	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5986.76851302333!2d2.109613467229756!3d41.387460787127004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a49854a99cad2f%3A0xb564263b0575d513!2sInstitut%20Pedralbes!5e0!3m2!1sca!2ses!4v1635405909805!5m2!1sca!2ses" frameborder="0" style="border:0;width:100%;height:340px;" allowfullscreen=""></iframe>
+    </div>
     <footer class="bg-light text-center text-lg-start">
       <!-- Grid container -->
       <div class="container p-4">
@@ -34,7 +28,7 @@
         <div class="row">
           <!--Grid column-->
           <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-            <h5 class="text-uppercase">Local</h5>
+            <h5 class="text-uppercase">Local</h5><br>
     
             <ul class="list-unstyled mb-0">
               <li>
@@ -47,7 +41,7 @@
     
           <!--Grid column-->
           <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-            <h5 class="text-uppercase mb-0">Legal</h5>
+            <h5 class="text-uppercase mb-0">Legal</h5><br>
     
             <ul class="list-unstyled">
               <li>
@@ -63,7 +57,7 @@
     
           <!--Grid column-->
           <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-            <h5 class="text-uppercase">Contacto</h5>
+            <h5 class="text-uppercase">Contacto</h5><br>
     
             <ul class="list-unstyled mb-0">
               <li>
@@ -76,16 +70,53 @@
     
           <!--Grid column-->
           <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-            <h5 class="text-uppercase mb-0">¿Dónde estamos?</h5>
-    
-            <ul class="list-unstyled">
-              <li>
-                <p>Av. Esplugues, 36-42. 08034. Barcelona</p>
-              </li>
-              <li>
-                <iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5986.76851302333!2d2.109613467229756!3d41.387460787127004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a49854a99cad2f%3A0xb564263b0575d513!2sInstitut%20Pedralbes!5e0!3m2!1sca!2ses!4v1635405909805!5m2!1sca!2ses'  classth='250' height='200' style='border:0;' allowfullscreen='' loading='lazy'></iframe>
-              </li>
-            </ul>
+            <h5 class="text-uppercase mb-0">Horario de apertura</h5><br>
+            <table>
+              <tbody>
+                <tr>
+                  <th>Lunes:</th>
+                  <td>
+                    <span>10:00 - 21:30</span>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Martes:</th>
+                  <td>
+                    <span>10:00 - 21:30</span>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Miércoles:</th>
+                  <td>
+                    <span>10:00 - 21:30</span>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Jueves:</th>
+                  <td>
+                    <span>10:00 - 21:30</span>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Viernes:</th>
+                  <td>
+                    <span>10:00 - 14:00, 15:00 - 21:30</span>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Sábado:</th>
+                  <td>
+                    <span>10:00 - 21:30</span>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Domingo:</th>
+                  <td>
+                    <span>10:00 - 20:00</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <!--Grid column-->
         </div>
@@ -100,14 +131,6 @@
       </div>
       <!-- Copyright -->
     </footer>
-
-
-
-
-
-
-
-
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
