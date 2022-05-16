@@ -27,6 +27,12 @@
                 console.log(this.contrasena + " ");
                 const datosEnvio = new FormData();
                 datosEnvio.append('contrasena', this.contrasena);
+                fetch(`http://192.168.210.154:8000/usuarios/cambiar/contrasena/${this.$route.params.id}`, {
+                    method: 'POST',
+                    body: datosEnvio
+                }).then(response => response.json())
+                .then(data => this.datos = data);
+                console.log(this.datos);
             },
         },
         mounted() {
