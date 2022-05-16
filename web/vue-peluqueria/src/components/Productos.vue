@@ -7,13 +7,10 @@
             <p class="card-text">{{infoProduct.precio}}</p>
         </div>
         </div>
-
-    
 </template>
 
 <script>
-export default{
-    props: ['infoProduct']
+export default {
+    props: ['infoProduct'],
 }
-
 </script>
