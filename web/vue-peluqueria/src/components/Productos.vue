@@ -3,8 +3,8 @@
         <div class="card-body">
             <h5 class="card-title">{{infoProduct.nombre}}</h5>
             <h6 class="card-subtitle mb-2 text-muted">{{infoProduct.descripcion}}</h6>
-            <p class="card-text">{{infoProduct.cantidad}}</p>
-            <p class="card-text">{{infoProduct.precio}}</p>
+            <p class="card-text">Cantidad :  {{infoProduct.cantidad}}</p>
+            <p class="card-text">Precio : {{infoProduct.precio}} €  </p>
         </div>
         </div>
 </template>
