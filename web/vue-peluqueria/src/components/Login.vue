@@ -4,17 +4,22 @@
     <input v-model="contrasena" type="password" id="pwd" name="contrasena" placeholder="contraseña" required> 
     <button class="btn btn-outline-primary" type="submit" id="loginBtn" @click="login()">Login</button><br> 
   </div>
-  <a class="btn btn-outline-primary" :href="'/perfil/' + this.datos" id="login" hidden>Perfil</a>
 </template>
 
 <script>
+  import { sessioStore } from '@/stores/sessioStore'
+  import { mapStores } from 'pinia'
   export default {
     data() {
       return {
           email: '',
           contrasena: '',
           datos: '',
+          logueado: false
       }
+    },
+    computed: {
+      ...mapStores(sessioStore)
     },
     methods: {
       login() {
@@ -30,7 +35,9 @@
         .then(data => this.datos = data);
         console.log(this.datos);
         if(this.datos != false) {
-          document.getElementById("login").removeAttribute("hidden");
+          this.logueado = true;
+          console.log(this.email);
+          this.sessioStore.set({estado: this.logueado, email: this.email});
           document.getElementById("loginNav").setAttribute("style","display: none;");
         }
       },
