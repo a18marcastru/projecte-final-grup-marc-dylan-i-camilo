@@ -16,29 +16,29 @@
         <div>
         <select id="Reserva">
             <option selected>Reserva</option>
-            <option id="dia" value="">Corte de pelo</option>
-            <option id="dia" value="">Teñir</option>
+            <option id="tipo" value="30">Corte de pelo</option>
+            <option id="tipo" value="10">Teñir</option>
         </select>
         <br>
 
         	<div>Picked: {{ picked }}</div>
 
-        <input type="radio" id="num" value="1" v-model="picked" />
+        <input type="radio" id="dia" value="1" v-model="picked" />
         <label for="1">Lunes</label>
 
-        <input type="radio" id="num" value="Two" v-model="picked" />
+        <input type="radio" id="dia" value="Two" v-model="picked" />
         <label for="two">martes</label>
-          <input type="radio" id="num" value="tre" v-model="picked" />
+          <input type="radio" id="dia" value="tre" v-model="picked" />
         <label for="tre">miercoles</label>
 
-        <input type="radio" id="num" value="cat" v-model="picked" />
+        <input type="radio" id="dia" value="cat" v-model="picked" />
         <label for="cat">jueves</label>
-          <input type="radio" id="num" value="fiv" v-model="picked" />
+          <input type="radio" id="dia" value="fiv" v-model="picked" />
         <label for="fiv">viernes</label>
 
-        <input type="radio" id="num" value="six" v-model="picked" />
+        <input type="radio" id="dia" value="six" v-model="picked" />
         <label for="six">sabado</label>
-          <input type="radio" id="num" value="seve" v-model="picked" />
+          <input type="radio" id="dia" value="seve" v-model="picked" />
         <label for="seve">domingo</label>
 
         </div>
@@ -56,7 +56,6 @@
             <option id=hora value="18:00">18:00</option>
             <option id=hora value="19:00">19:00</option>
             <option id=hora value="20:00">20:00</option>
-
         </select>
         <br>   
         <br>
@@ -87,31 +86,35 @@
         data() {
             return {
                 email: '',
+                tipo: '',
                 dia: '',
-                num: '',
                 hora: '',
+                precio_total: '',
                 picked : 'One'
             }
         },
         methods: {
-            regist() {
-                console.log(this.dia + " " + this.dia + " " + this.num + " " + this.hora + " " + this.email+ " ");
+            reserva() {
+                console.log(this.total);
+                this.email = "marc@gmail.com";;
+                const productos = JSON.stringify(this.total);
                 const datosEnvio = new FormData();
                 datosEnvio.append('email', this.email);
+                datosEnvio.append('tipo', this.tipo);
                 datosEnvio.append('dia', this.dia);
-                datosEnvio.append('num', this.num);
                 datosEnvio.append('hora', this.hora);
-
+                datosEnvio.append('precio_total', this.precio_total);
+                console.log(this.email + " " + this.tipo + " " + this.dia + " " + this.hora + " " + this.precio_total);
 
                 fetch('http://192.168.210.154:8000/reservas/nueva/reserva', {
-                  method: 'POST',
-                  body: datosEnvio
+                method: 'POST',
+                body: datosEnvio
                 }).then(function(res){
                   return res.json();
                 }).then(function(data){
                   console.log(data)
                 });
-            },
+            },            
         }
     }
 </script> 
