@@ -23,6 +23,13 @@ const router = createRouter({
 
     },
     {
+      path: "/reserva",
+      name: "reserva",
+      component: () => import("../views/ReservaView.vue"),
+
+    },
+
+    {
       path: "/perfil/:id",
       name: "perfil",
       component: () => import("../views/PerfilView.vue"),
