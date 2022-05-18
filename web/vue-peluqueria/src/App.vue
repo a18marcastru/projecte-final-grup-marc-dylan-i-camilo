@@ -9,6 +9,8 @@
         <RouterLink class="btn btn-outline-primary" to="/">Home</RouterLink>
         <RouterLink class="btn btn-outline-primary" to="/register">Registro</RouterLink>
         <RouterLink class="btn btn-outline-primary" to="/tienda">tienda</RouterLink>
+        <RouterLink class="btn btn-outline-primary" to="/reserva">Reserva</RouterLink>
+
         <Login />
       </nav>
   </header>
