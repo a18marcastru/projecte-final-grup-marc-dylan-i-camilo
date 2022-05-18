@@ -46,33 +46,38 @@ class TicketsController extends AbstractController
     #[Route('/nuevo/ticket', name: 'app_ticket_new2', methods: ['POST','GET'])]
     public function new2(Request $request, TicketsRepository $ticketsRepository, UsuariosRepository $usuariosRepository, ComprarRepository $comprarRepository, ProductosRepository $productosRepository): JsonResponse
     {
-        //$data = $request->request->all();
-        $data = json_decode($request->getContent(),true);
-        for($i = 0;$i < count($data);$i++) {
-            $nombre[$i] = $data[$i]['nombre'];
-            $cantidades[$i] = $data[$i]['cantidades'];
+        $data = $request->request->all();
+        $array = json_decode($data['productos'],true);
+        print_r($data);
+        for($i = 0;$i < count($array);$i++) {
+            $nombre[$i] = $array[$i]['nombre'];
+            $cantidades[$i] = $array[$i]['cantidades'];
         }
-        $email = "oscar@gmail.com";//$data['email'];
-        $precio_total = 23; //$data['precio_total'];
+        $email = $data['email'];
+        $precio_total = $data['precio_total'];
         $fecha = date("Y-m-d H:i:s");
-        for($i = 0;$i < count($nombre);$i++) {
-            $data_nombres = $nombre[$i];
-            $data_usuario = $usuariosRepository->findOneBy(['email' => $email]);
+        $data_usuario = $usuariosRepository->findOneBy(['email' => $email]);
+        if(!empty($data_usuario)) {
             $ticketsRepository->save($data_usuario, $fecha, $precio_total);
-            $id_usuario = $data_usuario->getId();
-            $id_ticket = $ticketsRepository->coger_ticket($id_usuario, $fecha);
-            $data_ticket = $ticketsRepository->findOneBy(['id' => $id_ticket]);
-            $data_producto = $productosRepository->findOneBy(['nombre' => $data_nombres]);
-            $cantidad = $data_producto->getCantidad();
-            $data_cantidades_total = $cantidad - $cantidades[$i];
+            for($i = 0;$i < count($nombre);$i++) {
+                $data_nombres = $nombre[$i];
+                $id_usuario = $data_usuario->getId();
+                $id_ticket = $ticketsRepository->coger_ticket($id_usuario, $fecha);
+                $data_ticket = $ticketsRepository->findOneBy(['id' => $id_ticket]);
+                $data_producto = $productosRepository->findOneBy(['nombre' => $data_nombres]);
+                $cantidad = $data_producto->getCantidad();
+                $data_cantidades_total = $cantidad - $cantidades[$i];
 
-            empty($data_cantidades_total) ? true : $data_producto->setCantidad($data_cantidades_total);
+                empty($data_cantidades_total) ? true : $data_producto->setCantidad($data_cantidades_total);
 
-            $data_cantidades = $cantidades[$i];
-            $comprarRepository->save($data_ticket, $data_producto,  $data_cantidades);
+                $data_cantidades = $cantidades[$i];
+                $comprarRepository->save($data_ticket, $data_producto,  $data_cantidades);
+            }
+
+            return new JsonResponse("Gracias por comprar", Response::HTTP_OK);
         }
 
-        return new JsonResponse("Gracias por comprar", Response::HTTP_OK);
+        return new JsonResponse("No existe usuario", Response::HTTP_OK);
     }
 
     #[Route('/{id}', name: 'app_tickets_show', methods: ['GET'])]

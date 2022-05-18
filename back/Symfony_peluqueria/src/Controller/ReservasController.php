@@ -46,8 +46,9 @@ class ReservasController extends AbstractController
     #[Route('/nueva/reserva', name: 'app_reserva_new2', methods: ['POST','GET'])]
     public function new2(Request $request, ReservasRepository $reservasRepository, UsuariosRepository $usuariosRepository, ServiciosRepository $serviciosRepository, ReservaServicioRepository $reservaServicioRepository): JsonResponse
     {
-        //$data = $request->request->all();
-        $data = json_decode($request->getContent(),true);
+        $data = $request->request->all();
+        print_r($data);
+        /*$data = json_decode($request->getContent(),true);
         for($i = 0;$i < count($data);$i++) {
             $nombre_servicio[$i] = $data[$i]['nombre_servicio'];
         }
@@ -65,7 +66,7 @@ class ReservasController extends AbstractController
             $data_reserva = $reservasRepository->findOneBy(['id' => $id_reserva]);
             $data_servicio = $serviciosRepository->findOneBy(['nombre_servicio' => $data_nombres_servicio]);
             $reservaServicioRepository->save($data_reserva, $data_servicio);
-        }
+        }*/
 
         return new JsonResponse("Gracias por reservar", Response::HTTP_OK);
     }
