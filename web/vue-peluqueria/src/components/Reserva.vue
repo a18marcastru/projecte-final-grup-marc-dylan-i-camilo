@@ -15,7 +15,7 @@
         <div>
         <select id="Reserva">
             <option selected>Reserva</option>
-            <option id="nombre_servicio" value="30">Corte de pelo</option>
+            <option id="nombre_servicio" value="20">Corte de pelo</option>
             <option id="nombre_servicio" value="10">Teñir</option>
         </select>
         <br>
@@ -25,36 +25,36 @@
         <input type="radio" id="dia" value="1" v-model="picked" />
         <label for="1">Lunes</label>
 
-        <input type="radio" id="dia" value="Two" v-model="picked" />
+        <input type="radio" id="dia" value="2" v-model="picked" />
         <label for="two">martes</label>
-          <input type="radio" id="dia" value="tre" v-model="picked" />
+          <input type="radio" id="dia" value="3" v-model="picked" />
         <label for="tre">miercoles</label>
 
-        <input type="radio" id="dia" value="cat" v-model="picked" />
+        <input type="radio" id="dia" value="4" v-model="picked" />
         <label for="cat">jueves</label>
-          <input type="radio" id="dia" value="fiv" v-model="picked" />
+          <input type="radio" id="dia" value="5" v-model="picked" />
         <label for="fiv">viernes</label>
 
-        <input type="radio" id="dia" value="six" v-model="picked" />
+        <input type="radio" id="dia" value="6" v-model="picked" />
         <label for="six">sabado</label>
-          <input type="radio" id="dia" value="seve" v-model="picked" />
+          <input type="radio" id="dia" value="7" v-model="picked" />
         <label for="seve">domingo</label>
 
         </div>
 
           <select id="hora">
             <option selected>Hora</option>
-            <option id="hora" value="10:00">10:00</option>
-            <option id="hora" value="11:00">11:00</option>
-            <option id="hora" value="12:00">12:00</option>
-            <option id="hora" value="13:00">13:00</option>
-            <option id="hora" value="14:00">14:00</option>
-            <option id="hora" value="15:00">15:00</option>
-            <option id="hora" value="16:00">16:00</option>
-            <option id="hora" value="17:00">17:00</option>
-            <option id="hora" value="18:00">18:00</option>
-            <option id="hora" value="19:00">19:00</option>
-            <option id="hora" value="20:00">20:00</option>
+            <option id="hora">10:00</option>
+            <option id="hora">11:00</option>
+            <option id="hora">12:00</option>
+            <option id="hora">13:00</option>
+            <option id="hora">14:00</option>
+            <option id="hora">15:00</option>
+            <option id="hora">16:00</option>
+            <option id="hora">17:00</option>
+            <option id="hora">18:00</option>
+            <option id="hora">19:00</option>
+            <option id="hora">20:00</option>
         </select>
         <br>   
         <br>
@@ -88,15 +88,15 @@
         },
         methods: {
             reserva() {
-                console.log(this.precio_total);
-                const nombre_servicio = JSON.stringify(this.precio_total);
+                document.getElementById("nombre_servicio").value
+                console.log(this.email + " " + this.nombre_servicio + " " + this.dia + " " + this.hora + " " + this.precio_total);
+                const servicio = JSON.stringify(this.datos);
                 const datosEnvio = new FormData();
                 datosEnvio.append('email', this.email);
-                datosEnvio.append('nombre_servicio', nombre_servicio);
+                datosEnvio.append('nombre_servicio', this.nombre_servicio);
                 datosEnvio.append('dia', this.dia);
                 datosEnvio.append('hora', this.hora);
-                datosEnvio.append('precio_total', this.precio_total);
-                console.log(this.email + " " + this.nombre_servicio + " " + this.dia + " " + this.hora + " " + this.precio_total);
+                datosEnvio.append('precio_total', this.datos);
 
                 fetch('http://192.168.210.154:8000/reservas/nueva/reserva', {
                 method: 'POST',
