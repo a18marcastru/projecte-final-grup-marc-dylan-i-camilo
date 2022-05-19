@@ -1,5 +1,4 @@
 <template>
-
     <div class="principal">
         <h2>Reserva</h2>
         <p>SELECCIONAR SERVICIO(S) Y EMPLEADO(S)
@@ -70,12 +69,13 @@
     export default {
         data() {
             return {
-                email: '',
-                nombre_servicio: '',
-                dia: '',
-                hora: '',
-                precio_total: '',
-                picked : 'One'
+              datos: [],
+              email: '',
+              nombre_servicio: '',
+              dia: '',
+              hora: '',
+              precio_total: '',
+              picked : 'One'
             }
         },
         mounted() {
@@ -83,7 +83,7 @@
           .then(res => res.json())
           .then((data) => {
             this.datos = data;
-            console.log(this.datos);
+            console.log(data);
           });
         },
         methods: {
