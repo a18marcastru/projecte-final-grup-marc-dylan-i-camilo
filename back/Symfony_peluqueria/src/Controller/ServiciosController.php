@@ -36,8 +36,6 @@ class ServiciosController extends AbstractController
             $i++;
         }
 
-        print_r($data_producto);
-
         return new JsonResponse($data_producto, Response::HTTP_OK);
     }
 

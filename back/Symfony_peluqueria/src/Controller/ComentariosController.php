@@ -60,8 +60,6 @@ class ComentariosController extends AbstractController
     {
         $data = $request->request->all();
 
-        print_r($data);
-
         $email = $data['email'];
         $descripcion = $data['descripcion'];
         $valoracion = $data['valoracion'];
