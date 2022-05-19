@@ -16,8 +16,8 @@
         <div>
         <select id="Reserva">
             <option selected>Reserva</option>
-            <option id="tipo" value="30">Corte de pelo</option>
-            <option id="tipo" value="10">Teñir</option>
+            <option id="nombre_servicio" value="30">Corte de pelo</option>
+            <option id="nombre_servicio" value="10">Teñir</option>
         </select>
         <br>
 
@@ -45,66 +45,58 @@
 
           <select id="hora">
             <option selected>Hora</option>
-            <option id=hora value="10:00">10:00</option>
-            <option id=hora value="11:00">11:00</option>
-            <option id=hora value="12:00">12:00</option>
-            <option id=hora value="13:00">13:00</option>
-            <option id=hora value="14:00">14:00</option>
-            <option id=hora value="15:00">15:00</option>
-            <option id=hora value="16:00">16:00</option>
-            <option id=hora value="17:00">17:00</option>
-            <option id=hora value="18:00">18:00</option>
-            <option id=hora value="19:00">19:00</option>
-            <option id=hora value="20:00">20:00</option>
+            <option id="hora" value="10:00">10:00</option>
+            <option id="hora" value="11:00">11:00</option>
+            <option id="hora" value="12:00">12:00</option>
+            <option id="hora" value="13:00">13:00</option>
+            <option id="hora" value="14:00">14:00</option>
+            <option id="hora" value="15:00">15:00</option>
+            <option id="hora" value="16:00">16:00</option>
+            <option id="hora" value="17:00">17:00</option>
+            <option id="hora" value="18:00">18:00</option>
+            <option id="hora" value="19:00">19:00</option>
+            <option id="hora" value="20:00">20:00</option>
         </select>
         <br>   
         <br>
         <br>
-        <button @click="reserva()">Reserva</button><hr>
-
- 
+        <div id="confirmarReserva">
+          <button class="btn btn-primary" id="btn-reserva" @click="reserva()">Reservar</button><hr>
+        </div>
     </div>
-
-
 </template>
-
-<style>
-.principal{
-    text-align: center;
-}
-.form-select{
-    width: 150px;
-    padding: 0px;
-    margin: 0px;
-}
-
-
-</style>
 
 <script>
     export default {
         data() {
             return {
                 email: '',
-                tipo: '',
+                nombre_servicio: '',
                 dia: '',
                 hora: '',
                 precio_total: '',
                 picked : 'One'
             }
         },
+        mounted() {
+          fetch(`http://192.168.210.154:8000/servicios/mostrar`)
+          .then(res => res.json())
+          .then((data) => {
+            this.datos = data;
+            console.log(this.datos);
+          });
+        },
         methods: {
             reserva() {
-                console.log(this.total);
-                this.email = "marc@gmail.com";;
-                const productos = JSON.stringify(this.total);
+                console.log(this.precio_total);
+                const nombre_servicio = JSON.stringify(this.precio_total);
                 const datosEnvio = new FormData();
                 datosEnvio.append('email', this.email);
-                datosEnvio.append('tipo', this.tipo);
+                datosEnvio.append('nombre_servicio', nombre_servicio);
                 datosEnvio.append('dia', this.dia);
                 datosEnvio.append('hora', this.hora);
                 datosEnvio.append('precio_total', this.precio_total);
-                console.log(this.email + " " + this.tipo + " " + this.dia + " " + this.hora + " " + this.precio_total);
+                console.log(this.email + " " + this.nombre_servicio + " " + this.dia + " " + this.hora + " " + this.precio_total);
 
                 fetch('http://192.168.210.154:8000/reservas/nueva/reserva', {
                 method: 'POST',
@@ -115,6 +107,17 @@
                   console.log(data)
                 });
             },            
-        }
+        },
     }
 </script> 
+
+<style>
+  .principal{
+      text-align: center;
+  }
+  .form-select{
+      width: 150px;
+      padding: 0px;
+      margin: 0px;
+  }
+</style>
