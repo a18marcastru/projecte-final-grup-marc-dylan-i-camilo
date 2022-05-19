@@ -1,5 +1,5 @@
 <script setup>
-import Tienda from "@/components/Tienda.vue";
+    import Tienda from "@/components/Tienda.vue";
 </script>
 
 <template>

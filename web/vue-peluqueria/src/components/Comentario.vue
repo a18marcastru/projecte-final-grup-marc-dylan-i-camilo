@@ -1,10 +1,17 @@
 <template>
   <div>
-    <h2>Valoracion de usuario</h2>
+    <h2>Valoracion de usuarios</h2>
     <hr>
-    <label for="email"><b>Email</b></label>
+    <div id="container">
+      <div v-for="ses in datos">
+        <Review :infoComent="ses"/>
+      </div>
+    </div>
+    <h2>Envianos tu valoración</h2>
+    <hr>
+    <label for="email"><b>Email:</b></label>
     <input v-model="email" type="text" placeholder="email" name="email" id="email" required><br><br>
-    <label for="valoracion" class="form-label">Valoración:</label>
+    <label for="valoracion" class="form-label"><b>Valoración:</b></label><br>
     <input v-model="valoracion" type="range"  class="multi-range" min="0" max="5" step="0.5" id="valoracion" width="50%"><br><br>
     
     <div class="container">
@@ -12,53 +19,51 @@
     </div>
 
     <label for="descripcion"><b>Comentario</b></label>
-    <textarea v-model="descripcion" type="text"  name="descripcion" id="descripcion" style="width:550px; height:200px;" ></textarea><br><br>
-    <button @click="comment()">Enviar</button><br><br>
+    <br>
+    <textarea v-model="descripcion" type="text"  name="descripcion" id="descripcion" style="width:350px; height:100px;" ></textarea><br><br>
+    <button class="btn btn-outline-primary" @click="comment()">Enviar</button><br><br>
 
-    <div v-for="ses in datos">
-          <Review :infoComent="ses"/>
-    </div>
   </div>
 </template>
 
 <script>
-  import Review from "@/components/Review.vue";
-  export default {
-    data() {
-      return {
-        email: '',
-        valoracion: '',
-        descripcion: '',
-        datos: [],
+    import Review from "@/components/Review.vue";
+    export default {
+        data() {
+        return {
+            email: '',
+            valoracion: '',
+            descripcion: '',
+            datos: [],
 
-      }
-    },
-    components: {
-      Review
-    },
-    mounted() {
-      fetch("http://192.168.210.154:8000/comentarios/mostrar/comentarios")
-      .then(res => res.json())
-      .then((data) => {
-        this.datos = data;
-      });
-    },
-    methods: {
-      comment() {
+        }
+        },
+        components: {
+        Review
+        },
+        mounted() {
+        fetch("http://localhost:8000/comentarios/mostrar/comentarios")
+        .then(res => res.json())
+        .then((data) => {
+          this.datos = data;
+          console.log(this.datos);
+        });
+        },
+        methods: {
+            comment() {
                 console.log(this.email + " " + this.valoracion + " " +  this.descripcion + " " );
                 const datosEnvio = new FormData();
                 datosEnvio.append('email', this.email);
                 datosEnvio.append('valoracion', this.valoracion);
                 datosEnvio.append('descripcion', this.descripcion);
 
-
-                fetch('http://192.168.210.154:8000/comentarios/nuevo/comentario', {
-                  method: 'POST',
-                  body: datosEnvio
+                fetch('http://localhost:8000/comentarios/nuevo/comentario', {
+                    method: 'POST',
+                    body: datosEnvio
                 }).then(function(res){
-                  return res.json();
+                    return res.json();
                 }).then(function(data){
-                  console.log(data)
+                    console.log(data)
                 });
             },
         },
@@ -68,8 +73,10 @@
 </script> 
 
 <style>
-#valoracion{
-  width: 400px;
-}
-
+  #valoracion{
+    width: 400px;
+  }
+  #container {
+    display: flex;
+  }
 </style>

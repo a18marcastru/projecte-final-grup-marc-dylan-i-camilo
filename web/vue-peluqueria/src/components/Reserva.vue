@@ -15,7 +15,7 @@
         <div>
         <select id="Reserva">
             <option selected>Reserva</option>
-            <option id="nombre_servicio" value="20">Corte de pelo</option>
+            <option id="nombre_servicio" value="30">Corte de pelo</option>
             <option id="nombre_servicio" value="10">Teñir</option>
         </select>
         <br>
@@ -25,19 +25,19 @@
         <input type="radio" id="dia" value="1" v-model="picked" />
         <label for="1">Lunes</label>
 
-        <input type="radio" id="dia" value="2" v-model="picked" />
+        <input type="radio" id="dia" value="Two" v-model="picked" />
         <label for="two">martes</label>
-          <input type="radio" id="dia" value="3" v-model="picked" />
+          <input type="radio" id="dia" value="tre" v-model="picked" />
         <label for="tre">miercoles</label>
 
-        <input type="radio" id="dia" value="4" v-model="picked" />
+        <input type="radio" id="dia" value="cat" v-model="picked" />
         <label for="cat">jueves</label>
-          <input type="radio" id="dia" value="5" v-model="picked" />
+          <input type="radio" id="dia" value="fiv" v-model="picked" />
         <label for="fiv">viernes</label>
 
-        <input type="radio" id="dia" value="6" v-model="picked" />
+        <input type="radio" id="dia" value="six" v-model="picked" />
         <label for="six">sabado</label>
-          <input type="radio" id="dia" value="7" v-model="picked" />
+          <input type="radio" id="dia" value="seve" v-model="picked" />
         <label for="seve">domingo</label>
 
         </div>
@@ -79,7 +79,7 @@
             }
         },
         mounted() {
-          fetch(`http://192.168.210.154:8000/servicios/mostrar`)
+          fetch(`http://localhost:8000/servicios/mostrar`)
           .then(res => res.json())
           .then((data) => {
             this.datos = data;
@@ -98,7 +98,7 @@
                 datosEnvio.append('hora', this.hora);
                 datosEnvio.append('precio_total', this.datos);
 
-                fetch('http://192.168.210.154:8000/reservas/nueva/reserva', {
+                fetch('http://localhost:8000/reservas/nueva/reserva', {
                 method: 'POST',
                 body: datosEnvio
                 }).then(function(res){

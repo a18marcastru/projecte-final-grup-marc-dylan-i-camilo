@@ -33,7 +33,6 @@
 </template>
 
 <script>
-  import Productos from "@/components/Productos.vue";
   export default {
     data() {
       return {
@@ -45,11 +44,8 @@
         stock_groups: {}
       }
     },
-    components: {
-        Productos
-    },
     mounted() {
-      fetch(`http://192.168.210.154:8000/productos/catalogo`)
+      fetch(`http://localhost:8000/productos/catalogo`)
       .then(res => res.json())
       .then((data) => {
         this.datos = data;
@@ -160,10 +156,16 @@
   }
   #productos {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto auto auto auto;
   }
   #caruaje {
-    margin-left: 30%;
-    padding: 5px;
+    border: 3px solid black;
+    margin: 65px
+  }
+  #list {
+    padding: 30%;
+  }
+  .card {
+    margin: 5px;
   }
 </style>

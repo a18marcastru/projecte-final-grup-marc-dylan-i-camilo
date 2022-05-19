@@ -1,5 +1,6 @@
 <template>
-    <div>
+  <div>
+    <div id="registro">
       <h1>Registrar</h1>
       <p>Pon tus datos</p><hr>
       <label for="nombre"><b>Nombre</b></label>
@@ -14,6 +15,7 @@
       <input v-model="contrasena" type="text" placeholder="Contraseña" name="contrasena" id="contrasena" required><br><br>
       <button @click="regist()">Register</button><hr>
     </div>
+  </div>
 </template>
 
 <script>
@@ -37,8 +39,7 @@
                 datosEnvio.append('email', this.email);
                 datosEnvio.append('contrasena', this.contrasena);
 
-
-                fetch('http://192.168.210.154:8000/usuarios/nuevo/usuario', {
+                fetch('http://localhost:8000/usuarios/nuevo/usuario', {
                   method: 'POST',
                   body: datosEnvio
                 }).then(function(res){
@@ -49,4 +50,4 @@
             },
         },
     }
-</script> 
+</script>
