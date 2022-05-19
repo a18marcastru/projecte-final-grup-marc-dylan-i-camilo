@@ -90,7 +90,7 @@
         for(let i = 0;i < this.total.length;i++) {
           if(this.total[i].cantidades != 0) {
             htmlstr += `<h3>Aticulo: ${i+1}</h3><p class>Nombre del producto: ${this.total[i].nombre}</p>
-                        <p>Cantidades: ${this.total[i].cantidades}`;
+                        <p>Unidades: ${this.total[i].cantidades}`;
           }
         }
         this.stock_groups[nombre] = precio * num_total;
@@ -165,6 +165,5 @@
   #caruaje {
     margin-left: 30%;
     padding: 5px;
-    border: 5px solid black;
   }
 </style>

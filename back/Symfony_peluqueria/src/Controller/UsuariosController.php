@@ -71,8 +71,6 @@ class UsuariosController extends AbstractController
             $data_contras = $data_usuario->getContrasena();
             if (password_verify($contra, $data_contras)) {
                 $id_usuario = $data_usuario->getId();
-                /*session_start();
-                $_SESSION['inicio'] = $id_usuario;*/
                 return new JsonResponse($id_usuario, Response::HTTP_OK);
             }
             else {
