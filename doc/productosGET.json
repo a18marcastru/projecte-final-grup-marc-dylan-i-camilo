@@ -1,6 +1,5 @@
 [
     {
-        "id":1,
         "nombre":"SALERM 21",
         "descripcion":"El tratamiento Salerm 21 es m\u00e1s que un acondicionador y una mascarilla hidratante sin aclarado que cuida y reaviva el cabello con efecto inmediato. Su f\u00f3rmula basada en prote\u00ednas de seda llega hasta la m\u00e9dula del cabello.",
         "cantidad":10,
@@ -9,7 +8,6 @@
     },
 
     {
-        "id":2,
         "nombre":"FANOLA TINTE PROFESIONAL 100ML",
         "descripcion":"",
         "cantidad":10,

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Usuarios;
 use App\Form\UsuariosType;
+use App\Repository\ReservasRepository;
 use App\Repository\UsuariosRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -70,12 +71,11 @@ class UsuariosController extends AbstractController
             $data_contras = $data_usuario->getContrasena();
             if (password_verify($contra, $data_contras)) {
                 $id_usuario = $data_usuario->getId();
-                session_start();
-                $_SESSION['comprobacion'] = $id_usuario;
                 return new JsonResponse($id_usuario, Response::HTTP_OK);
             }
             else {
-                return new JsonResponse("Contraseña incorrecta", Response::HTTP_OK);
+                $id_usuario = false;
+                return new JsonResponse($id_usuario, Response::HTTP_OK);
             }
         }
 
@@ -93,23 +93,24 @@ class UsuariosController extends AbstractController
     }
 
     #[Route('/perfil/{id}', name: 'app_usuarios_perfil', methods: ['GET'])]
-    public function show2($id, UsuariosRepository $usuariosRepository): JsonResponse
+    public function mostrar($id, UsuariosRepository $usuariosRepository, ReservasRepository $reservasRepository): JsonResponse
     {
-        session_start();
-        if ($_SESSION['comprobacion'] == $id) {
+        //session_start();
+        //if($_SESSION['inicio'] == $id) {
             $restos = $usuariosRepository->findOneBy(['id' => $id]);
-
+            $reservas = $reservasRepository->buscar_usuario_reservas($id);
             $data_usuario = [
                 'nombre' => $restos->getNombre(),
                 'apellido' => $restos->getApellido(),
                 'email' => $restos->getEmail(),
-                'telefono' => $restos->getTelefono()
+                'telefono' => $restos->getTelefono(),
+                'reservas' => $reservas
             ];
 
             return new JsonResponse($data_usuario, Response::HTTP_OK);
-        }
+        //}
 
-        return new JsonResponse("Inicia sesion", Response::HTTP_OK);
+        //return new JsonResponse("Inicia Sesion", Response::HTTP_OK);
     }
 
     #[Route('/cambiar/contrasena/{id}', name: 'app_usuarios_perfil2', methods: ['POST','GET'])]
@@ -124,7 +125,7 @@ class UsuariosController extends AbstractController
 
         $usuariosRepository->update($restos);
 
-        return new JsonResponse("Fue cambiado la contraseña con exito", Response::HTTP_OK);
+        return new JsonResponse("Fue cambiado la contrasena con exito", Response::HTTP_OK);
     }
 
     #[Route('/{id}', name: 'app_usuarios_show', methods: ['GET'])]

@@ -1,9 +1,9 @@
-Ruta: ./nuevo/ticket
+Ruta: tickets/nuevo/ticket
 
 Parametros:
 
 - email: 
-- precio:
+- precio_total:
 
 JSON:
 [

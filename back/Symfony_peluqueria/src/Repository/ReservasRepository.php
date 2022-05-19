@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Reservas;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -18,9 +19,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ReservasRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $manager)
     {
         parent::__construct($registry, Reservas::class);
+        $this->manager = $manager;
     }
 
     /**
@@ -33,6 +35,51 @@ class ReservasRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function save($data_usuario, $dia, $hora, $precio_total, $telefono): void
+    {
+        $newReservas = new Reservas();
+
+        $newReservas
+            ->setUsuario($data_usuario)
+            ->setFecha($dia)
+            ->setHora($hora)
+            ->setTelefono($telefono)
+            ->setPrecioTotal($precio_total);
+
+        $this->manager->persist($newReservas);
+        $this->manager->flush();
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function buscar_usuario_reservas($id): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT reservas.* FROM reservas WHERE reservas.usuario_id = $id;";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+        return $resultSet->fetchAllAssociative();
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function coger_reserva($id_usuario, $dia, $hora): int
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT reservas.* FROM reservas WHERE reservas.usuario_id = $id_usuario AND (reservas.fecha = '$dia' AND reservas.hora= '$hora');";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+        return $resultSet->fetchOne();
     }
 
     /**

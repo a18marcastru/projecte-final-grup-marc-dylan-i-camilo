@@ -1,15 +1,14 @@
 <script setup>
   import { RouterLink, RouterView } from "vue-router";
+  import { sessioStore } from '@/stores/sessioStore'
+  import { mapStores } from 'pinia'
+  import Nav from "@/components/Navegador.vue"
   import Login from "@/components/Login.vue";
 </script>
 
 <template>
   <header>
-      <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-        <RouterLink class="btn btn-outline-primary" to="/">Home</RouterLink>
-        <RouterLink class="btn btn-outline-primary" to="/register">Registro</RouterLink>
-        <Login />
-      </nav>
+    <Nav/>
   </header>
   <RouterView />
 </template>
