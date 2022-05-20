@@ -45,7 +45,7 @@
       }
     },
     mounted() {
-      fetch(`http://localhost:8000/productos/catalogo`)
+      fetch(`http://192.168.210.154:8000/productos/catalogo`)
       .then(res => res.json())
       .then((data) => {
         this.datos = data;

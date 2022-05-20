@@ -39,7 +39,7 @@
                 datosEnvio.append('email', this.email);
                 datosEnvio.append('contrasena', this.contrasena);
 
-                fetch('http://localhost:8000/usuarios/nuevo/usuario', {
+                fetch('http://192.168.210.154:8000/usuarios/nuevo/usuario', {
                   method: 'POST',
                   body: datosEnvio
                 }).then(function(res){
