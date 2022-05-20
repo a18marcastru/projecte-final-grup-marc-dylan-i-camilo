@@ -6,11 +6,12 @@
 
 <template>
   <header>
-      <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-        <RouterLink class="btn btn-outline-primary" to="/">Home</RouterLink>
-        <RouterLink class="btn btn-outline-primary" to="/tienda">tienda</RouterLink>
-        <RouterLink class="btn btn-outline-primary" to="/reserva">Reserva</RouterLink>
-        <RouterLink class="btn btn-outline-primary" to="/register">Registro</RouterLink>
+      <nav class="navbar navbar-dark bg-dark" style="background-color: #e3f2fd;">
+        <img class="logo" src="/logo.png"/>
+        <RouterLink class="btn btn-dark" to="/">Home</RouterLink>
+        <RouterLink class="btn btn-dark" to="/tienda">tienda</RouterLink>
+        <RouterLink class="btn btn-dark" to="/reserva">Reserva</RouterLink>
+        <RouterLink class="btn btn-dark " to="/register">Registro</RouterLink>
         <Login />
       </nav>
   </header>
@@ -20,4 +21,8 @@
 
 <style>
   @import "@/assets/base.css";
+
+  .logo {
+    width: 200px;
+  }
 </style>

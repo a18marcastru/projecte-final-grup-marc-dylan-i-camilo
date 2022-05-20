@@ -103,9 +103,9 @@
       <!-- Grid container -->
     
       <!-- Copyright -->
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      <div class="text-center p-3 bg-dark" style="color: white;">
         © 2020 Copyright:
-        <a class="text-dark" href="https://mdbootstrap.com/">peluqueriahappy.com</a>
+        <a style="color: white;" href="https://mdbootstrap.com/">peluqueriahappy.com</a>
       </div>
       <!-- Copyright -->
     </footer>

@@ -2,9 +2,9 @@
   <div id="loginNav">
     <input v-model="email" type="text" id="email" name="email" placeholder="email" required>
     <input v-model="contrasena" type="password" id="pwd" name="contrasena" placeholder="contraseña" required> 
-    <button class="btn btn-outline-primary" type="submit" id="loginBtn" @click="login()">Login</button><br> 
+    <button class="btn btn-dark" type="submit" id="loginBtn" @click="login()">Login</button><br> 
   </div>
-  <a id="perfil" class="btn btn-outline-primary" :href="'/perfil/' + this.datos" hidden>Perfil</a>
+  <a id="perfil" class="btn btn-dark" :href="'/perfil/' + this.datos" hidden>Perfil</a>
 </template>
 
 <script>
