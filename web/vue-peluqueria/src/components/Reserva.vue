@@ -79,7 +79,7 @@
             }
         },
         mounted() {
-          fetch(`http://localhost:8000/servicios/mostrar`)
+          fetch(`http://192.168.210.154:8000/servicios/mostrar`)
           .then(res => res.json())
           .then((data) => {
             this.datos = data;
@@ -98,7 +98,7 @@
                 datosEnvio.append('hora', this.hora);
                 datosEnvio.append('precio_total', this.datos);
 
-                fetch('http://localhost:8000/reservas/nueva/reserva', {
+                fetch('http://192.168.210.154:8000/reservas/nueva/reserva', {
                 method: 'POST',
                 body: datosEnvio
                 }).then(function(res){

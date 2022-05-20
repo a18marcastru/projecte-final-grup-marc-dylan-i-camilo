@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Valoracion de usuarios</h2>
+    <h2>Valoración de usuarios</h2>
     <hr>
     <div id="container">
       <div v-for="ses in datos">
@@ -39,10 +39,10 @@
         }
         },
         components: {
-        Review
+            Review
         },
         mounted() {
-        fetch("http://localhost:8000/comentarios/mostrar/comentarios")
+        fetch("http://192.168.210.154:8000/comentarios/mostrar/comentarios")
         .then(res => res.json())
         .then((data) => {
           this.datos = data;
@@ -57,7 +57,7 @@
                 datosEnvio.append('valoracion', this.valoracion);
                 datosEnvio.append('descripcion', this.descripcion);
 
-                fetch('http://localhost:8000/comentarios/nuevo/comentario', {
+                fetch('http://192.168.210.154:8000/comentarios/nuevo/comentario', {
                     method: 'POST',
                     body: datosEnvio
                 }).then(function(res){

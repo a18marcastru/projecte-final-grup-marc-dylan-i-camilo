@@ -3,6 +3,11 @@
     <div class="hero-text">
       <h1 style="font-size:50px">Peluquería Happy</h1>
     </div>
+  </div><br>
+  <div class="cont-video">
+    <video controls="" loop="loop" autoplay="" playsinline="" muted="" src="../../public/video_peluqueria.mp4">
+      <source src="/video_peluqueria.mp4" type="video/mp4">
+    </video>
   </div>
   <Comentario />
 </template>
@@ -23,7 +28,7 @@ export default {
       Comentario
     },
     mounted() {
-      fetch("http://localhost:8000/comentarios/mostrar/comentarios")
+      fetch("http://192.168.210.154:8000/comentarios/mostrar/comentarios")
       .then(res => res.json())
       .then((data) => {
         this.datos = data;
@@ -37,7 +42,7 @@ export default {
         datosEnvio.append('valoracion', this.valoracion);
         datosEnvio.append('descripcion', this.descripcion);
 
-        fetch('http://localhost:8000/comentarios/nuevo/comentario', {
+        fetch('http://192.168.210.154:8000/comentarios/nuevo/comentario', {
         method: 'POST',
         body: datosEnvio
         }).then(function(res){
@@ -81,5 +86,11 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
+}
+
+video {
+  width: 60%; 
+  margin-left: 20%;
+  border: 3px solid black;  
 }
 </style>
