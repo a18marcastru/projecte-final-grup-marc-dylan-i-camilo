@@ -1,67 +1,36 @@
 <template>
-    <div class="principal">
-        <h2>Reserva</h2>
-        <p>SELECCIONAR SERVICIO(S) Y EMPLEADO(S)
-        Skip Navigation LinksSELECCIÓN DEL CENTRO > SELECCIONAR SERVICIOS</p>
-
-        <p>Paso 1: Seleccionar la  categoría del servicio desde el menú desplegable Categoría y luego seleccione el servicio desde el menú desplegable Servicio.</p>
-        <p>Elige hora.</p>
-        <p>Una vez termine de seleccionar  todos los servicios y empleados haga clik en Siguiente  para continuar.</p>
- 
-
-      <label for="email"><b>email</b></label>
-      <input  v-model="email" type="text" placeholder="email" name="email" id="email" required><br><br>
-
-        <div>
-        <select id="Reserva">
-            <option selected>Reserva</option>
-            <option id="nombre_servicio" value="30">Corte de pelo</option>
-            <option id="nombre_servicio" value="10">Teñir</option>
-        </select>
-        <br>
-
-        	<div>Picked: {{ picked }}</div>
-
-        <input type="radio" id="dia" value="1" v-model="picked" />
-        <label for="1">Lunes</label>
-
-        <input type="radio" id="dia" value="Two" v-model="picked" />
-        <label for="two">martes</label>
-          <input type="radio" id="dia" value="tre" v-model="picked" />
-        <label for="tre">miercoles</label>
-
-        <input type="radio" id="dia" value="cat" v-model="picked" />
-        <label for="cat">jueves</label>
-          <input type="radio" id="dia" value="fiv" v-model="picked" />
-        <label for="fiv">viernes</label>
-
-        <input type="radio" id="dia" value="six" v-model="picked" />
-        <label for="six">sabado</label>
-          <input type="radio" id="dia" value="seve" v-model="picked" />
-        <label for="seve">domingo</label>
-
+    <div>
+      <h1>Reserva un dia en la peluqueria</h1>
+      <h2>Servicios</h2>
+      <div id="reservas">
+        <div v-for="ses in datos">
+          <div class="card" style="width: 20rem;">
+            <div class="card-body">
+              <p class="card-title">{{ses.nombre_servicio}}</p>
+              <p class="card-text">Precio : {{ses.precio}} €</p>
+              <button class="btn btn-primary" :id="ses.id" @click="anadir(ses.nombre_servicio, ses.precio, ses.id)">Añadir</button>
+              <button class="btn btn-success" :id="ses.id+'c'" @click="anadido(ses.nombre_servicio, ses.id)" hidden>Añadido</button>
+            </div>
+          </div>
         </div>
-
-          <select id="hora">
-            <option selected>Hora</option>
-            <option id="hora">10:00</option>
-            <option id="hora">11:00</option>
-            <option id="hora">12:00</option>
-            <option id="hora">13:00</option>
-            <option id="hora">14:00</option>
-            <option id="hora">15:00</option>
-            <option id="hora">16:00</option>
-            <option id="hora">17:00</option>
-            <option id="hora">18:00</option>
-            <option id="hora">19:00</option>
-            <option id="hora">20:00</option>
-        </select>
-        <br>   
-        <br>
-        <br>
-        <div id="confirmarReserva">
-          <button class="btn btn-primary" id="btn-reserva" @click="reserva()">Reservar</button><hr>
+      </div>
+      <h2>Fecha {{this.mes}}</h2>
+      <div id="dias">
+        <div>Lunes</div>
+        <div>Martes</div>
+        <div>Miercoles</div>
+        <div>Jueves</div>
+        <div>Viernes</div>
+        <div>Sabado</div>
+        <div>Domingo</div>
+        <div v-for="index in 30">
+          <div class="dia btn-primary" :id="index+'p'" @click="fecha(index)">{{index}}</div>
         </div>
+      </div>
+      <h2>Hora</h2>
+      <div>
+        
+      </div>
     </div>
 </template>
 
@@ -70,12 +39,10 @@
         data() {
             return {
               datos: [],
+              total: [],
               email: '',
-              nombre_servicio: '',
-              dia: '',
-              hora: '',
-              precio_total: '',
-              picked : 'One'
+              mes: '',
+              dia: 0
             }
         },
         mounted() {
@@ -85,39 +52,82 @@
             this.datos = data;
             console.log(data);
           });
+
+          const month = ["Junio","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+          const d = new Date()
+          this.mes = month[d.getUTCMonth()];
         },
         methods: {
-            reserva() {
-                document.getElementById("nombre_servicio").value
-                console.log(this.email + " " + this.nombre_servicio + " " + this.dia + " " + this.hora + " " + this.precio_total);
-                const servicio = JSON.stringify(this.datos);
-                const datosEnvio = new FormData();
-                datosEnvio.append('email', this.email);
-                datosEnvio.append('nombre_servicio', this.nombre_servicio);
-                datosEnvio.append('dia', this.dia);
-                datosEnvio.append('hora', this.hora);
-                datosEnvio.append('precio_total', this.datos);
+          anadir(nombre, precio, id) {
+            console.log("Hola");
+            let encontrado = false;
+            for(let i = 0;i < this.total.length;i++) {
+              if(this.total[i].nombre_servicio == nombre) {
+                encontrado = true;
+              }
+            }
+            if(encontrado == false) {
+              this.total.push({'nombre_servicio': nombre});
+              document.getElementById(id+'c').removeAttribute("hidden");
+              document.getElementById(id).setAttribute("style","display: none;");
+            }
+            console.log(this.total);
+          },
+          anadido(nombre, id) {
+            console.log("Hola2");
+            for(let i = 0;i < this.total.length;i++) {
+              if(this.total[i].nombre_servicio == nombre) {
+                this.total = this.total.filter(obj => obj.nombre_servicio != nombre);
+                document.getElementById(id+'c').setAttribute("style","display: none;");
+                document.getElementById(id).removeAttribute("style","display: none;");
+              }
+            }
+            console.log(this.total);
+          },
+          fecha(index) {
+            this.dia = index;
+            document.getElementById(index+'p').setAttribute("style","background: green;");
+            console.log(this.dia);
+          },
+          reserva() {
+            document.getElementById("nombre_servicio").value
+            console.log(this.email + " " + this.nombre_servicio + " " + this.dia + " " + this.hora + " " + this.precio_total);
+            const servicio = JSON.stringify(this.datos);
+            const datosEnvio = new FormData();
+            datosEnvio.append('email', this.email);
+            datosEnvio.append('nombre_servicio', this.nombre_servicio);
+            datosEnvio.append('dia', this.dia);
+            datosEnvio.append('hora', this.hora);
+            datosEnvio.append('precio_total', this.datos);
 
-                fetch('http://192.168.210.154:8000/reservas/nueva/reserva', {
-                method: 'POST',
-                body: datosEnvio
-                }).then(function(res){
-                  return res.json();
-                }).then(function(data){
-                  console.log(data)
-                });
-            },            
-        },
+            fetch('http://localhost:8000/reservas/nueva/reserva', {
+              method: 'POST',
+              body: datosEnvio
+            }).then(function(res){
+              return res.json();
+            }).then(function(data){
+              console.log(data)
+            });
+          },            
+      },
     }
 </script> 
 
 <style>
-  .principal{
-      text-align: center;
+  #reservas {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
   }
-  .form-select{
-      width: 150px;
-      padding: 0px;
-      margin: 0px;
+  #dias {
+    display: grid;
+    grid-template-columns: 10% 10% 10% 10% 10% 10% 10%;
+    column-gap: 20px;
+    row-gap: 20px;
+  }
+  .dia {
+    border: 1px solid black;
+    padding: 5px;
+    font-size: 15px;
+    text-align: center;
   }
 </style>
