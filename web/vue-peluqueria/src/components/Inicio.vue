@@ -9,6 +9,20 @@
       <source src="/video_peluqueria.mp4" type="video/mp4">
     </video>
   </div>
+  <div class="grid-container">
+    <div class="grid-item1">
+      <h3>Una alternativa a la peluquería convencional.</h3>
+      <p>Situada en el corazón de Pedralbes, La Peluquería Happy abrió sus puertas este 2022. Nuestro equipo lo forman dos profesionales de la cosmética natural que son a la vez fundadoras de la empresa con una larga experiencia en el mundo de la Bio peluquería, amantes de la naturaleza y comprometidas con el medio ambiente.</p>
+    </div>
+    <div class="grid-item2">
+    </div>
+    <div class="grid-item3">
+    </div>  
+    <div class="grid-item4">
+      <p>Si buscas entre las mejores peluquerías de Barcelona, ¡visítanos! en Happy es mucho más que un centro de peluquería y estética vanguardista, es un rincón de paz donde dejar volar tu imaginación. Nuestro concepto de belleza pasa por mimar cada detalle, desde que el cliente reserva, hasta ver la felicidad en su rostro una vez finaliza el servicio.</p>
+      <p>Solo podemos dar las gracias a todas las personas que año tras año pasan por el salón, ellos son los que nos han etiquetado como de las mejores peluquerías de Barcelona.</p>
+    </div>
+  </div>
   <Comentario />
 </template>
 
@@ -78,7 +92,6 @@ body {
   margin: 0px;
   padding: 0%;
 }
-
 .hero-text {
   text-align: center;
   position: absolute;
@@ -87,10 +100,42 @@ body {
   transform: translate(-50%, -50%);
   color: white;
 }
-
 video {
   width: 60%; 
   margin-left: 20%;
   border: 3px solid black;  
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 10px;
+}
+.grid-item2, .grid-item3 {
+  background-color: white;
+  border: 1px solid rgb(234, 213, 208);
+  padding: 20px;
+  text-align: center;
+}
+.grid-item2 {
+  background-image: url('/imagen1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;  
+  margin: 0px;
+  padding: 0%;
+}
+.grid-item3 {
+  background-image: url('/imagen2.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+    margin: 0px;
+  padding: 0%;
+}
+.grid-item1, .grid-item4 {
+  background-color: white;
+  border: 1px solid rgb(234, 213, 208);
+  padding: 10%;
+  padding-top: 150px;
 }
 </style>
