@@ -22,7 +22,7 @@ class ServiciosController extends AbstractController
         ]);
     }
 
-    #[Route('/mostrar', name: 'app_servicios_index2', methods: ['GET'])]
+    #[Route('/mostrar', name: 'app_servicios_mostrar', methods: ['GET'])]
     public function mostrar(ServiciosRepository $serviciosRepository): JsonResponse
     {
         $restos = $serviciosRepository->findAll();
@@ -30,6 +30,7 @@ class ServiciosController extends AbstractController
 
         foreach ($restos as $res){
             $data_producto[$i] = [
+                'id' => $res->getId(),
                 'nombre_servicio' => $res->getNombreServicio(),
                 'precio' => $res->getPrecio()
             ];

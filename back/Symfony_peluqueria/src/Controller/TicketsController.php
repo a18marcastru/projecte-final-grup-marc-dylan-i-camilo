@@ -48,7 +48,7 @@ class TicketsController extends AbstractController
     {
         $data = $request->request->all();
         $array = json_decode($data['productos'],true);
-        print_r($data);
+
         for($i = 0;$i < count($array);$i++) {
             $nombre[$i] = $array[$i]['nombre'];
             $cantidades[$i] = $array[$i]['cantidades'];

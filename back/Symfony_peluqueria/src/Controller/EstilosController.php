@@ -22,7 +22,7 @@ class EstilosController extends AbstractController
         ]);
     }
 
-    #[Route('/catalogo', name: 'app_estilos_index2', methods: ['GET'])]
+    #[Route('/catalogo', name: 'app_estilos_mostrar', methods: ['GET'])]
     public function mostrar(EstilosRepository $estilosRepository): JsonResponse
     {
         $restos = $estilosRepository->findAll();
