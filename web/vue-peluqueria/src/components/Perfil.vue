@@ -1,4 +1,5 @@
 <template>
+    <Navegador/>
     <div id="perfil">
         <div id="datos">
             <h2>Perfil del usuario</h2><br><br>
@@ -16,39 +17,57 @@
 </template>
 
 <script>
+    import { sessioStore } from '@/stores/sessioStore';
+    import { mapStores } from 'pinia';
+    import Navegador from './Navegador.vue';
     export default {
-        data() {
-            return {
-                datos: [],
-                nombre: '',
-                apellido: '',
-                telefono: '',
-                email: '',
+    data() {
+        return {
+            datos: [],
+            nombre: "",
+            apellido: "",
+            telefono: "",
+            email: "",
+            id_user: '',
+            contrasena:''
+        };
+    },
+    computed: {
+            ...mapStores(sessioStore)
+    },
+    mounted() {
+        console.log(this.$route.params.id)
+        this.id_user = this.sessioStore.get.id_user;
+        if(this.id_user == this.$route.params.id) {
+            fetch(`http://localhost:8000/usuarios/perfil/${this.$route.params.id}`)
+                .then(res => res.json())
+                .then((data) => {
+                this.datos = data;
+            });
+        }
+        else {
+            alert("Tienes que iniciar sesion");
+        }
+    },
+    methods: {
+        cambios() {
+            if(this.id_user == this.$route.params.id) {
+            const datosEnvio = new FormData();
+            datosEnvio.append("contrasena", this.contrasena);
+            fetch(`http://localhost:8000/usuarios/cambiar/contrasena/${this.$route.params.id}`, {
+                method: "POST",
+                body: datosEnvio
+            }).then(response => response.json())
+                .then(data => this.datos = data);
+            console.log(this.datos);
+            }
+            else {
+                alert("No puedes cambiar la contraseña, porque no has iniciado sesion");
             }
         },
-        methods: {
-            cambios() {
-                console.log(this.contrasena + " ");
-                const datosEnvio = new FormData();
-                datosEnvio.append('contrasena', this.contrasena);
-                fetch(`http://192.168.210.154:8000/usuarios/cambiar/contrasena/${this.$route.params.id}`, {
-                    method: 'POST',
-                    body: datosEnvio
-                }).then(response => response.json())
-                .then(data => this.datos = data);
-                console.log(this.datos);
-            },
-        },
-        mounted() {
-            console.log(this.$route.params.id);
-            fetch(`http://192.168.210.154:8000/usuarios/perfil/${this.$route.params.id}`)
-            .then(res => res.json())
-            .then((data) => {
-            this.datos = data;
-            });
-            console.log(this.datos);
-        }
-    }            
+    },
+    components: { Navegador }
+}            
 </script>
 
 <style>

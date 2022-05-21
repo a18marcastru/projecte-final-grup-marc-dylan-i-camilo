@@ -1,4 +1,5 @@
 <template>
+  <Navegador/>
   <div class="hero-image">
     <div class="hero-text">
       <h1 style="font-size:50px">Peluquería Happy</h1>
@@ -11,7 +12,7 @@
   </div><br>
   <div class="grid-container">
     <div class="grid-item1">
-      <h3>Una alternativa a la peluquería convencional.</h3><br>
+      <p>Una alternativa a la peluquería convencional.</p><br>
       <p>Situada en el corazón de Pedralbes, La Peluquería Happy abrió sus puertas este 2022. Nuestro equipo lo forman dos profesionales de la cosmética natural que son a la vez fundadoras de la empresa con una larga experiencia en el mundo de la Bio peluquería, amantes de la naturaleza y comprometidas con el medio ambiente.</p>
     </div>
     <div class="grid-item2">
@@ -28,6 +29,7 @@
 
 <script>
 import Comentario from "@/components/Comentario.vue";
+import Navegador from "@/components/Navegador.vue";
 export default {
     data() {
       return {
@@ -39,10 +41,11 @@ export default {
       }
     },
     components: {
-      Comentario
-    },
+    Comentario,
+    Navegador
+},
     mounted() {
-      fetch("http://192.168.210.154:8000/comentarios/mostrar/comentarios")
+      fetch("http://localhost:8000/comentarios/mostrar/comentarios")
       .then(res => res.json())
       .then((data) => {
         this.datos = data;
@@ -56,7 +59,7 @@ export default {
         datosEnvio.append('valoracion', this.valoracion);
         datosEnvio.append('descripcion', this.descripcion);
 
-        fetch('http://192.168.210.154:8000/comentarios/nuevo/comentario', {
+        fetch('http://localhost:8000/comentarios/nuevo/comentario', {
         method: 'POST',
         body: datosEnvio
         }).then(function(res){

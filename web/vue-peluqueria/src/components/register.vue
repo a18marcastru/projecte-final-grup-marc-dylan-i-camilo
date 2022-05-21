@@ -1,4 +1,5 @@
 <template>
+  <Navegador/>
   <div>
     <div id="registro">
       <h1>Registrar</h1>
@@ -19,35 +20,36 @@
 </template>
 
 <script>
+import Navegador from './Navegador.vue';
     export default {
-        data() {
-            return {
-                nombre: '',
-                apellido: '',
-                telefono: '',
-                email: '',
-                contrasena: '',
-            }
+    data() {
+        return {
+            nombre: "",
+            apellido: "",
+            telefono: "",
+            email: "",
+            contrasena: "",
+        };
+    },
+    methods: {
+        regist() {
+            console.log(this.nombre + " " + this.apellido + " " + this.telefono + " " + this.email + " " + this.contrasena + " ");
+            const datosEnvio = new FormData();
+            datosEnvio.append("nombre", this.nombre);
+            datosEnvio.append("apellido", this.apellido);
+            datosEnvio.append("telefono", this.telefono);
+            datosEnvio.append("email", this.email);
+            datosEnvio.append("contrasena", this.contrasena);
+            fetch("http://192.168.210.154:8000/usuarios/nuevo/usuario", {
+                method: "POST",
+                body: datosEnvio
+            }).then(function (res) {
+                return res.json();
+            }).then(function (data) {
+                console.log(data);
+            });
         },
-        methods: {
-            regist() {
-                console.log(this.nombre + " " + this.apellido + " " + this.telefono + " " + this.email+ " " +  this.contrasena + " " );
-                const datosEnvio = new FormData();
-                datosEnvio.append('nombre', this.nombre);
-                datosEnvio.append('apellido', this.apellido);
-                datosEnvio.append('telefono', this.telefono);
-                datosEnvio.append('email', this.email);
-                datosEnvio.append('contrasena', this.contrasena);
-
-                fetch('http://192.168.210.154:8000/usuarios/nuevo/usuario', {
-                  method: 'POST',
-                  body: datosEnvio
-                }).then(function(res){
-                  return res.json();
-                }).then(function(data){
-                  console.log(data)
-                });
-            },
-        },
-    }
+    },
+    components: { Navegador }
+}
 </script>

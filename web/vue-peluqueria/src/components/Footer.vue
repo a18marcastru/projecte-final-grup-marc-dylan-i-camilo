@@ -1,7 +1,7 @@
 <template>
     <div class="fullmap">
-    	<h4 class="map-tit text-uppercase" style="text-align: center;">Encuentra aquí nuestra peluquería:</h4>
-    	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5986.76851302333!2d2.109613467229756!3d41.387460787127004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a49854a99cad2f%3A0xb564263b0575d513!2sInstitut%20Pedralbes!5e0!3m2!1sca!2ses!4v1635405909805!5m2!1sca!2ses" frameborder="0" style="border:0;width:100%;height:340px;" allowfullscreen=""></iframe>
+    	<p class="map-tit text-uppercase" style="text-align: center;">Encuentra aquí nuestra peluquería:</p>
+    	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5986.76851302333!2d2.109613467229756!3d41.387460787127004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a49854a99cad2f%3A0xb564263b0575d513!2sInstitut%20Pedralbes!5e0!3m2!1sca!2ses!4v1635405909805!5m2!1sca!2ses" frameborder="0" style="border:0;width:100%;height:340px;" allowfullscreen="" title="Ubicación de la peluqueria"></iframe>
     </div>
 
     <footer class="bg-light text-center text-lg-start">

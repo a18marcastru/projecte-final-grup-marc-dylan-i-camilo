@@ -1,7 +1,7 @@
 <template>
     <div class="card-body">
-      <h5 class="card-title">{{infoComent.nombre}}</h5>
-      <h6 class="card-subtitle mb-2 text-muted">{{infoComent.apellido}}</h6>
+      <p class="card-title">{{infoComent.nombre}}</p>
+      <p class="card-subtitle mb-2 text-muted">{{infoComent.apellido}}</p>
       <p class="card-text">{{infoComent.descripcion}}</p>
       valoración: 
       <big class="hola" v-for="ses in infoComent.valoracion">

@@ -1,4 +1,5 @@
 <template>
+  <Navegador/>
   <h1>Tienda de peluqueria</h1>
   <div id="container">
     <div id="container2">
@@ -24,127 +25,121 @@
         <button class="btn btn-primary" id="btn-comprar" @click="comprar()" disabled>Comprar</button>
       </div>
     </div>
-    <br>
-    <div id="conf" hidden>
-      <input v-model="email" type="text" placeholder="Email" name="email" id="email" required />
-      <button class="btn btn-primary" @click="confirmar()">Confirmar</button>
-    </div>
   </div>
 </template>
 
 <script>
+  import { sessioStore } from '@/stores/sessioStore'
+  import { mapStores } from 'pinia'
+  import Navegador from './Navegador.vue';
   export default {
     data() {
-      return {
-        datos: [],
-        total: [],
-        email: '',
-        precio_total: 0,
-        stocks_total: 0,
-        stock_groups: {}
-      }
+        return {
+            datos: [],
+            total: [],
+            email: "",
+            precio_total: 0,
+            stocks_total: 0,
+            stock_groups: {}
+        };
+    },
+    computed: {
+      ...mapStores(sessioStore)
     },
     mounted() {
-      fetch(`http://192.168.210.154:8000/productos/catalogo`)
-      .then(res => res.json())
-      .then((data) => {
-        this.datos = data;
-        console.log(this.datos);
-      });
+        fetch(`http://localhost:8000/productos/catalogo`)
+            .then(res => res.json())
+            .then((data) => {
+            this.datos = data;
+        });
     },
     methods: {
-      comprar() {
-        console.log("Quiero comprar esto: " + this.seleccion);
-      },
-      sumar(nombre, stock, precio) {
-        console.log(nombre);
-        let num = document.getElementById(nombre).value;
-        if(num < stock) {
-          num++;
-          document.getElementById(nombre).value = num;
-          let num_total = num;
-          let encontrado = false;
-          for (let i = 0; i < this.total.length ;i++) {
-            //si lo he encontrado, le sumo uno
-            if (this.total[i].nombre == nombre) {
-              this.total[i].cantidades = num_total;
-              encontrado = true;
-            }            
-          }
-          if (encontrado == false){
-            this.total.push({'nombre':nombre, 'cantidades': num_total});
-          }
-          console.log(this.total);
-          this.actualizar(nombre, num_total, precio);
-        }
-        else {
-          alert("No hay suficiente stock");
-        }
-      },
-      actualizar(nombre, num_total, precio){
-        let htmlstr = "";
-        for(let i = 0;i < this.total.length;i++) {
-          if(this.total[i].cantidades != 0) {
-            htmlstr += `<h3>Aticulo: ${i+1}</h3><p class>Nombre del producto: ${this.total[i].nombre}</p>
-                        <p>Unidades: ${this.total[i].cantidades}`;
-          }
-        }
-        this.stock_groups[nombre] = precio * num_total;
-        console.log(this.stock_groups);
-        this.precio_total = Object.values(this.stock_groups).reduce((acc,curr) => acc + curr,0);
-        htmlstr += "<hr/>";
-        htmlstr += `<p>Precio total: ${this.precio_total}</p>`;
-        document.getElementById("lista").innerHTML = htmlstr;
-        document.getElementById("btn-comprar").removeAttribute("disabled");
-      },
-      restar(nombre, precio) {
-        let num = document.getElementById(nombre).value;
-        if(num > 0) {
-          num--;
-          document.getElementById(nombre).value = num;
-          let num_total = num;
-          let index = "";
-          for(let i = 0; i < this.total.length ;i++) {
-            //si lo he encontrado, le resto uno
-            if(this.total[i].nombre == nombre) {
-              if(num_total != 0) {
-                this.total[i].cantidades = num_total;
+        sumar(nombre, stock, precio) {
+            let unidades = document.getElementById(nombre).value;
+            if (unidades < stock) {
+              unidades++;
+              document.getElementById(nombre).value = unidades;
+              let num_total = unidades;
+              let encontrado = false;
+              for (let i = 0; i < this.total.length; i++) {
+                if (this.total[i].nombre == nombre) {
+                  this.total[i].cantidades = num_total;
+                  encontrado = true;
+                }
               }
-              else {
-                this.total[i].cantidades = num_total;
-                this.total = this.total.filter(can => can.cantidades > 0);
+              if (encontrado == false) {
+                  this.total.push({ "nombre": nombre, "cantidades": num_total });
               }
-            }            
-          }
-          console.log(this.total);
-          this.actualizar(nombre, num_total, precio)
+              this.actualizar(nombre, num_total, precio);
+            }
+            else {
+              alert("No hay suficiente stock");
+            }
+        },
+        actualizar(nombre, num_total, precio) {
+            let htmlstr = "";
+            for (let i = 0; i < this.total.length; i++) {
+                if (this.total[i].cantidades != 0) {
+                  htmlstr += `<h3>Aticulo: ${i + 1}</h3><p class>Nombre del producto: ${this.total[i].nombre}</p>
+                              <p>Unidades: ${this.total[i].cantidades}`;
+                }
+            }
+            this.stock_groups[nombre] = precio * num_total;
+            this.precio_total = Object.values(this.stock_groups).reduce((acc, curr) => acc + curr, 0);
+            htmlstr += "<hr/>";
+            htmlstr += `<p>Precio total: ${this.precio_total}</p>`;
+            document.getElementById("lista").innerHTML = htmlstr;
+            document.getElementById("btn-comprar").removeAttribute("disabled");
+        },
+        restar(nombre, precio) {
+            let num = document.getElementById(nombre).value;
+            if (num > 0) {
+                num--;
+                document.getElementById(nombre).value = num;
+                let num_total = num;
+                for (let i = 0; i < this.total.length; i++) {
+                    //si lo he encontrado, le resto uno
+                    if (this.total[i].nombre == nombre) {
+                        if (num_total != 0) {
+                            this.total[i].cantidades = num_total;
+                        }
+                        else {
+                            this.total[i].cantidades = num_total;
+                            this.total = this.total.filter(can => can.cantidades > 0);
+                        }
+                    }
+                }
+                this.actualizar(nombre, num_total, precio);
+            }
+            else if (num == 0) {
+                alert("No puedes restar mas");
+            }
+        },
+        comprar() {
+            this.email = this.sessioStore.get.email;
+            if(this.email != null) {
+              console.log(this.email);
+              const productos = JSON.stringify(this.total);
+              const datosEnvio = new FormData();
+              datosEnvio.append("email", this.email);
+              datosEnvio.append("productos", productos);
+              datosEnvio.append("precio_total", this.precio_total);
+              fetch("http://localhost:8000/tickets/nuevo/ticket", {
+                  method: "POST",
+                  body: datosEnvio
+              }).then(function (res) {
+                  return res.json();
+              }).then(function (data) {
+                  console.log(data);
+              });
+            }
+            else {
+              alert("Tienes que iniciar sesion para poder comprar")
+            }
         }
-        else if(num == 0) {
-          alert("No puedes restar mas");
-        }
-      },
-      confirmar() {
-        console.log(this.email);
-        const productos = JSON.stringify(this.total);
-        const datosEnvio = new FormData();
-        datosEnvio.append('email', this.email);
-        datosEnvio.append('productos', productos);
-        datosEnvio.append('precio_total', this.precio_total);
-        
-        fetch('http://192.168.210.154:8000/tickets/nuevo/ticket', {
-          method: 'POST',
-          body: datosEnvio
-        }).then(function(res){
-          return res.json();
-        }).then(function(data){
-          console.log(data)
-        });
-      },
-      comprar() {
-        document.getElementById("conf").removeAttribute("hidden");
-      }
-    }
-  }
+    },
+    components: { Navegador }
+}
 </script> 
 
 <style>

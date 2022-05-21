@@ -28,7 +28,12 @@ const router = createRouter({
       component: () => import("../views/ReservaView.vue"),
 
     },
+    {
+      path: "/login",
+      name: "login",
+      component: () => import("../views/LoginView.vue"),
 
+    },
     {
       path: "/perfil/:id",
       name: "perfil",
