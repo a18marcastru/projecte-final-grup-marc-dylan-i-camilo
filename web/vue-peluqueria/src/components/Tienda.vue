@@ -134,7 +134,7 @@
               });
             }
             else {
-              alert("Tienes que iniciar sesion para poder comprar")
+              alert("Tienes que iniciar sesion para poder comprar");
             }
         }
     },

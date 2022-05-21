@@ -15,7 +15,8 @@
           </div>
         </div>
       </div>
-      <h2>Fecha {{this.mes}}</h2>
+      <br><br>
+      <h2>Mes: {{this.mes}}</h2>
       <div id="container-fecha">
         <div id="dias">
           <div>Lunes</div>
@@ -35,13 +36,14 @@
           </div>
         </div>
       </div>
-      <input v-model="email" type="text" placeholder="Email" name="email" id="email" required />
-      <button class="btn btn-primary" @click="reservar()">Reservar</button>
+      <button @click="reservar()">Reservar</button>
     </div>
 </template>
 
 <script>
-import Navegador from './Navegador.vue';
+  import { sessioStore } from '@/stores/sessioStore'
+  import { mapStores } from 'pinia'
+  import Navegador from './Navegador.vue';
     export default {
     data() {
         return {
@@ -68,6 +70,9 @@ import Navegador from './Navegador.vue';
         const horario = [{ "hora": "10:00" }, { "hora": "11:00" }, { "hora": "12:00" }, { "hora": "13:00" }, { "hora": "14:00" }, { "hora": "15:00" }, { "hora": "16:00" }, { "hora": "17:00" }, { "hora": "18:00" }, { "hora": "19:00" }];
         this.horas = horario;
         console.log(this.horas);
+    },
+    computed: {
+      ...mapStores(sessioStore)
     },
     methods: {
         anadir(nombre, precio, id) {
@@ -110,6 +115,8 @@ import Navegador from './Navegador.vue';
             document.getElementById(hora).setAttribute("style", "background: green;");
         },
         reservar() {
+          this.email = this.sessioStore.get.email;
+          if(this.email != null) {
             console.log(this.email + " " + this.total + " " + this.dia + " " + this.hora + " " + this.precio_total);
             const servicio = JSON.stringify(this.total);
             const datosEnvio = new FormData();
@@ -127,6 +134,10 @@ import Navegador from './Navegador.vue';
             }).then(function (data) {
                 console.log(data);
             });
+          }
+          else {
+            alert("Tienes que iniciar sesion para poder reservar");
+          }
         },
     },
     components: { Navegador }
