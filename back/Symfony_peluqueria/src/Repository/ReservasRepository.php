@@ -41,14 +41,15 @@ class ReservasRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function save($data_usuario, $dia, $hora, $precio_total, $telefono): void
+    public function save($data_usuario, $dia, $hora, $mes, $precio_total, $telefono): void
     {
         $newReservas = new Reservas();
 
         $newReservas
             ->setUsuario($data_usuario)
-            ->setFecha($dia)
+            ->setDia($dia)
             ->setHora($hora)
+            ->setMes($mes)
             ->setTelefono($telefono)
             ->setPrecioTotal($precio_total);
 
@@ -73,10 +74,10 @@ class ReservasRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function coger_reserva($id_usuario, $dia, $hora): int
+    public function coger_reserva($id_usuario, $dia, $mes, $hora): int
     {
         $conn = $this->getEntityManager()->getConnection();
-        $sql = "SELECT reservas.* FROM reservas WHERE reservas.usuario_id = $id_usuario AND (reservas.fecha = '$dia' AND reservas.hora= '$hora');";
+        $sql = "SELECT reservas.* FROM reservas WHERE reservas.usuario_id = $id_usuario AND (reservas.dia = '$dia' AND reservas.hora= '$hora' AND  reservas.mes = '$mes');";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
         return $resultSet->fetchOne();

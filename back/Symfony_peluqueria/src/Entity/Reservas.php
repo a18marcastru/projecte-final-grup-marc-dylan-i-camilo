@@ -29,10 +29,13 @@ class Reservas
     private $precio_total;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $fecha;
+    private $dia;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $hora;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $mes;
 
     public function __construct()
     {
@@ -110,14 +113,14 @@ class Reservas
         return $this;
     }
 
-    public function getFecha(): ?string
+    public function getDia(): ?string
     {
-        return $this->fecha;
+        return $this->dia;
     }
 
-    public function setFecha(string $fecha): self
+    public function setDia(string $dia): self
     {
-        $this->fecha = $fecha;
+        $this->dia = $dia;
 
         return $this;
     }
@@ -130,6 +133,18 @@ class Reservas
     public function setHora(string $hora): self
     {
         $this->hora = $hora;
+
+        return $this;
+    }
+
+    public function getMes(): ?string
+    {
+        return $this->mes;
+    }
+
+    public function setMes(string $mes): self
+    {
+        $this->mes = $mes;
 
         return $this;
     }

@@ -47,26 +47,27 @@ class ReservasController extends AbstractController
     public function new2(Request $request, ReservasRepository $reservasRepository, UsuariosRepository $usuariosRepository, ServiciosRepository $serviciosRepository, ReservaServicioRepository $reservaServicioRepository): JsonResponse
     {
         $data = $request->request->all();
-        print_r($data);
-        /*$data = json_decode($request->getContent(),true);
-        for($i = 0;$i < count($data);$i++) {
-            $nombre_servicio[$i] = $data[$i]['nombre_servicio'];
+        $array = json_decode($data['servicios'],true);
+
+        for($i = 0;$i < count($array);$i++) {
+            $nombre_servicio[$i] = $array[$i]['nombre_servicio'];
         }
-        $email = "marc@gmail.com";//$data['email'];
-        $precio_total = 30; //$data['precio_total'];
-        $dia = date("Y-m-d"); //data['fecha'];
-        $hora = date("H:i:s"); //data['hora'];
+        $email = $data['email'];
+        $precio_total = $data['precio_total'];
+        $dia = $data['dia'];
+        $hora = $data['hora'];
+        $mes = $data['mes'];
         $data_usuario = $usuariosRepository->findOneBy(['email' => $email]);
         $telefono = $data_usuario->getTelefono();
-        $reservasRepository->save($data_usuario, $dia, $hora, $precio_total, $telefono);
+        $reservasRepository->save($data_usuario, $dia, $hora, $mes, $precio_total, $telefono);
         $id_usuario = $data_usuario->getId();
         for($i = 0;$i < count($nombre_servicio);$i++) {
             $data_nombres_servicio = $nombre_servicio[$i];
-            $id_reserva = $reservasRepository->coger_reserva($id_usuario, $dia, $hora);
+            $id_reserva = $reservasRepository->coger_reserva($id_usuario, $dia, $mes, $hora);
             $data_reserva = $reservasRepository->findOneBy(['id' => $id_reserva]);
             $data_servicio = $serviciosRepository->findOneBy(['nombre_servicio' => $data_nombres_servicio]);
             $reservaServicioRepository->save($data_reserva, $data_servicio);
-        }*/
+        }
 
         return new JsonResponse("Gracias por reservar", Response::HTTP_OK);
     }
