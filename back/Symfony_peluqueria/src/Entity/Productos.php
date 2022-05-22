@@ -31,11 +31,11 @@ class Productos
     private $imagen;
 
     #[ORM\OneToMany(mappedBy: 'producto', targetEntity: TicketProducto::class)]
-    private $comprars;
+    private $ticketProductos;
 
     public function __construct()
     {
-        $this->comprars = new ArrayCollection();
+        $this->ticketProductos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -104,29 +104,29 @@ class Productos
     }
 
     /**
-     * @return Collection<int, Comprar>
+     * @return Collection<int, TicketProducto>
      */
-    public function getComprars(): Collection
+    public function getticketProductos(): Collection
     {
-        return $this->comprars;
+        return $this->ticketProductos;
     }
 
-    public function addComprar(Comprar $comprar): self
+    public function addticketProducto(TicketProducto $ticketProducto): self
     {
-        if (!$this->comprars->contains($comprar)) {
-            $this->comprars[] = $comprar;
-            $comprar->setProducto($this);
+        if (!$this->ticketProductos->contains($ticketProducto)) {
+            $this->ticketProductos[] = $ticketProducto;
+            $ticketProducto->setProducto($this);
         }
 
         return $this;
     }
 
-    public function removeComprar(Comprar $comprar): self
+    public function removeComprar(TicketProducto $ticketProducto): self
     {
-        if ($this->comprars->removeElement($comprar)) {
+        if ($this->ticketProductos->removeElement($ticketProducto)) {
             // set the owning side to null (unless already changed)
-            if ($comprar->getProducto() === $this) {
-                $comprar->setProducto(null);
+            if ($ticketProducto->getProducto() === $this) {
+                $ticketProducto->setProducto(null);
             }
         }
 
