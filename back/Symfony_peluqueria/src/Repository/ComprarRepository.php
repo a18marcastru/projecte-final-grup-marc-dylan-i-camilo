@@ -42,6 +42,21 @@ class ComprarRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
+    public function coger_compra($id): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT tickets.fecha, tickets.precio_total, usuarios.email, comprar.cantidades, comprar.producto_id, productos.nombre 
+            FROM tickets join usuarios on tickets.usuario_id=usuarios.id join comprar on tickets.id=comprar.ticket_id 
+                join productos on productos.id = comprar.producto_id WHERE usuario_id=$id; ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+        return $resultSet->fetchAllAssociative();
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
     public function save($data_ticket, $data_producto,  $data_cantidades): void
     {
         $newComprar = new Comprar();

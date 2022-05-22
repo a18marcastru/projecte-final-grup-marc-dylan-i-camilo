@@ -12,11 +12,11 @@ class ReservasType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('fecha')
             ->add('hora')
+            ->add('dia')
+            ->add('mes')
             ->add('telefono')
             ->add('precio_total')
-            ->add('usuario')
         ;
     }
 

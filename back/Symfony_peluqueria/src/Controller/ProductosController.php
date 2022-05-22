@@ -22,6 +22,15 @@ class ProductosController extends AbstractController
         ]);
     }
 
+    #[Route('/buscar', name: 'app_productos_index2', methods: ['POST','GET'])]
+    public function search(ProductosRepository $productosRepository): Response
+    {
+        $data_producto = $productosRepository->findOneBy(['nombre' => $_POST['articulo']]);
+        return $this->render('productos/resultado.html.twig', [
+            'producto' => $data_producto,
+        ]);
+    }
+
     #[Route('/new', name: 'app_productos_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProductosRepository $productosRepository): Response
     {

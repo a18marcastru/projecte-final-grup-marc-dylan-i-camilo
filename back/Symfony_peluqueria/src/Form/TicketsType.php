@@ -14,7 +14,6 @@ class TicketsType extends AbstractType
         $builder
             ->add('fecha')
             ->add('precio_total')
-            ->add('usuario')
         ;
     }
 

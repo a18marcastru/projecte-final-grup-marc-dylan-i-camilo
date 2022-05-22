@@ -15,9 +15,6 @@ class Reservas
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'integer')]
-    private $telefono;
-
     #[ORM\ManyToOne(targetEntity: Usuarios::class, inversedBy: 'reservas')]
     #[ORM\JoinColumn(nullable: false)]
     private $usuario;
@@ -45,18 +42,6 @@ class Reservas
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getTelefono(): ?int
-    {
-        return $this->telefono;
-    }
-
-    public function setTelefono(int $telefono): self
-    {
-        $this->telefono = $telefono;
-
-        return $this;
     }
 
     public function getUsuario(): ?Usuarios

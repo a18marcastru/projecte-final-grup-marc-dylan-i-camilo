@@ -18,10 +18,48 @@ use Symfony\Component\Routing\Annotation\Route;
 class TicketsController extends AbstractController
 {
     #[Route('/', name: 'app_tickets_index', methods: ['GET'])]
-    public function index(TicketsRepository $ticketsRepository): Response
+    public function index(TicketsRepository $ticketsRepository, UsuariosRepository $usuariosRepository): Response
     {
+        $data_tickets = $ticketsRepository->findAll();
+
+        foreach ($data_tickets as $key) {
+            $id_usuarios[] = $key->getUsuario();
+        }
+
+        for($i = 0;$i < count($id_usuarios);$i++) {
+            $data_usuarios[$i] = $usuariosRepository->coger_emails_telefonos($id_usuarios[$i]);
+        }
+
+        for($i = 0;$i < count($data_tickets);$i++) {
+            $data_email[$i] = $data_usuarios[$i][0]['email'];
+        }
+
+        $i = 0;
+        foreach($data_tickets as $key) {
+            $array_tickets[$i] = [
+                'id' => $key->getId(),
+                'email' => $data_email[$i],
+                'fecha' => $key->getFecha(),
+                'precioTotal' => $key->getPrecioTotal()
+            ];
+            $i++;
+        }
+
         return $this->render('tickets/index.html.twig', [
-            'tickets' => $ticketsRepository->findAll(),
+            'tickets' => $array_tickets,
+        ]);
+    }
+
+    #[Route('/buscar', name: 'app_tickets_index2', methods: ['POST','GET'])]
+    public function search(UsuariosRepository $usuariosRepository, ComprarRepository $comprarRepository): Response
+    {
+        $data_usuario = $usuariosRepository->findOneBy(['email' => $_POST['email']]);
+        $id = $data_usuario->getId();
+        $data_compra = $comprarRepository->coger_compra($id);
+
+
+        return $this->render('tickets/resultado.html.twig', [
+            'tickets' => $data_compra,
         ]);
     }
 

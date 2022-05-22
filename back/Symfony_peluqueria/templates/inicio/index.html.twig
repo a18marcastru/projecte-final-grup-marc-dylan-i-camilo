@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administración{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper {margin: 1em; text-align: center }
+    .enlaces { color: white; text-decoration: none; padding: 50px; }
+    #btn-adm {
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        column-gap: 20px;
+        row-gap: 20px;
+    }
+    a:link {
+        text-decoration: none;
+    }
+</style>
+
+<div class="example-wrapper">
+    <h1>Administración</h1>
+    <div id="btn-adm">
+        <a class="enlaces btn-primary" href="{{ path('app_usuarios_index')}}">Usuarios</a>
+        <a class="enlaces btn-primary" href="{{ path('app_comentarios_index')}}">Comentarios</a>
+        <a class="enlaces btn-primary" href="{{ path('app_productos_index')}}">Productos</a>
+        <a class="enlaces btn-primary" href="{{ path('app_servicios_index')}}">Servicios</a>
+        <a class="enlaces btn-primary" href="{{ path('app_estilos_index')}}">Estilos</a>
+        <a class="enlaces btn-primary" href="{{ path('app_tickets_index')}}">Tickets</a>
+        <a class="enlaces btn-primary" href="{{ path('app_reservas_index')}}">Reservas</a>
+    </div>
+</div>
+{% endblock %}

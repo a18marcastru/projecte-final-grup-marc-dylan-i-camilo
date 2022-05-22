@@ -58,6 +58,23 @@ class UsuariosRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
+    public function coger_emails_telefonos($id): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT e.email, e.telefono
+            FROM App\Entity\Usuarios e
+            WHERE e.id = :id'
+        )->setParameter('id',$id);
+
+        return $query->getResult();
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
     public function save($nombre, $apellido, $email, $contrasena, $telefono): void
     {
         $newUsuario = new Usuarios();

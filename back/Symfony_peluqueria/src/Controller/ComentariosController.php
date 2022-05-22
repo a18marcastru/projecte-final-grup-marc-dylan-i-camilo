@@ -16,10 +16,49 @@ use Symfony\Component\Routing\Annotation\Route;
 class ComentariosController extends AbstractController
 {
     #[Route('/', name: 'app_comentarios_index', methods: ['GET'])]
-    public function index(ComentariosRepository $comentariosRepository): Response
+    public function index(ComentariosRepository $comentariosRepository, UsuariosRepository $usuariosRepository): Response
     {
+        $data_comentarios = $comentariosRepository->findAll();
+
+        foreach ($data_comentarios as $key) {
+            $id_usuarios[] = [$key->getUsuario()];
+        }
+
+        for($i = 0;$i < count($id_usuarios);$i++) {
+            $data_usuarios[$i] = $usuariosRepository->coger_emails_telefonos($id_usuarios[$i]);
+        }
+
+        for($i = 0;$i < count($data_usuarios);$i++) {
+            $data_email[$i] = $data_usuarios[$i][0]['email'];
+        }
+
+        $i = 0;
+        foreach($data_comentarios as $key) {
+            $array_comentarios[$i] = [
+                'id' => $key->getId(),
+                'email' => $data_email[$i],
+                'descripcion' => $key->getDescripcion(),
+                'valoracion' => $key->getValoracion()
+            ];
+            $i++;
+        }
+
         return $this->render('comentarios/index.html.twig', [
-            'comentarios' => $comentariosRepository->findAll(),
+            'comentarios' => $array_comentarios,
+        ]);
+    }
+
+    #[Route('/buscar', name: 'app_comentarios_index2', methods: ['POST','GET'])]
+    public function search(ComentariosRepository $comentariosRepository, UsuariosRepository $usuariosRepository): Response
+    {
+        $data_usuario = $usuariosRepository->findOneBy(['email' => $_POST['email']]);
+        $id = $data_usuario->getId();
+        $data_comentario = $comentariosRepository->coger_id_usuario($id);
+
+
+        return $this->render('comentarios/resultado.html.twig', [
+            'comentario' => $data_comentario,
+            'email' => $_POST['email']
         ]);
     }
 
@@ -27,7 +66,7 @@ class ComentariosController extends AbstractController
         $this->usuariosRepository = $usuariosRepository;
     }
 
-    #[Route('/mostrar/comentarios', name: 'app_comentarios_index2', methods: ['GET'])]
+    #[Route('/mostrar/comentarios', name: 'app_comentarios_vue', methods: ['GET'])]
     public function mostrar(ComentariosRepository $comentariosRepository, UsuariosRepository $usuariosRepository): JsonResponse
     {
         $data_comentarios = $comentariosRepository->mostrarComentarios();

@@ -1,13 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Productos index{% endblock %}
+{% block title %}Busqueda{% endblock %}
 
 {% block body %}
     <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
         h1 {
-            text-align: center;
-        }
-        #buscador {
             text-align: center;
         }
         .btn {
@@ -18,54 +16,39 @@
         <button class="btn btn-primary"><a href="{{ path('app_inicio')}}" style="text-decoration: none; color: white;">Inicio</a></button>
         <button class="btn btn-primary"><a href="{{ path('app_usuarios_index')}}" style="text-decoration: none; color: white;">Usuarios</a></button>
         <button class="btn btn-primary"><a href="{{ path('app_comentarios_index')}}" style="text-decoration: none; color: white;">Comentarios</a></button>
+        <button class="btn btn-primary"><a href="{{ path('app_productos_index')}}" style="text-decoration: none; color: white;">Productos</a></button>
         <button class="btn btn-primary"><a href="{{ path('app_servicios_index')}}" style="text-decoration: none; color: white;">Servicios</a></button>
         <button class="btn btn-primary"><a href="{{ path('app_estilos_index')}}" style="text-decoration: none; color: white;">Estilos</a></button>
         <button class="btn btn-primary"><a href="{{ path('app_tickets_index')}}" style="text-decoration: none; color: white;">Tickets</a></button>
         <button class="btn btn-primary"><a href="{{ path('app_reservas_index')}}" style="text-decoration: none; color: white;">Reservas</a></button>
         <button class="btn btn-primary"><a href="http://localhost:3000" style="text-decoration: none; color: white;">Pagina Web</a></button>
     </nav>
-    <h1>Productos index</h1>
-    <br>
-    <div id="buscador">
-        <form method="post" action="/productos/buscar">
-            <p>Busca el producto por su nombre:</p>
-            <input name="articulo" value="">
-            <input class="btn btn-primary" type="submit" value="Cercar">
-        </form>
-    </div>
-    <a href="{{ path('app_productos_new') }}">Create new</a>
-    <table class="table">
-        <thead>
+    <div class="example-wrapper">
+        <h1>Resultado</h1>
+        <table class="table">
+            <thead>
             <tr>
                 <th>Id</th>
                 <th>Nombre</th>
-                <th>Descripcion</th>
-                <th>Stock</th>
-                <th>Precio</th>
-                <th>Imagen</th>
-                <th>actions</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Contrasena</th>
+                <th>Actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for producto in productos %}
-            <tr>
-                <td>{{ producto.id }}</td>
-                <td>{{ producto.nombre }}</td>
-                <td>{{ producto.descripcion }}</td>
-                <td>{{ producto.cantidad }}</td>
-                <td>{{ producto.precio }}€</td>
-                <td><img src="{{ producto.imagen }}" alt="Producto"/></td>
-                <td>
-                    <a href="{{ path('app_productos_show', {'id': producto.id}) }}">show</a>
-                    <a href="{{ path('app_productos_edit', {'id': producto.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ usuario.id }}</td>
+                    <td>{{ usuario.nombre }}</td>
+                    <td>{{ usuario.apellido }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td>{{ usuario.contrasena }}</td>
+                    <td>
+                        <a href="{{ path('app_usuarios_show', {'id': usuario.id}) }}">show</a>
+                        <a href="{{ path('app_usuarios_edit', {'id': usuario.id}) }}">edit</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

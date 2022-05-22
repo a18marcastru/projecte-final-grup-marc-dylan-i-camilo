@@ -41,6 +41,23 @@ class ComentariosRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
+    public function coger_id_usuario($id): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT e
+            FROM App\Entity\Comentarios e
+            WHERE e.usuario = :id'
+        )->setParameter('id',$id);
+
+        return $query->getResult();
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
     public function save($data_usuario, $descripcion, $valoracion): void
     {
         $newComentario = new Comentarios();

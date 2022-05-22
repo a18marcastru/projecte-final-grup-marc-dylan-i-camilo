@@ -1,13 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tickets index{% endblock %}
+{% block title %}Busqueda{% endblock %}
 
 {% block body %}
     <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
         h1 {
-            text-align: center;
-        }
-        #buscador {
             text-align: center;
         }
         .btn {
@@ -21,47 +19,32 @@
         <button class="btn btn-primary"><a href="{{ path('app_productos_index')}}" style="text-decoration: none; color: white;">Productos</a></button>
         <button class="btn btn-primary"><a href="{{ path('app_servicios_index')}}" style="text-decoration: none; color: white;">Servicios</a></button>
         <button class="btn btn-primary"><a href="{{ path('app_estilos_index')}}" style="text-decoration: none; color: white;">Estilos</a></button>
+        <button class="btn btn-primary"><a href="{{ path('app_tickets_index')}}" style="text-decoration: none; color: white;">Tickets</a></button>
         <button class="btn btn-primary"><a href="{{ path('app_reservas_index')}}" style="text-decoration: none; color: white;">Reservas</a></button>
         <button class="btn btn-primary"><a href="http://localhost:3000" style="text-decoration: none; color: white;">Pagina Web</a></button>
     </nav>
-    <h1>Tickets index</h1>
-    <br>
-    <div id="buscador">
-        <form method="post" action="/tickets/buscar">
-            <p>Busca el ticket con el email del usuario:</p>
-            <input name="email" value="">
-            <input class="btn btn-primary" type="submit" value="Cercar">
-        </form>
+    <div class="example-wrapper">
+        <h1>Resultado</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre_servicio</th>
+                    <th>Precio</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ servicio.id }}</td>
+                    <td>{{ servicio.nombreServicio }}</td>
+                    <td>{{ servicio.precio }}</td>
+                    <td>
+                        <a href="{{ path('app_servicios_show', {'id': servicio.id}) }}">show</a>
+                        <a href="{{ path('app_servicios_edit', {'id': servicio.id}) }}">edit</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <a href="{{ path('app_tickets_new') }}">Create new</a>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Fecha</th>
-                <th>Precio_total</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for ticket in tickets %}
-            <tr>
-                <td>{{ ticket.id }}</td>
-                <td>{{ ticket.email }}</td>
-                <td>{{ ticket.fecha }}</td>
-                <td>{{ ticket.precioTotal }}€</td>
-                <td>
-                    <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}">show</a>
-                    <a href="{{ path('app_tickets_edit', {'id': ticket.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
 {% endblock %}

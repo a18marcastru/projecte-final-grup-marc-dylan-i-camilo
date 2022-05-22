@@ -6,8 +6,8 @@
                 <RouterLink class="btn btn-dark" to="/">Home</RouterLink>
                 <RouterLink class="btn btn-dark" to="/tienda">Tienda</RouterLink>
                 <RouterLink class="btn btn-dark" to="/reserva">Reserva</RouterLink>
-                <RouterLink class="btn btn-dark " to="/register">Registro</RouterLink>
-                <RouterLink class="btn btn-dark " to="/login">Login</RouterLink>
+                <RouterLink class="btn btn-dark" to="/register">Registro</RouterLink>
+                <RouterLink class="btn btn-dark" to="/login">Login</RouterLink>
             </div>
             <div v-else>
                 <RouterLink class="btn btn-dark" to="/">Home</RouterLink>

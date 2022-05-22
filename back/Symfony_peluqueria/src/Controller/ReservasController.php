@@ -18,10 +18,52 @@ use Symfony\Component\Routing\Annotation\Route;
 class ReservasController extends AbstractController
 {
     #[Route('/', name: 'app_reservas_index', methods: ['GET'])]
-    public function index(ReservasRepository $reservasRepository): Response
+    public function index(ReservasRepository $reservasRepository, UsuariosRepository $usuariosRepository): Response
     {
+        $data_reservas = $reservasRepository->findAll();
+
+        foreach ($data_reservas as $key) {
+            $id_usuarios[] = $key->getId();
+        }
+
+        for($i = 0;$i < count($id_usuarios);$i++) {
+            $data_usuarios[$i] = $usuariosRepository->coger_emails_telefonos($id_usuarios[$i]);
+        }
+
+        for($i = 0;$i < count($data_reservas);$i++) {
+            $data_email[$i] = $data_usuarios[$i][0]['email'];
+            $data_telefono[$i] = $data_usuarios[$i][0]['telefono'];
+        }
+
+        $i = 0;
+        foreach($data_reservas as $key) {
+            $array_reservas[$i] = [
+                'id' => $key->getId(),
+                'email' => $data_email[$i],
+                'telefono' => $data_telefono[$i],
+                'hora' => $key->getHora(),
+                'dia' => $key->getDia(),
+                'mes' => $key->getMes(),
+                'precioTotal' => $key->getPrecioTotal()
+            ];
+            $i++;
+        }
+
         return $this->render('reservas/index.html.twig', [
-            'reservas' => $reservasRepository->findAll(),
+            'reservas' => $array_reservas,
+        ]);
+    }
+
+    #[Route('/buscar', name: 'app_reservas_index2', methods: ['POST','GET'])]
+    public function search(UsuariosRepository $usuariosRepository, ReservaServicioRepository $reservaServicioRepository): Response
+    {
+        $data_usuario = $usuariosRepository->findOneBy(['email' => $_POST['email']]);
+        $id = $data_usuario->getId();
+        $data_reservas_servicio = $reservaServicioRepository->coger_reserva_servicio($id);
+
+
+        return $this->render('reservas/resultado.html.twig', [
+            'reservas_servicio' => $data_reservas_servicio,
         ]);
     }
 
@@ -58,8 +100,7 @@ class ReservasController extends AbstractController
         $hora = $data['hora'];
         $mes = $data['mes'];
         $data_usuario = $usuariosRepository->findOneBy(['email' => $email]);
-        $telefono = $data_usuario->getTelefono();
-        $reservasRepository->save($data_usuario, $dia, $hora, $mes, $precio_total, $telefono);
+        $reservasRepository->save($data_usuario, $dia, $hora, $mes, $precio_total);
         $id_usuario = $data_usuario->getId();
         for($i = 0;$i < count($nombre_servicio);$i++) {
             $data_nombres_servicio = $nombre_servicio[$i];

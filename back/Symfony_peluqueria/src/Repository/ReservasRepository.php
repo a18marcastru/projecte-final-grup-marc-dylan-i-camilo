@@ -41,7 +41,7 @@ class ReservasRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function save($data_usuario, $dia, $hora, $mes, $precio_total, $telefono): void
+    public function save($data_usuario, $dia, $hora, $mes, $precio_total): void
     {
         $newReservas = new Reservas();
 
@@ -50,7 +50,6 @@ class ReservasRepository extends ServiceEntityRepository
             ->setDia($dia)
             ->setHora($hora)
             ->setMes($mes)
-            ->setTelefono($telefono)
             ->setPrecioTotal($precio_total);
 
         $this->manager->persist($newReservas);

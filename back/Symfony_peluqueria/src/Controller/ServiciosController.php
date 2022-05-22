@@ -22,6 +22,15 @@ class ServiciosController extends AbstractController
         ]);
     }
 
+    #[Route('/buscar', name: 'app_servicios_index2', methods: ['POST','GET'])]
+    public function search(ServiciosRepository $serviciosRepository): Response
+    {
+        $data_servicio = $serviciosRepository->findOneBy(['nombre_servicio' => $_POST['servicio']]);
+        return $this->render('servicios/resultado.html.twig', [
+            'servicio' => $data_servicio,
+        ]);
+    }
+
     #[Route('/mostrar', name: 'app_servicios_mostrar', methods: ['GET'])]
     public function mostrar(ServiciosRepository $serviciosRepository): JsonResponse
     {

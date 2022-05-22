@@ -24,6 +24,15 @@ class UsuariosController extends AbstractController
         ]);
     }
 
+    #[Route('/buscar', name: 'app_usuarios_index2', methods: ['POST','GET'])]
+    public function search(UsuariosRepository $usuariosRepository): Response
+    {
+        $data_usuario = $usuariosRepository->findOneBy(['email' => $_POST['email']]);
+        return $this->render('usuarios/resultado.html.twig', [
+            'usuario' => $data_usuario,
+        ]);
+    }
+
     #[Route('/new', name: 'app_usuarios_new', methods: ['GET', 'POST'])]
     public function new(Request $request, UsuariosRepository $usuariosRepository): Response
     {
@@ -45,12 +54,18 @@ class UsuariosController extends AbstractController
     #[Route('/nuevo/usuario', name: 'app_usuarios_new2', methods: ['POST','GET'])]
     public function new2(Request $request, UsuariosRepository $usuariosRepository): JsonResponse
     {
+        function test_input($data) {
+            $data = trim($data);
+            $data = stripslashes($data);
+            $data = htmlspecialchars($data);
+            return $data;
+        }
         $data = $request->request->all();
-        $nombre = $data['nombre'];
-        $apellido = $data['apellido'];
-        $email = $data['email'];
-        $telefono = $data['telefono'];
-        $contrasena = password_hash($data['contrasena'], PASSWORD_DEFAULT);
+        $nombre = test_input($data['nombre']);
+        $apellido = test_input($data['apellido']);
+        $email = test_input($data['email']);
+        $telefono = test_input($data['telefono']);
+        $contrasena = password_hash(test_input($data['contrasena']), PASSWORD_DEFAULT);
 
         $data_usuario = $usuariosRepository->findOneBy(['email' => $email]);
         if(empty($data_usuario)) {
@@ -63,9 +78,15 @@ class UsuariosController extends AbstractController
     #[Route('/login', name: 'app_usuarios_login', methods: ['POST', 'GET'])]
     public function login(Request $request, UsuariosRepository $usuariosRepository): JsonResponse
     {
+        function test_input($data) {
+            $data = trim($data);
+            $data = stripslashes($data);
+            $data = htmlspecialchars($data);
+            return $data;
+        }
         $data = $request->request->all();
-        $email = $data['email'];
-        $contra = $data['contrasena'];
+        $email = test_input($data['email']);
+        $contra = test_input($data['contrasena']);
         $data_usuario = $usuariosRepository->findOneBy(['email' => $email]);
         if(!empty($data_usuario)) {
             $data_contras = $data_usuario->getContrasena();
@@ -82,35 +103,20 @@ class UsuariosController extends AbstractController
         return new JsonResponse("No existe usuario", Response::HTTP_OK);
     }
 
-    #[Route('/logout', name: 'app_usuarios_logout', methods: ['GET'])]
-    public function logout(): JsonResponse
-    {
-        session_start();
-
-        session_destroy();
-
-        return new JsonResponse("Logout", Response::HTTP_OK);
-    }
-
     #[Route('/perfil/{id}', name: 'app_usuarios_perfil', methods: ['GET'])]
     public function mostrar($id, UsuariosRepository $usuariosRepository, ReservasRepository $reservasRepository): JsonResponse
     {
-        //session_start();
-        //if($_SESSION['inicio'] == $id) {
-            $restos = $usuariosRepository->findOneBy(['id' => $id]);
-            $reservas = $reservasRepository->buscar_usuario_reservas($id);
-            $data_usuario = [
-                'nombre' => $restos->getNombre(),
-                'apellido' => $restos->getApellido(),
-                'email' => $restos->getEmail(),
-                'telefono' => $restos->getTelefono(),
-                'reservas' => $reservas
-            ];
+        $restos = $usuariosRepository->findOneBy(['id' => $id]);
+        $reservas = $reservasRepository->buscar_usuario_reservas($id);
+        $data_usuario = [
+            'nombre' => $restos->getNombre(),
+            'apellido' => $restos->getApellido(),
+            'email' => $restos->getEmail(),
+            'telefono' => $restos->getTelefono(),
+            'reservas' => $reservas
+        ];
 
-            return new JsonResponse($data_usuario, Response::HTTP_OK);
-        //}
-
-        //return new JsonResponse("Inicia Sesion", Response::HTTP_OK);
+        return new JsonResponse($data_usuario, Response::HTTP_OK);
     }
 
     #[Route('/cambiar/contrasena/{id}', name: 'app_usuarios_perfil2', methods: ['POST','GET'])]

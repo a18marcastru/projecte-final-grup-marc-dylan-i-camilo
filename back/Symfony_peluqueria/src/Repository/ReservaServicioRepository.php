@@ -55,6 +55,21 @@ class ReservaServicioRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
+    public function coger_reserva_servicio($id): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT reservas.dia, reservas.hora, reservas.mes, reservas.precio_total, usuarios.telefono, usuarios.email, servicios.nombre_servicio 
+                FROM reservas join usuarios on reservas.usuario_id=usuarios.id join reserva_servicio on reservas.id=reserva_servicio.reserva_id 
+                join servicios on servicios.id = reserva_servicio.servicio_id WHERE usuario_id=$id;";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+        return $resultSet->fetchAllAssociative();
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
     public function save($data_reserva, $data_servicio): void
     {
         $newReservaServicio = new ReservaServicio();
