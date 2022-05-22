@@ -42,7 +42,7 @@ class TicketProductoRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function coger_compra($id): array
+    public function coger_compras($id): array
     {
         $conn = $this->getEntityManager()->getConnection();
         $sql = "SELECT tickets.fecha, tickets.precio_total, usuarios.email, usuarios.telefono, ticket_producto.cantidades, productos.nombre 

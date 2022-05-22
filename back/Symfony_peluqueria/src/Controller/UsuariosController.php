@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Usuarios;
 use App\Form\UsuariosType;
+use App\Repository\ReservaServicioRepository;
 use App\Repository\ReservasRepository;
+use App\Repository\TicketProductoRepository;
 use App\Repository\UsuariosRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -104,16 +106,19 @@ class UsuariosController extends AbstractController
     }
 
     #[Route('/perfil/{id}', name: 'app_usuarios_perfil', methods: ['GET'])]
-    public function mostrar($id, UsuariosRepository $usuariosRepository, ReservasRepository $reservasRepository): JsonResponse
+    public function mostrar($id, UsuariosRepository $usuariosRepository, ReservaServicioRepository $reservaServicioRepository, TicketProductoRepository $ticketProductoRepository): JsonResponse
     {
         $restos = $usuariosRepository->findOneBy(['id' => $id]);
-        $reservas = $reservasRepository->buscar_usuario_reservas($id);
+        $reservas = $reservaServicioRepository->coger_reserva_servicio($id);
+        $tickets = $ticketProductoRepository->coger_compras($id);
+
         $data_usuario = [
             'nombre' => $restos->getNombre(),
             'apellido' => $restos->getApellido(),
             'email' => $restos->getEmail(),
             'telefono' => $restos->getTelefono(),
-            'reservas' => $reservas
+            'reservas' => $reservas,
+            'tickets' => $tickets
         ];
 
         return new JsonResponse($data_usuario, Response::HTTP_OK);

@@ -102,7 +102,7 @@
       </div>
       <!-- Grid container -->
       <div>
-        <a href="http://127.0.0.1:8000/inicio" class="btn btn-dark">Administracion</a>
+        <a href="http://peluqueriahappyback.alumnes.inspedralbes.cat/usuarios" class="btn btn-dark">Administracion</a>
       </div>
       <!-- Copyright -->
       <div class="text-center p-3 bg-dark" style="color: white;">

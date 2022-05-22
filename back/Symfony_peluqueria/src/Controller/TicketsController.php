@@ -57,8 +57,7 @@ class TicketsController extends AbstractController
     {
         $data_usuario = $usuariosRepository->findOneBy(['email' => $_POST['email']]);
         $id = $data_usuario->getId();
-        $data_compra = $ticketProductoRepository->coger_compra($id);
-
+        $data_compra = $ticketProductoRepository->coger_compras($id);
 
         return $this->render('tickets/resultado.html.twig', [
             'tickets' => $data_compra,
