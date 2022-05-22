@@ -97,12 +97,12 @@ class UsuariosController extends AbstractController
                 return new JsonResponse($id_usuario, Response::HTTP_OK);
             }
             else {
-                $id_usuario = false;
-                return new JsonResponse($id_usuario, Response::HTTP_OK);
+                return new JsonResponse("Contraseña incorrecta", Response::HTTP_OK);
             }
         }
-
-        return new JsonResponse("No existe usuario", Response::HTTP_OK);
+        else {
+            return new JsonResponse("No existe usuario", Response::HTTP_OK);
+        }
     }
 
     #[Route('/perfil/{id}', name: 'app_usuarios_perfil', methods: ['GET'])]

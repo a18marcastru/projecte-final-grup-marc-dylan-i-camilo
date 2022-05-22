@@ -1,29 +1,28 @@
 <template>
   <Navegador/>
-  <h1>Tienda de peluqueria</h1>
-  <div id="container">
-    <div id="container2">
-      <div id="productos">
-        <div v-for="ses in datos">
-          <div class="card" style="width: 20rem;">
-            <div class="card-body">
-              <h5 class="card-title">{{ses.nombre}}</h5>
-              <!-- <img :src="infoProduct.imagen"> -->
-              <p class="card-subtitle mb-2 text-muted">{{ses.descripcion}}</p>
-              <p class="card-text">Stock :  {{ses.cantidad}}</p>
-              <p class="card-text">Precio : {{ses.precio}} €</p>
-              <button class="btn btn-primary" @click="sumar(ses.nombre, ses.cantidad, ses.precio)">+</button>
-              <input type="text" :id="ses.nombre" value="0" />
-              <button class="btn btn-primary" @click="restar(ses.nombre, ses.precio)">-</button>
-            </div>
+  <h1 id="title-tienda">Tienda de peluqueria</h1>
+  <div id="container-tienda">
+    <div id="productos">
+      <div v-for="ses in datos">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ses.nombre}}</h5>
+            <img :src="ses.imagen">
+            <p class="card-subtitle mb-2 text-muted">{{ses.descripcion}}</p>
+            <p class="card-text">Stock :  {{ses.cantidad}}</p>
+            <p class="card-text">Precio : {{ses.precio}} €</p>
+            <button class="btn btn-primary" @click="sumar(ses.nombre, ses.cantidad, ses.precio)">+</button>
+            <input type="text" :id="ses.nombre" value="0" />
+            <button class="btn btn-primary" @click="restar(ses.nombre, ses.precio)">-</button>
           </div>
         </div>
       </div>
-      <div id="caruaje">
-        <h2>Lista de productos:</h2>
-        <div id="lista"></div>
-        <button class="btn btn-primary" id="btn-comprar" @click="comprar()" disabled>Comprar</button>
-      </div>
+    </div>
+    <div id="barra"></div>
+    <div id="lista">
+      <h2>Lista de productos:</h2>
+      <div id="lista-producto"></div>
+      <button class="btn btn-primary" id="btn-comprar" @click="comprar()" disabled>Comprar</button>
     </div>
   </div>
 </template>
@@ -80,15 +79,15 @@
             let htmlstr = "";
             for (let i = 0; i < this.total.length; i++) {
                 if (this.total[i].cantidades != 0) {
-                  htmlstr += `<h3>Aticulo: ${i + 1}</h3><p class>Nombre del producto: ${this.total[i].nombre}</p>
-                              <p>Unidades: ${this.total[i].cantidades}`;
+                  htmlstr += `<h4>Aticulo: ${i + 1}</h4><p class>- Nombre del producto: ${this.total[i].nombre}</p>
+                              <p>- Unidades: ${this.total[i].cantidades}`;
                 }
             }
             this.stock_groups[nombre] = precio * num_total;
             this.precio_total = Object.values(this.stock_groups).reduce((acc, curr) => acc + curr, 0);
             htmlstr += "<hr/>";
             htmlstr += `<p>Precio total: ${this.precio_total}</p>`;
-            document.getElementById("lista").innerHTML = htmlstr;
+            document.getElementById("lista-producto").innerHTML = htmlstr;
             document.getElementById("btn-comprar").removeAttribute("disabled");
         },
         restar(nombre, precio) {
@@ -143,24 +142,49 @@
 </script> 
 
 <style>
-  h1 {
+  #title-tienda {
+    color: black;
     text-align: center;
   }
-  #container2 {
+  #container-tienda {
     display: flex;
+  }
+  #barra {
+    background-color: black;
+    border: 5px solid black;
+    margin-right: 5px;
   }
   #productos {
     display: grid;
-    grid-template-columns: auto auto auto auto auto;
+    grid-template-columns: repeat(4,1fr);
   }
   #caruaje {
     border: 3px solid black;
     margin: 65px
   }
-  #list {
-    padding: 30%;
-  }
   .card {
     margin: 5px;
+    width: 20rem;
+  }
+  @media screen and (max-width: 600px){
+    #container-tienda {
+      display: flow-root;
+    }
+    #productos {
+      display: grid;
+      grid-template-columns: repeat(1,1fr);
+    }
+    .card {
+      margin-left: 50px;
+    }
+    #lista-producto {
+      margin-left: 10px;
+    }
+    h2 {
+      text-align: center;
+    }
+    #btn-comprar {
+      margin-left: 150px;
+    }
   }
 </style>
