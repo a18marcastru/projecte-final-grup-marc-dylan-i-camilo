@@ -31,8 +31,9 @@
                     <th>Articulo</th>
                     <th>Unidades</th>
                     <th>Precio total</th>
-                    <th>Email</th>
                     <th>Fecha</th>
+                    <th>Email</th>
+                    <th>Telefono</th>
                 </tr>
             </thead>
             <tbody>
@@ -43,6 +44,7 @@
                     <td>{{ ticket.precio_total }}€</td>
                     <td>{{ ticket.fecha }}</td>
                     <td>{{ ticket.email }}</td>
+                    <td>{{ ticket.telefono }}</td>
                 </tr>
             {% else %}
                 <tr>

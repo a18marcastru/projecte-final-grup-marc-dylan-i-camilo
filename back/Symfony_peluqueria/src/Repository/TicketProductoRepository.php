@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Comprar;
+use App\Entity\TicketProducto;
 use App\Entity\Tickets;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,18 +11,18 @@ use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Comprar>
+ * @extends ServiceEntityRepository<TicketProducto>
  *
- * @method Comprar|null find($id, $lockMode = null, $lockVersion = null)
- * @method Comprar|null findOneBy(array $criteria, array $orderBy = null)
- * @method Comprar[]    findAll()
- * @method Comprar[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method TicketProducto|null find($id, $lockMode = null, $lockVersion = null)
+ * @method TicketProducto|null findOneBy(array $criteria, array $orderBy = null)
+ * @method TicketProducto[]    findAll()
+ * @method TicketProducto[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ComprarRepository extends ServiceEntityRepository
+class TicketProductoRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry, EntityManagerInterface $manager)
     {
-        parent::__construct($registry, Comprar::class);
+        parent::__construct($registry, TicketProducto::class);
         $this->manager = $manager;
     }
 
@@ -30,7 +30,7 @@ class ComprarRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Comprar $entity, bool $flush = true): void
+    public function add(TicketProducto $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -45,9 +45,9 @@ class ComprarRepository extends ServiceEntityRepository
     public function coger_compra($id): array
     {
         $conn = $this->getEntityManager()->getConnection();
-        $sql = "SELECT tickets.fecha, tickets.precio_total, usuarios.email, comprar.cantidades, comprar.producto_id, productos.nombre 
-            FROM tickets join usuarios on tickets.usuario_id=usuarios.id join comprar on tickets.id=comprar.ticket_id 
-                join productos on productos.id = comprar.producto_id WHERE usuario_id=$id; ";
+        $sql = "SELECT tickets.fecha, tickets.precio_total, usuarios.email, usuarios.telefono, ticket_producto.cantidades, productos.nombre 
+                FROM tickets join usuarios on tickets.usuario_id=usuarios.id join ticket_producto on tickets.id=ticket_producto.ticket_id 
+                join productos on productos.id = ticket_producto.producto_id WHERE usuario_id=$id; ";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
         return $resultSet->fetchAllAssociative();
@@ -59,7 +59,7 @@ class ComprarRepository extends ServiceEntityRepository
      */
     public function save($data_ticket, $data_producto,  $data_cantidades): void
     {
-        $newComprar = new Comprar();
+        $newComprar = new TicketProducto();
 
         $newComprar
             ->setTicket($data_ticket)
@@ -74,7 +74,7 @@ class ComprarRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Comprar $entity, bool $flush = true): void
+    public function remove(TicketProducto $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {

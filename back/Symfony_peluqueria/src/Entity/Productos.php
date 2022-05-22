@@ -30,7 +30,7 @@ class Productos
     #[ORM\Column(type: 'string', length: 255)]
     private $imagen;
 
-    #[ORM\OneToMany(mappedBy: 'producto', targetEntity: Comprar::class)]
+    #[ORM\OneToMany(mappedBy: 'producto', targetEntity: TicketProducto::class)]
     private $comprars;
 
     public function __construct()

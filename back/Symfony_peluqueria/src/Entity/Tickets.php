@@ -25,7 +25,7 @@ class Tickets
     #[ORM\JoinColumn(nullable: false)]
     private $usuario;
 
-    #[ORM\OneToMany(mappedBy: 'ticket', targetEntity: Comprar::class)]
+    #[ORM\OneToMany(mappedBy: 'ticket', targetEntity: TicketProducto::class)]
     private $comprars;
 
     public function __construct()

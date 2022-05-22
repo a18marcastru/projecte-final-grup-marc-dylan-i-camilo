@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ComprarRepository;
+use App\Repository\TicketProductoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ComprarRepository::class)]
-class Comprar
+#[ORM\Entity(repositoryClass: TicketProductoRepository::class)]
+class TicketProducto
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

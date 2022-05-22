@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Tickets;
 use App\Form\TicketsType;
-use App\Repository\ComprarRepository;
+use App\Repository\TicketProductoRepository;
 use App\Repository\ProductosRepository;
 use App\Repository\TicketsRepository;
 use App\Repository\UsuariosRepository;
@@ -32,6 +32,7 @@ class TicketsController extends AbstractController
 
         for($i = 0;$i < count($data_tickets);$i++) {
             $data_email[$i] = $data_usuarios[$i][0]['email'];
+            $data_telefono[$i] = $data_usuarios[$i][0]['telefono'];
         }
 
         $i = 0;
@@ -39,6 +40,7 @@ class TicketsController extends AbstractController
             $array_tickets[$i] = [
                 'id' => $key->getId(),
                 'email' => $data_email[$i],
+                'telefono' => $data_telefono[$i],
                 'fecha' => $key->getFecha(),
                 'precioTotal' => $key->getPrecioTotal()
             ];
@@ -51,11 +53,11 @@ class TicketsController extends AbstractController
     }
 
     #[Route('/buscar', name: 'app_tickets_index2', methods: ['POST','GET'])]
-    public function search(UsuariosRepository $usuariosRepository, ComprarRepository $comprarRepository): Response
+    public function search(UsuariosRepository $usuariosRepository, TicketProductoRepository $ticketProductoRepository): Response
     {
         $data_usuario = $usuariosRepository->findOneBy(['email' => $_POST['email']]);
         $id = $data_usuario->getId();
-        $data_compra = $comprarRepository->coger_compra($id);
+        $data_compra = $ticketProductoRepository->coger_compra($id);
 
 
         return $this->render('tickets/resultado.html.twig', [
@@ -82,7 +84,7 @@ class TicketsController extends AbstractController
     }
 
     #[Route('/nuevo/ticket', name: 'app_ticket_new2', methods: ['POST','GET'])]
-    public function new2(Request $request, TicketsRepository $ticketsRepository, UsuariosRepository $usuariosRepository, ComprarRepository $comprarRepository, ProductosRepository $productosRepository): JsonResponse
+    public function new2(Request $request, TicketsRepository $ticketsRepository, UsuariosRepository $usuariosRepository, TicketProductoRepository $ticketProductoRepository, ProductosRepository $productosRepository): JsonResponse
     {
         $data = $request->request->all();
         $array = json_decode($data['productos'],true);
@@ -109,7 +111,7 @@ class TicketsController extends AbstractController
                 empty($data_cantidades_total) ? true : $data_producto->setCantidad($data_cantidades_total);
 
                 $data_cantidades = $cantidades[$i];
-                $comprarRepository->save($data_ticket, $data_producto,  $data_cantidades);
+                $ticketProductoRepository->save($data_ticket, $data_producto,  $data_cantidades);
             }
 
             return new JsonResponse("Gracias por comprar", Response::HTTP_OK);
