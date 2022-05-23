@@ -7,14 +7,6 @@ Esquema mínim de carpetes pels projectes transversals
 ## Atenció
 Un cop comenceu heu de canviar aquesta explicació amb la corresponent al vostre projecte (utilitzant markdown)
 
-
-# Aquest fitxer ha de contenir com a mínim:
- * Nom dels integrants
- * Nom del projecte
- * Petita descripció
- * URL de producció (quan la tingueu)
- * Estat: (explicació de en quin punt està)
-
 # Nom dels integrants
 - Camilo
 - Dylan
