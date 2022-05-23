@@ -39,39 +39,19 @@ export default {
         valoracion: '',
         descripcion: '',
         datos: [],
-
       }
     },
     components: {
-    Comentario,
-    Navegador,
-    Galeria
-        
-},
+      Comentario,
+      Navegador,
+      Galeria
+    },
     mounted() {
       fetch("http://192.168.137.159:8000/comentarios/mostrar/comentarios")
       .then(res => res.json())
       .then((data) => {
         this.datos = data;
       });
-    },
-    methods: {
-      comment() {
-        console.log(this.email + " " + this.valoracion + " " +  this.descripcion + " " );
-        const datosEnvio = new FormData();
-        datosEnvio.append('email', this.email);
-        datosEnvio.append('valoracion', this.valoracion);
-        datosEnvio.append('descripcion', this.descripcion);
-
-        fetch('http://192.168.137.159:8000/comentarios/nuevo/comentario', {
-        method: 'POST',
-        body: datosEnvio
-        }).then(function(res){
-        return res.json();
-        }).then(function(data){
-        console.log(data)
-        });
-      },
     },
   }
 </script>
