@@ -6,6 +6,7 @@ Parametros:
 - precio_total:
 - dia:
 - hora:
+- mes:
 
 JSON:
 [
