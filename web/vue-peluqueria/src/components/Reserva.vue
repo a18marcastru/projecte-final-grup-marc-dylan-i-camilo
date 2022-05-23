@@ -1,24 +1,26 @@
 <template>
     <Navegador/>
-    <div>
-      <h1>Reserva un dia en la peluqueria</h1>
+    <h1 id="title-tienda">Reserva un dia en la peluqueria</h1>
+    <div id="container-reserva">
+      <br>
       <h2>Servicios</h2>
-      <div id="reservas">
-        <div v-for="ses in datos">
-          <div class="card" style="width: 20rem;">
+      <div id="servicios">
+        <div v-for="ses in servicios">
+          <div class="card" id="card-servicios">
             <div class="card-body">
               <p class="card-title">{{ses.nombre_servicio}}</p>
               <p class="card-text">Precio : {{ses.precio}} €</p>
-              <button class="btn btn-primary" :id="ses.id" @click="anadir(ses.nombre_servicio, ses.precio, ses.id)">Añadir</button>
-              <button class="btn btn-success" :id="ses.id+'c'" @click="anadido(ses.nombre_servicio, ses.precio, ses.id)" hidden>Añadido</button>
+              <button class="btn btn-dark" :id="ses.id" @click="anadir(ses.nombre_servicio, ses.precio, ses.id)">Añadir</button>
+              <button class="btn btn-anadido btn-success" :id="ses.id+'c'" @click="anadido(ses.nombre_servicio, ses.precio, ses.id)">Añadido</button>
             </div>
           </div>
         </div>
       </div>
-      <br><br>
+      <p id="precio_total">Precio total: {{this.precio_total}}</p>
+      <br>
       <h2>Mes: {{this.mes}}</h2>
       <div id="container-fecha">
-        <div id="dias">
+        <div id="nombre-dias">
           <div>Lunes</div>
           <div>Martes</div>
           <div>Miercoles</div>
@@ -26,18 +28,22 @@
           <div>Viernes</div>
           <div>Sabado</div>
           <div>Domingo</div>
-          <div v-for="index in 30">
-            <div class="dia btn-primary" :id="index+'p'" @click="fecha(index)">{{index}}</div>
+          <div v-for="index in 31">
+            <div class="dia btn-dark" :id="index+'p'" @click="fecha(index)">{{index}}</div>
           </div>
         </div>
+        <br>
+        <h2 id="title-horas">Horas</h2>
         <div id="horas">
           <div v-for="index in horas">
-            <div class="dia btn-primary" :id="index.hora" @click="selecion_hora(index.hora)">{{index.hora}}</div>
+            <div class="dia btn-dark" :id="index.hora" @click="selecion_hora(index.hora)">{{index.hora}}</div>
+            <br>
           </div>
         </div>
       </div>
-      <button @click="reservar()">Reservar</button>
     </div>
+    <button id="btn-reservar" class="btn btn-dark" @click="reservar()" disabled>Reservar</button>
+    <br><br>
 </template>
 
 <script>
@@ -47,12 +53,14 @@
     export default {
     data() {
         return {
-            datos: [],
+            servicios: [],
+            reservas: [],
             total: [],
+            horasOcupadas: [],
+            horas: [],
             email: "",
             mes: "",
             hora: "",
-            horas: [],
             dia: 0,
             precio_total: 0
         };
@@ -61,22 +69,27 @@
         fetch(`http://localhost:8000/servicios/mostrar`)
             .then(res => res.json())
             .then((data) => {
-            this.datos = data;
-            console.log(data);
+            this.servicios = data;
+            console.log(this.servicios);
+        });
+
+        fetch(`http://localhost:8000/reservas/todas`)
+            .then(res => res.json())
+            .then((data) => {
+            this.reservas = data;
+            console.log(this.reservas);
         });
         const meses = ["Junio", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
         const d = new Date();
         this.mes = meses[d.getUTCMonth()];
         const horario = [{ "hora": "10:00" }, { "hora": "11:00" }, { "hora": "12:00" }, { "hora": "13:00" }, { "hora": "14:00" }, { "hora": "15:00" }, { "hora": "16:00" }, { "hora": "17:00" }, { "hora": "18:00" }, { "hora": "19:00" }];
         this.horas = horario;
-        console.log(this.horas);
     },
     computed: {
       ...mapStores(sessioStore)
     },
     methods: {
         anadir(nombre, precio, id) {
-            console.log("Hola");
             let encontrado = false;
             for (let i = 0; i < this.total.length; i++) {
                 if (this.total[i].nombre_servicio == nombre) {
@@ -86,14 +99,13 @@
             if (encontrado == false) {
                 this.total.push({ "nombre_servicio": nombre });
                 this.precio_total += precio;
-                document.getElementById(id + "c").removeAttribute("hidden");
+                document.getElementById(id + "c").setAttribute("style","display: block");
                 document.getElementById(id).setAttribute("style", "display: none;");
+                document.getElementById("btn-reservar").removeAttribute("disabled");
             }
-            console.log(this.total);
             console.log(this.precio_total);
         },
         anadido(nombre, precio, id) {
-            console.log("Hola2");
             for (let i = 0; i < this.total.length; i++) {
                 if (this.total[i].nombre_servicio == nombre) {
                     this.total = this.total.filter(obj => obj.nombre_servicio != nombre);
@@ -103,37 +115,98 @@
                     console.log(this.precio_total);
                 }
             }
-            console.log(this.total);
         },
         fecha(index) {
-            this.dia = index;
-            document.getElementById(index + "p").setAttribute("style", "background: green;");
-            console.log(this.dia);
+            if(this.dia == 0) {
+              this.dia = index;
+              let encontrado = false;
+              document.getElementById(index + "p").setAttribute("style", "background: green;");
+              for(let i = 0;i < this.horasOcupadas.length;i++) {
+                if(this.horasOcupadas[i].dia == this.dia) {
+                  encontrado = true
+                }
+              }
+              if(encontrado == false) {
+                for(let i = 0;i < this.reservas.length;i++) {
+                  if(this.reservas[i].dia == index) {
+                    this.horasOcupadas.push({"dia": this.dia, "hora": this.reservas[i].hora});
+                  }
+                }
+                for(let i = 0;i < this.horasOcupadas.length;i++) {
+                    document.getElementById(this.horasOcupadas[i].hora).setAttribute("style","background-color: red;");
+                }
+              }
+              else {
+                for(let i = 0;i < this.horasOcupadas.length;i++) {
+                    document.getElementById(this.horasOcupadas[i].hora).setAttribute("style","background-color: red;");
+                }
+              }
+            }
+            else {
+              document.getElementById(index + "p").setAttribute("style", "background: dark;");
+              let encontrado = false
+              for(let i = 0;i < this.horasOcupadas.length;i++) {
+                if(this.horasOcupadas[i].dia == this.dia) {
+                  encontrado = true;
+                }
+              }
+              if(encontrado == true) {
+                for(let i = 0;i < this.horasOcupadas.length;i++) {
+                  document.getElementById(this.horasOcupadas[i].hora).setAttribute("style","background-color: dark;");
+                }
+                this.horasOcupadas = this.horasOcupadas.filter(d => d.dia != this.dia);
+              }
+              this.dia = 0;
+            }
         },
-        selecion_hora(hora) {
-            this.hora = hora;
-            document.getElementById(hora).setAttribute("style", "background: green;");
+        selecion_hora(index) {
+          let num = 0;
+          console.log(this.hora)
+          for(let i = 0;i < this.horasOcupadas.length;i++) {
+            if(this.hora == "" && index == this.horasOcupadas[i].hora) {
+              num = 1;
+            }
+            else if(this.hora != "" && index != this.horasOcupadas[i].hora){
+              num = 2;
+            }
+          }
+          console.log(num)
+          if(num == 1) {
+            alert("Ya esta reservado");
+          }
+          else if(num == 2) {
+            document.getElementById(index).setAttribute("style", "background: dark;");
+            this.hora = "";
+          }
+          else {
+            document.getElementById(index).setAttribute("style", "background: green;");
+            this.hora = index;
+          }
         },
         reservar() {
           this.email = this.sessioStore.get.email;
           if(this.email != null) {
-            console.log(this.email + " " + this.total + " " + this.dia + " " + this.hora + " " + this.precio_total);
-            const servicio = JSON.stringify(this.total);
-            const datosEnvio = new FormData();
-            datosEnvio.append("email", this.email);
-            datosEnvio.append("servicios", servicio);
-            datosEnvio.append("dia", this.dia);
-            datosEnvio.append("hora", this.hora);
-            datosEnvio.append("mes", this.mes);
-            datosEnvio.append("precio_total", this.precio_total);
-            fetch("http://localhost:8000/reservas/nueva/reserva", {
-                method: "POST",
-                body: datosEnvio
-            }).then(function (res) {
-                return res.json();
-            }).then(function (data) {
-                console.log(data);
-            });
+            if(this.hora != 0 && this.dia != "") {
+              const servicio = JSON.stringify(this.total);
+              const datosEnvio = new FormData();
+              datosEnvio.append("email", this.email);
+              datosEnvio.append("servicios", servicio);
+              datosEnvio.append("dia", this.dia);
+              datosEnvio.append("hora", this.hora);
+              datosEnvio.append("mes", this.mes);
+              datosEnvio.append("precio_total", this.precio_total);
+              fetch("http://localhost:8000/reservas/nueva/reserva", {
+                  method: "POST",
+                  body: datosEnvio
+              }).then(function (res) {
+                  return res.json();
+              }).then(function (data) {
+                  console.log(data);
+              });
+            }
+            else {
+              alert("Porfavor escoga un dia y hora");
+            }
           }
           else {
             alert("Tienes que iniciar sesion para poder reservar");
@@ -145,29 +218,83 @@
 </script> 
 
 <style>
-  #reservas {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
+  h2 {
+    margin-left: 20%;
   }
+  #title-tienda {
+    color: black;
+    text-align: center;
+  }
+  #servicios {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    margin-left: 50px;
+  }
+  #precio_total {
+      margin-left: 50%;
+    }
   #container-fecha {
     display: flex;
+    margin-right: 30em;
   }
-  #dias {
+  #nombre-dias {
     display: grid;
-    grid-template-columns: 10% 10% 10% 10% 10% 10% 10%;
+    grid-template-columns: repeat(7,1fr);
     column-gap: 20px;
     row-gap: 20px;
+    margin-left: 20em;
+  }
+  .card {
+    margin: 5px;
+  }
+  .btn-anadido {
+    display: none;
   }
   .dia {
-    border: 1px solid black;
     padding: 5px;
     font-size: 15px;
     text-align: center;
   }
   #horas {
     display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-columns: repeat(5,1fr);
     column-gap: 20px;
-    row-gap: 20px;
+    margin-top: 50px;
+  }
+  #btn-reservar {
+    margin-left: 60em;
+  }
+
+  @media screen and (max-width: 600px) {
+    h2 {
+      text-align: center;
+    }
+    #servicios {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      margin-right: 20px;
+    }
+    #precio_total {
+      margin-left: 40%;
+    }
+    #card-servicios {
+      margin: 5px;
+      width: 10rem;
+    }
+    #container-fecha {
+      display: flow-root;
+    }
+    #nombre-dias {
+      display: grid;
+      margin-left: 0em;
+    }
+    #horas {
+      margin-right: 50%;
+      margin-top: 20px;
+    }
+    #btn-reservar {
+      margin-left: 0em;
+      margin-left: 40%;
+    }
   }
 </style>

@@ -25,6 +25,7 @@
                         <p class="card-subtitle">- Hora: {{ses.hora}} <br> - Dia: {{ses.dia}} <br> - Mes: {{ses.mes}}</p>
                         <p class="card-text">- Precio total: {{ses.precio_total}} €</p>
                     </div>
+                    <button class="btn btn-danger" @click="cancelar(ses.id)">Cancelar reserva</button>
                 </div>
             </div>
         </div>
@@ -38,6 +39,7 @@
                         <p class="card-text">- Precio total: {{ses.precio_total}} €</p>
                     </div>
                 </div>
+                <br>
             </div>
         </div>
     </div>
@@ -65,32 +67,36 @@
             ...mapStores(sessioStore)
     },
     mounted() {
-        console.log(this.$route.params.id)
-        this.id_user = this.sessioStore.get.id_user;
-        if(this.id_user == this.$route.params.id) {
-            fetch(`http://localhost:8000/usuarios/perfil/${this.$route.params.id}`)
-                .then(res => res.json())
-                .then((data) => {
-                this.datos = data;
-                for(let i = 0;i < this.datos.reservas.length;i++) {
-                    this.reservas = this.datos.reservas;
-                }
-                for(let i = 0;i < this.datos.tickets.length;i++) {
-                    this.tickets = this.datos.tickets;
-                }
-            });
-        }
-        else {
-            alert("Tienes que iniciar sesion");
-        }
+        this.actualizar();
     },
     methods: {
+        actualizar() {
+            console.log(this.$route.params.id)
+            this.id_user = this.sessioStore.get.id_user;
+            if(this.id_user == this.$route.params.id) {
+                fetch(`http://localhost:8000/usuarios/perfil/${this.$route.params.id}`)
+                .then(res => res.json())
+                .then((data) => {
+                    this.datos = data;
+                    console.log(this.datos)
+                    for(let i = 0;i < this.datos.reservas.length;i++) {
+                        this.reservas = this.datos.reservas;
+                    }
+                    for(let i = 0;i < this.datos.tickets.length;i++) {
+                        this.tickets = this.datos.tickets;
+                    }
+                });
+            }   
+            else {
+                alert("Tienes que iniciar sesion");
+            }
+        },
         cambios() {
             if(this.id_user == this.$route.params.id) {
             const datosEnvio = new FormData();
             datosEnvio.append("contrasena", this.contrasena);
             fetch(`http://localhost:8000/usuarios/cambiar/contrasena/${this.$route.params.id}`, {
-                method: "PUT",
+                method: "POST",
                 body: datosEnvio
             }).then(response => response.json())
                 .then(data => this.datos = data);
@@ -99,6 +105,13 @@
                 alert("No puedes cambiar la contraseña, porque no has iniciado sesion");
             }
         },
+        cancelar(id) {
+            console.log(id);
+            fetch(`http://localhost:8000/reservas/cancelar/reserva/${id}`, {
+                method: "DELETE"
+            }).then(response => response.json());
+
+        }
     },
     components: { Navegador }
 }            

@@ -85,6 +85,23 @@ class ReservasController extends AbstractController
         ]);
     }
 
+    #[Route('/todas', name: 'app_reservas_todas', methods: ['GET'])]
+    public function mostrar(ReservasRepository $reservasRepository): JsonResponse
+    {
+        $reservas = $reservasRepository->findAll();
+
+        $i = 0;
+        foreach ($reservas as $key) {
+            $data_reservas[$i] = [
+                'hora' => $key->getHora(),
+                'dia' => $key->getDia()
+            ];
+            $i++;
+        }
+
+        return new JsonResponse($data_reservas, Response::HTTP_OK);
+    }
+
     #[Route('/nueva/reserva', name: 'app_reserva_new2', methods: ['POST','GET'])]
     public function new2(Request $request, ReservasRepository $reservasRepository, UsuariosRepository $usuariosRepository, ServiciosRepository $serviciosRepository, ReservaServicioRepository $reservaServicioRepository): JsonResponse
     {
@@ -113,11 +130,10 @@ class ReservasController extends AbstractController
         return new JsonResponse("Gracias por reservar", Response::HTTP_OK);
     }
 
-    #[Route('/cancelar/reserva/{id}', name: 'app_delete', methods: ['POST','GET'])]
+    /*#[Route('/cancelar/reserva/{id}', name: 'app_delete', methods: ['DELETE','GET'])]
     public function cancelar($id, ReservasRepository $reservasRepository, ReservaServicioRepository $reservaServicioRepository): JsonResponse
     {
         $data_id = $reservaServicioRepository->coger_id_reserva_servicio($id);
-        print_r($data_id);
         for($i = 0;$i < count($data_id);$i++) {
             $id_reserva = $data_id[$i]['id'];
             $restos = $reservaServicioRepository->findOneBy(['id' => $id_reserva]);
@@ -127,7 +143,7 @@ class ReservasController extends AbstractController
         $restos2 = $reservasRepository->findOneBy(['id' => $id_reserva2]);
         $reservasRepository->remove($restos2);
         return new JsonResponse("Se ha eliminado reserva", Response::HTTP_OK);
-    }
+    }*/
 
     #[Route('/{id}', name: 'app_reservas_show', methods: ['GET'])]
     public function show(Reservas $reserva): Response
