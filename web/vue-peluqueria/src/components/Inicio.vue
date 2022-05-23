@@ -1,10 +1,10 @@
 <template>
   <Navegador/>
-  <div class="hero-image">
-    <div class="hero-text">
-      <h1 style="font-size:50px">Peluquería Happy</h1>
-    </div>
-  </div><br>
+  <div class="hola">
+    <h1 class="adios">Peluquería Happy</h1>
+  </div>
+  
+    <br>
   <div class="cont-video">
     <video controls="" loop="loop" autoplay="" playsinline="" muted="" src="/video_peluqueria.mp4">
       <source src="/video_peluqueria.mp4" type="video/mp4">
@@ -57,6 +57,15 @@ export default {
 </script>
 
 <style>
+.hola{
+  width: 100%;
+  height: 900px;
+  text-align: center;
+  padding-top:370px;
+}
+.adios{
+
+}
 body {
   margin: 0;
   padding: 0%;
@@ -68,24 +77,14 @@ body {
   background-color: aliceblue;
 
 }
-.hero-image {
-  background-image: url("./salon.jpg");
-  background-color: #cccccc;
-  height: 500px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
-  margin: 0px;
-  padding: 0%;
-}
 .hero-text {
   text-align: center;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  
   transform: translate(-50%, -50%);
   color: white;
+  width: 800px;
+  height: 800px;
 }
 video {
   width: 60%; 
