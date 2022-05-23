@@ -40,7 +40,7 @@ import Navegador from './Navegador.vue';
             datosEnvio.append("telefono", this.telefono);
             datosEnvio.append("email", this.email);
             datosEnvio.append("contrasena", this.contrasena);
-            fetch("http://192.168.210.154:8000/usuarios/nuevo/usuario", {
+            fetch("http://192.168.137.159:8000/usuarios/nuevo/usuario", {
                 method: "POST",
                 body: datosEnvio
             }).then(function (res) {
