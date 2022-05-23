@@ -11,9 +11,9 @@
             <p class="card-subtitle mb-2 text-muted">{{ses.descripcion}}</p>
             <p class="card-text">Stock :  {{ses.cantidad}}</p>
             <p class="card-text">Precio : {{ses.precio}} €</p>
-            <button class="btn btn-primary" @click="sumar(ses.nombre, ses.cantidad, ses.precio)">+</button>
+            <button class="btn btn-dark" @click="sumar(ses.nombre, ses.cantidad, ses.precio)">+</button>
             <input type="text" :id="ses.nombre" value="0" />
-            <button class="btn btn-primary" @click="restar(ses.nombre, ses.precio)">-</button>
+            <button class="btn btn-dark" @click="restar(ses.nombre, ses.precio)">-</button>
           </div>
         </div>
       </div>
@@ -23,8 +23,8 @@
       <h2>Lista de productos:</h2>
       <div id="lista-producto"></div>
       <hr>
-      <p id="precio_total">Precio total: {{this.precio_total}}</p>
-      <button class="btn btn-primary" id="btn-comprar" @click="comprar()" disabled>Comprar</button>
+      <p id="precio_total">Precio total: {{this.precio_total}}€</p>
+      <button class="btn btn-dark" id="btn-comprar" @click="comprar()" disabled>Comprar</button>
     </div>
   </div>
   <br><br>
@@ -49,7 +49,7 @@
       ...mapStores(sessioStore)
     },
     mounted() {
-        fetch(`http://192.168.210.154:8000/productos/catalogo`)
+        fetch(`http://localhost:8000/productos/catalogo`)
             .then(res => res.json())
             .then((data) => {
             this.datos = data;
@@ -84,8 +84,8 @@
                 if (this.total[i].cantidades != 0) {
                   htmlstr +=`<div id="articulo">
                               <h4>Aticulo: ${i + 1}</h4>
-                              <p class>- Nombre del producto: ${this.total[i].nombre}</p>
-                              <p>- Unidades: ${this.total[i].cantidades}
+                              <p class="art">- Nombre del producto: ${this.total[i].nombre}</p>
+                              <p class="art">- Unidades: ${this.total[i].cantidades}
                             </div>`;
                 }
             }
@@ -145,6 +145,15 @@
 </script> 
 
 <style>
+  h2 {
+    color: white;
+  }
+  h4 {
+    color: white;
+  }
+  .art {
+    color: white;
+  }
   #title-tienda {
     color: black;
     text-align: center;
@@ -168,6 +177,9 @@
     margin: 5px;
     width: 20rem;
   }
+  #btn-comprar {
+    margin-left: 10rem;
+  }
 
 /* Tablet */
   @media screen and (max-width: 992px) {
@@ -177,6 +189,7 @@
     #productos {
       display: grid;
       grid-template-columns: repeat(2,1fr);
+      margin-left: 3rem;
     }
     #lista-producto {
       display: grid;
@@ -184,9 +197,6 @@
     }
     #articulo {
       margin-left: 20%;
-    }
-    #precio_total {
-      margin-left: 40%;
     }
     .card {
       margin-left: 50px;
@@ -198,7 +208,7 @@
       text-align: center;
     }
     #btn-comprar {
-      margin-left: 21rem;
+      margin-left: 25rem;
     }
   }
 
@@ -209,17 +219,15 @@
     }
     #productos {
       display: grid;
-      grid-template-columns: repeat(3,30%);
+      grid-template-columns: repeat(3,32%);
+      margin-left: 2rem;
     }
     #lista-producto {
       display: grid;
       grid-template-columns: repeat(3,30%);
     }
     #articulo {
-      margin-left: 20%;
-    }
-    #precio_total {
-      margin-left: 45%;
+      margin-left: 30%;
     }
     .card {
       margin-left: 50px;
@@ -243,6 +251,7 @@
     #productos {
       display: grid;
       grid-template-columns: repeat(1,1fr);
+      margin-left: 2.5rem;
     }
     .card {
       margin-left: 50px;

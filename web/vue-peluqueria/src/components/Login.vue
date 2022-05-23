@@ -41,7 +41,7 @@
             const datosEnvio = new FormData();
             datosEnvio.append("email", this.email);
             datosEnvio.append("contrasena", this.contrasena);
-            fetch("http://192.168.210.154:8000/usuarios/login", {
+            fetch("http://localhost:8000/usuarios/login", {
                 method: "POST",
                 body: datosEnvio
             }).then(response => response.json())

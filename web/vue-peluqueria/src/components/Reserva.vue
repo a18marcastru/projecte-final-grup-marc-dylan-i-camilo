@@ -1,6 +1,6 @@
 <template>
     <Navegador/>
-    <h1 id="title-tienda">Reserva un dia en la peluqueria</h1>
+    <h1 id="title-reserva">Reserva un dia en la peluqueria</h1>
     <div id="container-reserva">
       <br>
       <h2>Servicios</h2>
@@ -16,7 +16,7 @@
           </div>
         </div>
       </div>
-      <p id="precio_total">Precio total: {{this.precio_total}}</p>
+      <p id="precio_total">Precio total: {{this.precio_total}}€</p>
       <br>
       <h2>Mes: {{this.mes}}</h2>
       <div id="container-fecha">
@@ -66,18 +66,20 @@
         };
     },
     mounted() {
-        fetch(`http://192.168.210.154:8000/servicios/mostrar`)
+        fetch(`http://localhost:8000/servicios/mostrar`)
             .then(res => res.json())
             .then((data) => {
             this.servicios = data;
-            console.log(this.servicios);
         });
 
-        fetch(`http://192.168.210.154:8000/reservas/todas`)
+        fetch(`http://localhost:8000/reservas/todas`)
             .then(res => res.json())
             .then((data) => {
             this.reservas = data;
-            console.log(this.reservas);
+            for(let i = 0;i < this.reservas.length;i++) {
+              this.horasOcupadas.push({"dia": this.reservas[i].dia, "hora": this.reservas[i].hora});
+            }
+            console.log(this.horasOcupadas)
         });
         const meses = ["Junio", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
         const d = new Date();
@@ -118,6 +120,7 @@
         },
         fecha(index) {
             if(this.dia == 0) {
+              console.log("Hola1")
               this.dia = index;
               let encontrado = false;
               document.getElementById(index + "p").setAttribute("style", "background: green;");
@@ -126,61 +129,71 @@
                   encontrado = true
                 }
               }
-              if(encontrado == false) {
-                for(let i = 0;i < this.reservas.length;i++) {
-                  if(this.reservas[i].dia == index) {
-                    this.horasOcupadas.push({"dia": this.dia, "hora": this.reservas[i].hora});
-                  }
-                }
+              if(encontrado == true) {
                 for(let i = 0;i < this.horasOcupadas.length;i++) {
+                  if(this.horasOcupadas[i].dia == this.dia) {
                     document.getElementById(this.horasOcupadas[i].hora).setAttribute("style","background-color: red;");
+                  }
                 }
               }
               else {
                 for(let i = 0;i < this.horasOcupadas.length;i++) {
-                    document.getElementById(this.horasOcupadas[i].hora).setAttribute("style","background-color: red;");
+                    document.getElementById(this.horasOcupadas[i].hora).setAttribute("style","background-color: dark;");
                 }
               }
             }
-            else {
-              document.getElementById(index + "p").setAttribute("style", "background: dark;");
-              let encontrado = false
+            else if(this.dia != index){
+              document.getElementById(this.dia + "p").setAttribute("style", "background: dark;");
+              document.getElementById(index + "p").setAttribute("style", "background: green;");
               for(let i = 0;i < this.horasOcupadas.length;i++) {
-                if(this.horasOcupadas[i].dia == this.dia) {
-                  encontrado = true;
-                }
-              }
-              if(encontrado == true) {
-                for(let i = 0;i < this.horasOcupadas.length;i++) {
+                if(this.dia == this.horasOcupadas[i].dia) {
                   document.getElementById(this.horasOcupadas[i].hora).setAttribute("style","background-color: dark;");
                 }
-                this.horasOcupadas = this.horasOcupadas.filter(d => d.dia != this.dia);
+              }
+              this.dia = index;
+              for(let i = 0;i < this.horasOcupadas.length;i++) {
+                if(index == this.horasOcupadas[i].dia) {
+                  document.getElementById(this.horasOcupadas[i].hora).setAttribute("style","background-color: red;");
+                }
+              }
+            }
+            else if(this.dia == index) {
+              document.getElementById(index + "p").setAttribute("style", "background: dark;");
+              for(let i = 0;i < this.horasOcupadas.length;i++) {
+                if(index == this.horasOcupadas[i].dia) {
+                  document.getElementById(this.horasOcupadas[i].hora).setAttribute("style","background-color: dark;");
+                }
               }
               this.dia = 0;
             }
         },
         selecion_hora(index) {
           if(this.dia != 0) {
-            let num = 0;
-            for(let i = 0;i < this.horasOcupadas.length;i++) {
-              if(this.hora == "" && index == this.horasOcupadas[i].hora) {
-                num = 1;
+            if(this.hora == index || this.hora == "") {
+              let num = 0;
+              for(let i = 0;i < this.horasOcupadas.length;i++) {
+                if(this.dia == this.horasOcupadas[i].dia && this.hora == "" && index == this.horasOcupadas[i].hora) {
+                  num = 1;
+                }
+                else if(this.hora != "" && index != this.horasOcupadas[i].hora){
+                  num = 2;
+                }
               }
-              else if(this.hora != "" && index != this.horasOcupadas[i].hora){
-                num = 2;
+              console.log(num)
+              if(num == 1) {
+                alert("Ya esta reservado");
+              }
+              else if(num == 2) {
+                document.getElementById(index).setAttribute("style", "background: dark;");
+                this.hora = "";
+              }
+              else {
+                document.getElementById(index).setAttribute("style", "background: green;");
+                this.hora = index;
               }
             }
-            console.log(num)
-            if(num == 1) {
-              alert("Ya esta reservado");
-            }
-            else if(num == 2) {
-              document.getElementById(index).setAttribute("style", "background: dark;");
-              this.hora = "";
-            }
-            else {
-              document.getElementById(index).setAttribute("style", "background: green;");
-              this.hora = index;
+            else if(this.hora != index) {
+              alert("Solo puedes coger una hora")
             }
           }
           else {
@@ -199,7 +212,7 @@
               datosEnvio.append("hora", this.hora);
               datosEnvio.append("mes", this.mes);
               datosEnvio.append("precio_total", this.precio_total);
-              fetch("http://192.168.210.154:8000/reservas/nueva/reserva", {
+              fetch("http://localhost:8000/reservas/nueva/reserva", {
                   method: "POST",
                   body: datosEnvio
               }).then(function (res) {
@@ -224,9 +237,10 @@
 <style>
   h2 {
     margin-left: 20%;
+    color: white;
   }
-  #title-tienda {
-    color: black;
+  #title-reserva {
+    color: white;
     text-align: center;
   }
   #servicios {
@@ -236,6 +250,7 @@
   }
   #precio_total {
       margin-left: 50%;
+      color: white;
     }
   #container-fecha {
     display: flex;
