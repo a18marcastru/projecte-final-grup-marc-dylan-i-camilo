@@ -1,36 +1,65 @@
 <template>
     <Navegador/>
-    <div id="perfil">
-        <div id="datos">
-            <h2>Perfil del usuario</h2><br><br>
-            <p>Nombre: {{this.datos.nombre}}</p><br>
-            <p>Apellido: {{this.datos.apellido}}</p><br>
-            <p>Teléfono: {{this.datos.telefono}}</p><br>
-            <p>Email: {{this.datos.email}}</p><br><br>
-        </div>
-        <div id="contrasena">
+    <div class="grid-container"> 
+        <div id="user-item1">
+            <div id="datos" style="color: white;">
+                <h1>Perfil del usuario</h1><br>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Nombre:</th>
+                            <td>
+                                <span>{{this.datos.nombre}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Apellido:</th>
+                            <td>
+                                <span>{{this.datos.apellido}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>telefono:</th>
+                            <td>
+                                <span>{{this.datos.telefono}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Email:</th>
+                            <td>
+                                <span>{{this.datos.email}}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div><br><br>
+
+        <div class="user-item2" id="contrasena" style="color: white;">
             <h2>Cambiar contraseña:</h2>
             <input v-model="contrasena" type="password" id="pwd2" name="contrasena2" placeholder="introduce nueva contraseña" size="35" required><br><br>
-            <button class="btn btn-outline-primary" type="submit" id="perfilBtn" @click="cambios()">Guardar cambios<br>{{this.datos.nombre}}</button>
+            <button class="btn btn-success" type="submit" id="perfilBtn" @click="cambios()">Guardar cambios<br>{{this.datos.nombre}}</button>
         </div>
-    </div>
-    <h2>Datos de reservas y compras</h2>
-    <div id="datos2">
-        <div id="reservas">
-            <h2>Reservas</h2>
-            <div v-for="ses in reservas">
-                <div class="card" style="width: 20rem;">
-                    <div class="card-body">
-                        <p class="card-title">- Servicio: {{ses.nombre_servicio}}</p>
-                        <p class="card-subtitle">- Hora: {{ses.hora}} <br> - Dia: {{ses.dia}} <br> - Mes: {{ses.mes}}</p>
-                        <p class="card-text">- Precio total: {{ses.precio_total}} €</p>
-                    </div>
+        
+        <div class="user-item3" id="datos2">
+            <h2 style="color: white;">Datos de reservas y compras</h2>
+            <div id="reservas">
+                <h2 style="color: white;">Reservas</h2>
+                <div v-for="ses in reservas">
+                    <div class="card" style="width: 20rem;">
+                        <div class="card-body">
+                            <p class="card-title">- Servicio: {{ses.nombre_servicio}}</p>
+                            <p class="card-subtitle">- Hora: {{ses.hora}} <br> - Dia: {{ses.dia}} <br> - Mes: {{ses.mes}}</p>
+                            <p class="card-text">- Precio total: {{ses.precio_total}} €</p>
+                        </div>
+                    </div>    
                     <button class="btn btn-danger" @click="cancelar(ses.id)">Cancelar reserva</button>
                 </div>
             </div>
         </div>
-        <div>
-            <h2>Compras</h2>
+
+        <div class="user-item4">
+            <h2 style="color: white;">Compras</h2>
             <div v-for="ses in tickets">
                 <div class="card" style="width: 20rem;">
                     <div class="card-body">
@@ -38,8 +67,7 @@
                         <p class="card-subtitle">- Fecha: {{ses.fecha}}</p>
                         <p class="card-text">- Precio total: {{ses.precio_total}} €</p>
                     </div>
-                </div>
-                <br>
+                </div><br>
             </div>
         </div>
     </div>
@@ -119,17 +147,12 @@
 </script>
 
 <style>
-    #perfil {
+    .grid-container{
         display: grid;
         grid-template-columns: auto auto;
+        font-size: 20px;
     }
-    #datos {
-        margin-right: 5px;
-    }
-    #datos2 {
-        display: flex;
-    }
-    #reservas {
-        margin-right: 50%;
+    span {
+        margin-left: 20px;
     }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <header>
         <nav class="navbar navbar-dark bg-dark" style="background-color: #e3f2fd;">
-            <img class="logo" src="/logo.png"/>
+            <a href="/"><img class="logo" src="/logo.png"/></a>
             <div v-if="this.estado != true">
                 <RouterLink class="btn btn-dark" to="/">Home</RouterLink>
                 <RouterLink class="btn btn-dark" to="/tienda">Tienda</RouterLink>
