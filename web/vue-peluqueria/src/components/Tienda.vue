@@ -7,7 +7,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">{{ses.nombre}}</h5>
-            <img :src="ses.imagen">
+            <img :src="ses.imagen" alt="Producto">
             <p class="card-subtitle mb-2 text-muted">{{ses.descripcion}}</p>
             <p class="card-text">Stock :  {{ses.cantidad}}</p>
             <p class="card-text">Precio : {{ses.precio}} €</p>
@@ -22,9 +22,12 @@
     <div id="lista">
       <h2>Lista de productos:</h2>
       <div id="lista-producto"></div>
+      <hr>
+      <p id="precio_total">Precio total: {{this.precio_total}}</p>
       <button class="btn btn-primary" id="btn-comprar" @click="comprar()" disabled>Comprar</button>
     </div>
   </div>
+  <br><br>
 </template>
 
 <script>
@@ -79,14 +82,15 @@
             let htmlstr = "";
             for (let i = 0; i < this.total.length; i++) {
                 if (this.total[i].cantidades != 0) {
-                  htmlstr += `<h4>Aticulo: ${i + 1}</h4><p class>- Nombre del producto: ${this.total[i].nombre}</p>
-                              <p>- Unidades: ${this.total[i].cantidades}`;
+                  htmlstr +=`<div id="articulo">
+                              <h4>Aticulo: ${i + 1}</h4>
+                              <p class>- Nombre del producto: ${this.total[i].nombre}</p>
+                              <p>- Unidades: ${this.total[i].cantidades}
+                            </div>`;
                 }
             }
             this.stock_groups[nombre] = precio * num_total;
             this.precio_total = Object.values(this.stock_groups).reduce((acc, curr) => acc + curr, 0);
-            htmlstr += "<hr/>";
-            htmlstr += `<p>Precio total: ${this.precio_total}</p>`;
             document.getElementById("lista-producto").innerHTML = htmlstr;
             document.getElementById("btn-comprar").removeAttribute("disabled");
         },
@@ -97,21 +101,20 @@
                 document.getElementById(nombre).value = num;
                 let num_total = num;
                 for (let i = 0; i < this.total.length; i++) {
-                    //si lo he encontrado, le resto uno
-                    if (this.total[i].nombre == nombre) {
-                        if (num_total != 0) {
-                            this.total[i].cantidades = num_total;
-                        }
-                        else {
-                            this.total[i].cantidades = num_total;
-                            this.total = this.total.filter(can => can.cantidades > 0);
-                        }
+                  if (this.total[i].nombre == nombre) {
+                    if (num_total != 0) {
+                      this.total[i].cantidades = num_total;
                     }
+                    else {
+                      this.total[i].cantidades = num_total;
+                      this.total = this.total.filter(can => can.cantidades > 0);
+                    }
+                  }
                 }
-                this.actualizar(nombre, num_total, precio);
+              this.actualizar(nombre, num_total, precio);
             }
             else if (num == 0) {
-                alert("No puedes restar mas");
+              alert("No puedes restar mas");
             }
         },
         comprar() {
@@ -158,14 +161,81 @@
     display: grid;
     grid-template-columns: repeat(4,1fr);
   }
-  #caruaje {
-    border: 3px solid black;
-    margin: 65px
+  #lista-producto {
+      margin-left: 30px;
   }
   .card {
     margin: 5px;
     width: 20rem;
   }
+
+/* Tablet */
+  @media screen and (max-width: 992px) {
+    #container-tienda {
+      display: flow-root;
+    }
+    #productos {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+    }
+    #lista-producto {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+    }
+    #articulo {
+      margin-left: 20%;
+    }
+    #precio_total {
+      margin-left: 40%;
+    }
+    .card {
+      margin-left: 50px;
+    }
+    #lista-producto {
+      margin-left: 10px;
+    }
+    h2 {
+      text-align: center;
+    }
+    #btn-comprar {
+      margin-left: 21rem;
+    }
+  }
+
+    /* Tablet-hroizontal */
+  @media screen and (max-width: 1200px) and (min-width: 992px) {
+    #container-tienda {
+      display: flow-root;
+    }
+    #productos {
+      display: grid;
+      grid-template-columns: repeat(3,30%);
+    }
+    #lista-producto {
+      display: grid;
+      grid-template-columns: repeat(3,30%);
+    }
+    #articulo {
+      margin-left: 20%;
+    }
+    #precio_total {
+      margin-left: 45%;
+    }
+    .card {
+      margin-left: 50px;
+    }
+    #lista-producto {
+      margin-left: 10px;
+    }
+    h2 {
+      text-align: center;
+    }
+    #btn-comprar {
+      margin-left: 31rem;
+    }
+  }
+
+  /* Mobil */
   @media screen and (max-width: 600px){
     #container-tienda {
       display: flow-root;
@@ -184,7 +254,8 @@
       text-align: center;
     }
     #btn-comprar {
-      margin-left: 150px;
+      margin-left: 10rem;
     }
   }
+
 </style>

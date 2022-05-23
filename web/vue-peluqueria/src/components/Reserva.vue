@@ -35,7 +35,7 @@
         <br>
         <h2 id="title-horas">Horas</h2>
         <div id="horas">
-          <div v-for="index in horas">
+          <div id="lista-horas" v-for="index in horas">
             <div class="dia btn-dark" :id="index.hora" @click="selecion_hora(index.hora)">{{index.hora}}</div>
             <br>
           </div>
@@ -161,26 +161,30 @@
         },
         selecion_hora(index) {
           let num = 0;
-          console.log(this.hora)
-          for(let i = 0;i < this.horasOcupadas.length;i++) {
-            if(this.hora == "" && index == this.horasOcupadas[i].hora) {
-              num = 1;
+          if(this.dia != "") {
+            for(let i = 0;i < this.horasOcupadas.length;i++) {
+              if(this.hora == "" && index == this.horasOcupadas[i].hora) {
+                num = 1;
+              }
+              else if(this.hora != "" && index != this.horasOcupadas[i].hora){
+                num = 2;
+              }
             }
-            else if(this.hora != "" && index != this.horasOcupadas[i].hora){
-              num = 2;
+            console.log(num)
+            if(num == 1) {
+              alert("Ya esta reservado");
             }
-          }
-          console.log(num)
-          if(num == 1) {
-            alert("Ya esta reservado");
-          }
-          else if(num == 2) {
-            document.getElementById(index).setAttribute("style", "background: dark;");
-            this.hora = "";
+            else if(num == 2) {
+              document.getElementById(index).setAttribute("style", "background: dark;");
+              this.hora = "";
+            }
+            else {
+              document.getElementById(index).setAttribute("style", "background: green;");
+              this.hora = index;
+            }
           }
           else {
-            document.getElementById(index).setAttribute("style", "background: green;");
-            this.hora = index;
+            alert("Escoge primero el dia");
           }
         },
         reservar() {
@@ -265,6 +269,75 @@
     margin-left: 60em;
   }
 
+  /* Tablet */
+  @media screen and (max-width: 992px) and (min-width: 600px) {
+    h2 {
+      margin-left: 0em;
+    }
+    #servicios {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+    }
+    #card-servicios {
+      margin: 5px;
+      width: 15rem;
+      margin-left: -20px;
+    }
+    #container-fecha {
+      display: flow-root;
+    }
+    #nombre-dias {
+      display: grid;
+      margin-left: 10em;
+    }
+    #title-horas {
+      margin-left: 13em;
+    }
+    #horas {
+      padding-left: 15em;
+      margin-top: 20px;
+    }
+    #btn-reservar {
+      margin-left: 0em;
+      margin-left: 45%;
+    }
+  }
+
+  /* Tablet-horizontal */
+  @media screen and (max-width: 1200px) and (min-width: 992px) {
+    h2 {
+      margin-left: 0em;
+    }
+    #servicios {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+    }
+    #card-servicios {
+      margin: 5px;
+      width: 15rem;
+      margin-left: -20px;
+    }
+    #container-fecha {
+      display: flow-root;
+    }
+    #nombre-dias {
+      display: grid;
+      margin-left: 17em;
+    }
+    #title-horas {
+      margin-left: 14em;
+    }
+    #horas {
+      margin-left: 23em;
+      margin-top: 20px;
+    }
+    #btn-reservar {
+      margin-left: 0em;
+      margin-left: 45%;
+    }
+  }
+
+  /* Mobil */
   @media screen and (max-width: 600px) {
     h2 {
       text-align: center;
@@ -288,8 +361,11 @@
       display: grid;
       margin-left: 0em;
     }
+    #title-horas {
+      margin-left: 7em;
+    }
     #horas {
-      margin-right: 50%;
+      padding-left: 3em;
       margin-top: 20px;
     }
     #btn-reservar {
