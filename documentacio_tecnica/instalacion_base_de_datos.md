@@ -5,6 +5,6 @@
 - Contraseña: Marcfv1302
 
 ## Instalacion
-- Para crear la base de datos peluqueria hay un archivo SQL que es peluqueria.sql que vendra las tablas y campos.
+- Para crear las tablas y los campos de la base de datos peluqueria hay un archivo SQL que es peluqueria.sql.
 
 - Para insertar la informacion ya de base es con insert.sql que contiene la informacion para la base de datos peluqueria.
