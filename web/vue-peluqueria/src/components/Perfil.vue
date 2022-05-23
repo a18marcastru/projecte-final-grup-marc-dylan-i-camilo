@@ -82,6 +82,7 @@
                     for(let i = 0;i < this.datos.reservas.length;i++) {
                         this.reservas = this.datos.reservas;
                     }
+                    this.reservas.sort();
                     for(let i = 0;i < this.datos.tickets.length;i++) {
                         this.tickets = this.datos.tickets;
                     }
@@ -95,7 +96,7 @@
             if(this.id_user == this.$route.params.id) {
             const datosEnvio = new FormData();
             datosEnvio.append("contrasena", this.contrasena);
-            fetch(`http://192.168.137.159:8000/usuarios/cambiar/contrasena/${this.$route.params.id}`, {
+            fetch(`http://192.168.210.154:8000/usuarios/cambiar/contrasena/${this.$route.params.id}`, {
                 method: "POST",
                 body: datosEnvio
             }).then(response => response.json())
@@ -107,7 +108,7 @@
         },
         cancelar(id) {
             console.log(id);
-            fetch(`http://192.168.137.159:8000/reservas/cancelar/reserva/${id}`, {
+            fetch(`http://192.168.210.154:8000/reservas/cancelar/reserva/${id}`, {
                 method: "DELETE"
             }).then(response => response.json());
 

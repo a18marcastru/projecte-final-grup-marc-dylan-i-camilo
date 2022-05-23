@@ -66,14 +66,14 @@
         };
     },
     mounted() {
-        fetch(`http://192.168.137.159:8000/servicios/mostrar`)
+        fetch(`http://192.168.210.154:8000/servicios/mostrar`)
             .then(res => res.json())
             .then((data) => {
             this.servicios = data;
             console.log(this.servicios);
         });
 
-        fetch(`http://192.168.137.159:8000/reservas/todas`)
+        fetch(`http://192.168.210.154:8000/reservas/todas`)
             .then(res => res.json())
             .then((data) => {
             this.reservas = data;
@@ -199,7 +199,7 @@
               datosEnvio.append("hora", this.hora);
               datosEnvio.append("mes", this.mes);
               datosEnvio.append("precio_total", this.precio_total);
-              fetch("http://192.168.137.159:8000/reservas/nueva/reserva", {
+              fetch("http://192.168.210.154:8000/reservas/nueva/reserva", {
                   method: "POST",
                   body: datosEnvio
               }).then(function (res) {

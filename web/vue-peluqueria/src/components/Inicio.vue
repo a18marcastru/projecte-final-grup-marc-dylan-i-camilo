@@ -47,7 +47,7 @@ export default {
       Galeria
     },
     mounted() {
-      fetch("http://192.168.137.159:8000/comentarios/mostrar/comentarios")
+      fetch("http://192.168.210.154:8000/comentarios/mostrar/comentarios")
       .then(res => res.json())
       .then((data) => {
         this.datos = data;

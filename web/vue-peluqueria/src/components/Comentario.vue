@@ -42,7 +42,7 @@ import { mapStores } from 'pinia'
             Review
         },
         mounted() {
-        fetch("http://192.168.137.159:8000/comentarios/mostrar/comentarios")
+        fetch("http://192.168.210.154:8000/comentarios/mostrar/comentarios")
         .then(res => res.json())
         .then((data) => {
           this.datos = data;
@@ -59,7 +59,7 @@ import { mapStores } from 'pinia'
               datosEnvio.append('valoracion', this.valoracion);
               datosEnvio.append('descripcion', this.descripcion);
 
-              fetch('http://192.168.137.159:8000/comentarios/nuevo/comentario', {
+              fetch('http://192.168.210.154:8000/comentarios/nuevo/comentario', {
               method: 'POST',
               body: datosEnvio
               }).then(function(res){

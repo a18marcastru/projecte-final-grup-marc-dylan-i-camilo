@@ -49,7 +49,7 @@
       ...mapStores(sessioStore)
     },
     mounted() {
-        fetch(`http://192.168.137.159:8000/productos/catalogo`)
+        fetch(`http://192.168.210.154:8000/productos/catalogo`)
             .then(res => res.json())
             .then((data) => {
             this.datos = data;
@@ -126,7 +126,7 @@
               datosEnvio.append("email", this.email);
               datosEnvio.append("productos", productos);
               datosEnvio.append("precio_total", this.precio_total);
-              fetch("http://192.168.137.159:8000/tickets/nuevo/ticket", {
+              fetch("http://192.168.210.154:8000/tickets/nuevo/ticket", {
                   method: "POST",
                   body: datosEnvio
               }).then(function (res) {
