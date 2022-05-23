@@ -1,47 +1,43 @@
 <template>
     <Navegador/>
     <div class="grid-container"> 
-        <div id="user-item1">
-            <div id="datos" style="color: white;">
-                <h1>Perfil del usuario</h1><br>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>Nombre:</th>
-                            <td>
-                                <span>{{this.datos.nombre}}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Apellido:</th>
-                            <td>
-                                <span>{{this.datos.apellido}}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>telefono:</th>
-                            <td>
-                                <span>{{this.datos.telefono}}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Email:</th>
-                            <td>
-                                <span>{{this.datos.email}}</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div><br><br>
-
-        <div class="user-item2" id="contrasena" style="color: white;">
-            <h2>Cambiar contraseña:</h2>
+        <div class="user-item1" id="datos" style="color: white;">
+            <h1>Perfil del usuario</h1><br>
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Nombre:</th>
+                        <td>
+                            <span>{{this.datos.nombre}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Apellido:</th>
+                        <td>
+                            <span>{{this.datos.apellido}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>telefono:</th>
+                        <td>
+                            <span>{{this.datos.telefono}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Email:</th>
+                        <td>
+                            <span>{{this.datos.email}}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="user-item2">
+            <h2 style="color: white;">Cambiar contraseña:</h2>
             <input v-model="contrasena" type="password" id="pwd2" name="contrasena2" placeholder="introduce nueva contraseña" size="35" required><br><br>
             <button class="btn btn-success" type="submit" id="perfilBtn" @click="cambios()">Guardar cambios<br>{{this.datos.nombre}}</button>
         </div>
-        
-        <div class="user-item3" id="datos2">
+        <div class="user-item3">
             <h2 style="color: white;">Datos de reservas y compras</h2>
             <div id="reservas">
                 <h2 style="color: white;">Reservas</h2>
@@ -57,7 +53,6 @@
                 </div>
             </div>
         </div>
-
         <div class="user-item4">
             <h2 style="color: white;">Compras</h2>
             <div v-for="ses in tickets">
@@ -147,11 +142,17 @@
 </script>
 
 <style>
-    .grid-container{
+    .grid-container {
         display: grid;
         grid-template-columns: auto auto;
         font-size: 20px;
     }
+    .user-item1, .user-item2, .user-item3, .user-item4 {
+        padding: 20px;
+        font-size: 30px;
+        text-align: center;
+    }
+
     span {
         margin-left: 20px;
     }
