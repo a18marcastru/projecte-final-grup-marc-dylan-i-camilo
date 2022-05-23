@@ -12,8 +12,8 @@
   </div><br>
   <div class="grid-container">
     <div class="grid-item1">
-      <p>Una alternativa a la peluquería convencional.</p><br>
-      <p>Situada en el corazón de Pedralbes, La Peluquería Happy abrió sus puertas este 2022. Nuestro equipo lo forman dos profesionales de la cosmética natural que son a la vez fundadoras de la empresa con una larga experiencia en el mundo de la Bio peluquería, amantes de la naturaleza y comprometidas con el medio ambiente.</p>
+      <h3 class="map-tit text-uppercase">los mejores en la peluquería convencional.</h3><br>
+      <p>Situada en el corazón de Pedralbes, La Peluquería Happy abrió sus puertas este 2022. Nuestro equipo lo forman tres profesionales de la cosmética que son a la vez fundadoras de la empresa con una larga experiencia en el mundo de la estética, amantes de la naturaleza y comprometidos con el medio ambiente.</p>
     </div>
     <div class="grid-item2">
     </div>
@@ -107,6 +107,7 @@ video {
 }
 .grid-item1 {
   border-top: 1px solid rgb(234, 213, 208);
+  font-size: 18px;
 }
 .grid-item2 {
   background-image: url('/imagen1.jpg');
@@ -124,6 +125,7 @@ video {
 }
 .grid-item4 {
   border-bottom: 1px solid rgb(234, 213, 208);
+  font-size: 18px;
 }
 
 </style>
