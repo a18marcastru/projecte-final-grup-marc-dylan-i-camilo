@@ -25,11 +25,13 @@
     </div>
   </div><br>
   <Comentario />
+  <Galeria/>
 </template>
 
 <script>
 import Comentario from "@/components/Comentario.vue";
 import Navegador from "@/components/Navegador.vue";
+import Galeria from './Galeria.vue';
 export default {
     data() {
       return {
@@ -42,7 +44,9 @@ export default {
     },
     components: {
     Comentario,
-    Navegador
+    Navegador,
+    Galeria
+        
 },
     mounted() {
       fetch("http://localhost:8000/comentarios/mostrar/comentarios")
