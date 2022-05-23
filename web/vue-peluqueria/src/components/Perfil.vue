@@ -74,7 +74,7 @@
             console.log(this.$route.params.id)
             this.id_user = this.sessioStore.get.id_user;
             if(this.id_user == this.$route.params.id) {
-                fetch(`http://localhost:8000/usuarios/perfil/${this.$route.params.id}`)
+                fetch(`http://192.168.210.154:8000/usuarios/perfil/${this.$route.params.id}`)
                 .then(res => res.json())
                 .then((data) => {
                     this.datos = data;
@@ -95,7 +95,7 @@
             if(this.id_user == this.$route.params.id) {
             const datosEnvio = new FormData();
             datosEnvio.append("contrasena", this.contrasena);
-            fetch(`http://localhost:8000/usuarios/cambiar/contrasena/${this.$route.params.id}`, {
+            fetch(`http://192.168.210.154:8000/usuarios/cambiar/contrasena/${this.$route.params.id}`, {
                 method: "POST",
                 body: datosEnvio
             }).then(response => response.json())
@@ -107,7 +107,7 @@
         },
         cancelar(id) {
             console.log(id);
-            fetch(`http://localhost:8000/reservas/cancelar/reserva/${id}`, {
+            fetch(`http://192.168.210.154:8000/reservas/cancelar/reserva/${id}`, {
                 method: "DELETE"
             }).then(response => response.json());
 

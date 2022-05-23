@@ -6,7 +6,7 @@
     </div>
   </div><br>
   <div class="cont-video">
-    <video controls="" loop="loop" autoplay="" playsinline="" muted="" src="../../public/video_peluqueria.mp4">
+    <video controls="" loop="loop" autoplay="" playsinline="" muted="" src="/video_peluqueria.mp4">
       <source src="/video_peluqueria.mp4" type="video/mp4">
     </video>
   </div><br>
