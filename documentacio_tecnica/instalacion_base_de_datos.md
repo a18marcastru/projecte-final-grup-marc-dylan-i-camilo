@@ -1,10 +1,7 @@
 # Base de datos peluqueria
-- La URL de phpMyAdmin MYSQL: https://labs.inspedralbes.cat/phpmyadmin/index.php?route=/
-
-- Nombre de usuario: a18marcastru_root
-- Contraseña: Marcfv1302
+- Para conectarse el Symfony con la base de datos es al archivo .env.local, que hay dentro tienes que poner el nombre de usuario, contraseña y nombre de la base de datos(peluqueria).
 
 ## Instalacion
-- Para crear las tablas y los campos de la base de datos peluqueria hay un archivo SQL que es peluqueria.sql.
+- Para las tablas y los campos de la base de datos peluqueria hay un archivo SQL que es peluqueria.sql, que los crea.
 
-- Para insertar la informacion ya de base es con insert.sql que contiene la informacion para la base de datos peluqueria.
+- Para insertar la informacion ya de base es con insert.sql.
