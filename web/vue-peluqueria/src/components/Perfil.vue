@@ -34,7 +34,7 @@
         </div>
         <div class="user-item2">
             <h2 style="color: white;">Cambiar contraseña:</h2>
-            <input v-model="contrasena" type="password" id="pwd2" name="contrasena2" placeholder="introduce nueva contraseña" size="35" required><br><br>
+            <input v-model="contrasena" type="password" id="pwd2" name="contrasena2" size="30" placeholder="introduce nueva contraseña" required><br><br>
             <button class="btn btn-success" type="submit" id="perfilBtn" @click="cambios()">Guardar cambios<br>{{this.datos.nombre}}</button>
         </div>
         <div class="user-item3">
@@ -145,15 +145,27 @@
     .grid-container {
         display: grid;
         grid-template-columns: auto auto;
-        font-size: 20px;
     }
     .user-item1, .user-item2, .user-item3, .user-item4 {
-        padding: 20px;
-        font-size: 30px;
+        padding: 50px;
+        font-size: 20px;
         text-align: center;
     }
 
     span {
         margin-left: 20px;
     }
+    @media screen and (max-width: 600px) {
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto;
+        }
+        .user-item1, .user-item2, .user-item3, .user-item4 {
+            padding: 0px;
+            font-size: 20px;
+        }
+        span {
+            margin-left: 20px;
+        }
+    }   
 </style>

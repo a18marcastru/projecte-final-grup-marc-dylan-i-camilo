@@ -1,23 +1,23 @@
 <template>
   <div>
-    <h2>Valoración de usuarios</h2>
+    <h2 style="color: white;">Valoración de usuarios</h2>
     <hr>
     <div id="container">
       <div v-for="ses in datos">
         <Review :infoComent="ses"/>
       </div>
     </div>
-    <h2>Envianos tu valoración</h2>
+    <h2 style="color: white;">Envianos tu valoración</h2>
     <hr>
-    <label for="valoracion" class="form-label"><b>Valoración:</b></label><br>
+    <label for="valoracion" class="form-label" style="color: white;"><b>Valoración:</b></label><br>
     <input v-model="valoracion" type="range"  class="multi-range" min="0" max="5" step="0.5" id="valoracion" width="50%"><br><br>
     <div class="container">
       <span id="rateMe1"></span>
     </div>
-    <label for="descripcion"><b>Comentario</b></label>
+    <label for="descripcion" style="color: white;"><b>Comentario</b></label>
     <br>
     <textarea v-model="descripcion" type="text"  name="descripcion" id="descripcion" style="width:350px; height:100px;" ></textarea><br><br>
-    <button class="btn btn-outline-primary" @click="comment()">Enviar</button><br><br>
+    <button class="btn btn-success" @click="comment()">Enviar</button><br><br>
 
   </div>
 </template>

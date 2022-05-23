@@ -21,14 +21,11 @@
     background-attachment: fixed;
     width: 100%;
     height: 100%;
-      background-repeat: no-repeat;
-background-size: cover;
-    
+    background-repeat: no-repeat;
+    background-size: cover;
   }
-  
-    img{
+  img {
     -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
-}
-  
+  }  
 </style>
