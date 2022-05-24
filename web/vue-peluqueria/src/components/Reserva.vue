@@ -68,13 +68,13 @@
         };
     },
     mounted() {
-        fetch(`http://http://peluqueriahappyback.alumnes.inspedralbes.cat/servicios/catalogo`)
+        fetch(`http://peluqueriahappyback.alumnes.inspedralbes.cat/servicios/catalogo`)
             .then(res => res.json())
             .then((data) => {
             this.servicios = data;
         });
 
-        fetch(`http://http://peluqueriahappyback.alumnes.inspedralbes.cat/reservas/reservas_selecionadas`)
+        fetch(`http://peluqueriahappyback.alumnes.inspedralbes.cat/reservas/reservas_selecionadas`)
             .then(res => res.json())
             .then((data) => {
             this.reservas = data;
