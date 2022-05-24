@@ -73,6 +73,7 @@
 </template>
 
 <script>
+    import Swal from 'sweetalert2';
     import { sessioStore } from '@/stores/sessioStore';
     import { mapStores } from 'pinia';
     import Navegador from './Navegador.vue';
@@ -94,14 +95,12 @@
             ...mapStores(sessioStore)
     },
     mounted() {
-        console.log(this.$route.params.id)
         this.id_user = this.sessioStore.get.id_user;
         if(this.id_user == this.$route.params.id) {
-            fetch(`http://192.168.210.154:8000/usuarios/perfil/${this.$route.params.id}`)
+            fetch(`http://peluqueriahappyback.alumnes.inspedralbes.cat/usuarios/perfil/${this.$route.params.id}`)
             .then(res => res.json())
             .then((data) => {
                 this.datos = data;
-                console.log(this.datos)
                 for(let i = 0;i < this.datos.reservas.length;i++) {
                     this.reservas = this.datos.reservas;
                 }
@@ -111,30 +110,47 @@
             });
         }   
         else {
-            alert("Tienes que iniciar sesion");
+            Swal.fire({
+                title: 'Iniciar sesion',
+                text: "Tienes que iniciar sesion para poder comprar",
+                icon: 'warning',
+            });
         }
     },
     methods: {
-            
         cambios() {
             if(this.id_user == this.$route.params.id) {
                 const datosEnvio = new FormData();
                 datosEnvio.append("contrasena", this.contrasena);
-                fetch(`http://192.168.210.154:8000/usuarios/cambiar/contrasena/${this.$route.params.id}`, {
+                fetch(`http://peluqueriahappyback.alumnes.inspedralbes.cat/usuarios/cambiar/contrasena/${this.$route.params.id}`, {
                     method: "POST",
                     body: datosEnvio
                 }).then(response => response.json())
                 .then(data => this.datos = data);
+                Swal.fire({
+                    title: 'Contraseña',
+                    text: "La contraseña ha sido cambiado",
+                    icon: 'success',
+                });
             }
             else {
-                alert("No puedes cambiar la contraseña, porque no has iniciado sesion");
+                Swal.fire({
+                    title: 'Iniciar sesion',
+                    text: "Tienes que iniciar sesion para poder comprar",
+                    icon: 'warning',
+                });
             }
         },
         cancelar(id) {
             console.log(id);
-            fetch(`http://192.168.210.154:8000/reservas/cancelar/reserva/${id}`, {
+            fetch(`http://peluqueriahappyback.alumnes.inspedralbes.cat/reservas/cancelar/reserva/${id}`, {
                 method: "DELETE"
             }).then(response => response.json());
+            Swal.fire({
+                title: 'Reserva',
+                text: "La reserva ha sido cancelada",
+                icon: 'success',
+            });
         }
     },
     components: { Navegador }

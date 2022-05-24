@@ -6,10 +6,10 @@
       <div v-for="ses in datos">
         <div class="card">
           <div class="card-body">
-            <h2 id="title-articulo" class="card-title">{{ses.nombre}}</h2>
+            <h2 id="title-articulo" style="color:white" class="card-title">{{ses.nombre}}</h2>
             <p class="card-subtitle mb-2 text-muted" id="desc">{{ses.descripcion}}</p>
-            <p class="card-text">Stock :  {{ses.cantidad}}</p>
-            <p class="card-text">Precio : {{ses.precio}} €</p>
+            <p class="card-text" style="color:white">Unidades :  {{ses.cantidad}}</p>
+            <p class="card-text" style="color:white">Precio : {{ses.precio}} €</p>
             <button class="btn btn-dark" @click="sumar(ses.nombre, ses.cantidad, ses.precio)">+</button>
             <input type="text" :id="ses.nombre" value="0" />
             <button class="btn btn-dark" @click="restar(ses.nombre, ses.precio)">-</button>
@@ -49,7 +49,7 @@
       ...mapStores(sessioStore)
     },
     mounted() {
-        fetch(`http://192.168.210.154:8000/productos/catalogo`)
+        fetch(`http://peluqueriahappyback.alumnes.inspedralbes.cat/productos/catalogo`)
             .then(res => res.json())
             .then((data) => {
             this.datos = data;
@@ -76,8 +76,9 @@
             }
             else {
               Swal.fire({
-                title: 'Stocks del producto',
-                text: 'No hay suficiente stock',
+                icon: 'warning',
+                title: 'Unidades del producto',
+                text: 'No hay suficiente unidades.',
               });
             }
         },
@@ -118,8 +119,9 @@
             }
             else if (num == 0) {
               Swal.fire({
+                icon: 'warning',
                 title: 'Unidades',
-                text: 'No puedes restar mas',
+                text: 'No puedes restar mas.',
               });
             }
         },
@@ -132,13 +134,14 @@
               datosEnvio.append("email", this.email);
               datosEnvio.append("productos", productos);
               datosEnvio.append("precio_total", this.precio_total);
-              fetch("http://192.168.210.154:8000/tickets/nuevo/ticket", {
+              fetch("http://peluqueriahappyback.alumnes.inspedralbes.cat/tickets/nuevo/ticket", {
                   method: "POST",
                   body: datosEnvio
               }).then(function (res) {
                   return res.json();
               });
               Swal.fire({
+                icon: 'success',
                 position: 'top-end',
                 title: 'Compra acceptada',
                 showConfirmButton: false,
@@ -147,8 +150,8 @@
             }
             else {
               Swal.fire({
-                title: 'Unidades',
-                text: 'Tienes que iniciar sesion para poder comprar',
+                title: 'Iniciar Sesion',
+                text: 'Tienes que iniciar sesion para poder comprar.',
                 icon: 'warning',
               });
             }
@@ -169,7 +172,7 @@
     font-size: 20px;
   }
   #title-tienda {
-    color: black;
+    color: white;
     text-align: center;
   }
   #container-tienda {

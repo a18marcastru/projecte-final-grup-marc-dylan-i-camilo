@@ -31,7 +31,7 @@ class ServiciosController extends AbstractController
         ]);
     }
 
-    #[Route('/mostrar', name: 'app_servicios_mostrar', methods: ['GET'])]
+    #[Route('/catalogo', name: 'app_servicios_mostrar', methods: ['GET'])]
     public function mostrar(ServiciosRepository $serviciosRepository): JsonResponse
     {
         $restos = $serviciosRepository->findAll();

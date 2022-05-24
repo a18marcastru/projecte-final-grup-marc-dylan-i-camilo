@@ -3,15 +3,11 @@
       <div class="text-center p-3 bg-dark" style="color: white;">
     	<p class="map-tit text-uppercase" style="text-align: center; color: white;">Encuentra aquí nuestra peluquería:</p>
       </div>
-    	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5986.76851302333!2d2.109613467229756!3d41.387460787127004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a49854a99cad2f%3A0xb564263b0575d513!2sInstitut%20Pedralbes!5e0!3m2!1sca!2ses!4v1635405909805!5m2!1sca!2ses" frameborder="0" style="border:0;width:100%;height:340px;" allowfullscreen="" title="Ubicación de la peluqueria"></iframe>
+    	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5986.76851302333!2d2.109613467229756!3d41.387460787127004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a49854a99cad2f%3A0xb564263b0575d513!2sInstitut%20Pedralbes!5e0!3m2!1sca!2ses!4v1635405909805!5m2!1sca!2ses" frameborder="0" style="border:0;width:100%;height:340px;" title="Ubicación de la peluqueria"></iframe>
     </div>
-
     <footer class="bg-light text-center text-lg-start">
-      <!-- Grid container -->
       <div class="container p-4">
-        <!--Grid row-->
         <div class="row">
-          <!--Grid column-->
           <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
             <h1 class="titles-footer text-uppercase">Local</h1><br>
     
@@ -21,9 +17,6 @@
               </li>
             </ul>
           </div>
-          <!--Grid column-->
-    
-          <!--Grid column-->
           <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
             <h1 class="titles-footer text-uppercase mb-0">Legal</h1><br>
             <ul class="list-unstyled">
@@ -35,9 +28,6 @@
               </li>
             </ul>
           </div>
-          <!--Grid column-->
-    
-          <!--Grid column-->
           <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
             <h1 class="titles-footer text-uppercase">Contacto</h1><br>
             <ul class="list-unstyled mb-0">
@@ -46,9 +36,6 @@
               </li>
             </ul>
           </div>
-          <!--Grid column-->
-    
-          <!--Grid column-->
           <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
             <h1 class="titles-footer text-uppercase mb-0">Horario de apertura</h1><br>
             <table>
@@ -98,20 +85,15 @@
               </tbody>
             </table>
           </div>
-          <!--Grid column-->
         </div>
-        <!--Grid row-->
       </div>
-      <!-- Grid container -->
       <div>
         <a href="http://peluqueriahappyback.alumnes.inspedralbes.cat/inicio" class="btn btn-dark">Administracion</a>
       </div>
-      <!-- Copyright -->
       <div class="text-center p-3 bg-dark" style="color: white;">
         © 2020 Copyright:
         <a style="color: white;" href="https://mdbootstrap.com/">peluqueriahappy.com</a>
       </div>
-      <!-- Copyright -->
     </footer>
 </template>
 

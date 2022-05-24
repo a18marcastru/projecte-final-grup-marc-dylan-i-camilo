@@ -85,7 +85,7 @@ class ReservasController extends AbstractController
         ]);
     }
 
-    #[Route('/todas', name: 'app_reservas_todas', methods: ['GET'])]
+    #[Route('/reservas_selecionadas', name: 'app_reservas_todas', methods: ['GET'])]
     public function mostrar(ReservasRepository $reservasRepository): JsonResponse
     {
         $reservas = $reservasRepository->findAll();

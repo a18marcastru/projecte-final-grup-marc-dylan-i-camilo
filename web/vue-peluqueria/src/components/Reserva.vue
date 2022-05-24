@@ -8,10 +8,10 @@
         <div v-for="ses in servicios">
           <div class="card" id="card-servicios">
             <div class="card-body">
-              <h4 class="card-title">{{ses.nombre_servicio}}</h4>
-              <p class="card-text">Precio : {{ses.precio}} €</p>
+              <h4 class="card-title" style="color:white">{{ses.nombre_servicio}}</h4>
+              <p class="card-text" style="color:white">Precio : {{ses.precio}} €</p>
               <button class="btn btn-dark" :id="ses.id" @click="anadir(ses.nombre_servicio, ses.precio, ses.id)">Añadir</button>
-              <button class="btn btn-anadido btn-success" :id="ses.id+'c'" @click="descartar(ses.nombre_servicio, ses.precio, ses.id)">Descartar</button>
+              <button class="btn btn-descartar btn-success" :id="ses.id+'c'" @click="descartar(ses.nombre_servicio, ses.precio, ses.id)">Descartar</button>
             </div>
           </div>
         </div>
@@ -68,13 +68,13 @@
         };
     },
     mounted() {
-        fetch(`http://192.168.210.154:8000/servicios/mostrar`)
+        fetch(`http://http://peluqueriahappyback.alumnes.inspedralbes.cat/servicios/catalogo`)
             .then(res => res.json())
             .then((data) => {
             this.servicios = data;
         });
 
-        fetch(`http://192.168.210.154:8000/reservas/todas`)
+        fetch(`http://http://peluqueriahappyback.alumnes.inspedralbes.cat/reservas/reservas_selecionadas`)
             .then(res => res.json())
             .then((data) => {
             this.reservas = data;
@@ -186,6 +186,7 @@
             console.log(num)
             if(num == 1) {
               Swal.fire({
+                icon: 'error',
                 title: 'Reserva ocupada',
                 text: 'Ya esta reservado',
               });
@@ -201,6 +202,7 @@
           }
           else {
             Swal.fire({
+              icon: 'warning',
               title: 'Hora reserva',
               text: 'Solo puedes reservar una hora',
             });
@@ -208,8 +210,9 @@
         }
         else {
           Swal.fire({
+            icon: 'warning',
             title: 'Dia reserva',
-              text: 'Tienes que escoger primero el dia',
+            text: 'Tienes que escoger primero el dia',
           });
         }
       },
@@ -225,7 +228,7 @@
             datosEnvio.append("hora", this.hora);
             datosEnvio.append("mes", this.mes);
             datosEnvio.append("precio_total", this.precio_total);
-            fetch("http://192.168.210.154:8000/reservas/nueva/reserva", {
+            fetch("http://peluqueriahappyback.alumnes.inspedralbes.cat/reservas/nueva/reserva", {
               method: "POST",
               body: datosEnvio
             }).then(function (res) {
@@ -233,6 +236,7 @@
             }).then(function (data) {
               console.log(data);
               Swal.fire({
+                icon: 'success',
                 position: 'top-end',
                 title: 'Reserva acceptada',
                 showConfirmButton: false,
@@ -244,6 +248,7 @@
             Swal.fire({
                 title: 'Dia y hora reserva',
                 text: 'Porfavor escoga un dia y hora',
+                icon: 'warning'
             });
           }
         }
@@ -295,8 +300,9 @@
   .card {
     margin: 5px;
   }
-  .btn-anadido {
+  .btn-descartar {
     display: none;
+    margin-left: 6rem;
   }
   #horas {
     display: grid;
@@ -304,8 +310,8 @@
     column-gap: 20px;
     margin-top: 50px;
   }
-  #btn-reservar {
-    margin-left: 60em;
+  .btn-descartar {
+    margin-right: 23rem;
   }
 
   /* Tablet */
@@ -340,6 +346,9 @@
       margin-left: 0em;
       margin-left: 45%;
     }
+    .btn-descartar {
+      margin-left: 4rem;
+    }
   }
 
   /* Tablet-horizontal */
@@ -371,8 +380,10 @@
       margin-top: 20px;
     }
     #btn-reservar {
-      margin-left: 0em;
       margin-left: 45%;
+    }
+    .btn-descartar {
+      margin-left: 3.5rem;
     }
   }
 
@@ -408,8 +419,10 @@
       margin-top: 20px;
     }
     #btn-reservar {
-      margin-left: 0em;
       margin-left: 40%;
+    }
+    .btn-descartar {
+      margin-left: 1rem;
     }
   }
 </style>
