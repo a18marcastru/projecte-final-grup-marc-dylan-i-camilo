@@ -56,43 +56,43 @@
                 <tr>
                   <th>Lunes:</th>
                   <td>
-                    <span>10:00 - 14:00, 15:00 - 20:00</span>
+                    <span class="dia-apertura">10:00 - 14:00, 15:00 - 20:00</span>
                   </td>
                 </tr>
                 <tr>
                   <th>Martes:</th>
                   <td>
-                    <span>10:00 - 14:00, 15:00 - 20:00</span>
+                    <span class="dia-apertura">10:00 - 14:00, 15:00 - 20:00</span>
                   </td>
                 </tr>
                 <tr>
                   <th>Miércoles:</th>
                   <td>
-                    <span>10:00 - 14:00, 15:00 - 20:00</span>
+                    <span class="dia-apertura">10:00 - 14:00, 15:00 - 20:00</span>
                   </td>
                 </tr>
                 <tr>
                   <th>Jueves:</th>
                   <td>
-                    <span>10:00 - 14:00, 15:00 - 20:00</span>
+                    <span class="dia-apertura">10:00 - 14:00, 15:00 - 20:00</span>
                   </td>
                 </tr>
                 <tr>
                   <th>Viernes:</th>
                   <td>
-                    <span>10:00 - 14:00, 15:00 - 20:00</span>
+                    <span class="dia-apertura">10:00 - 14:00, 15:00 - 20:00</span>
                   </td>
                 </tr>
                 <tr>
                   <th>Sábado:</th>
                   <td>
-                    <span>10:00 - 14:00, 15:00 - 20:00</span>
+                    <span class="dia-apertura">10:00 - 14:00, 15:00 - 20:00</span>
                   </td>
                 </tr>
                 <tr>
                   <th>Domingo:</th>
                   <td>
-                    <span>Festivo</span>
+                    <span class="dia-apertura">Festivo</span>
                   </td>
                 </tr>
               </tbody>
@@ -116,7 +116,14 @@
 </template>
 
 <style>
-    span {
-        margin-left: 20px;
+    .dia-apertura {
+      margin-left: 20px;
+      color: black;
+    }
+    table {
+      color: black;
+    }
+    h5 {
+      color: black;
     }
 </style>

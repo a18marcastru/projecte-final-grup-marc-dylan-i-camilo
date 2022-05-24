@@ -12,7 +12,6 @@
       <p id="mensaje" hidden>*No existe usuario con este {{this.email}}</p>
     </div>
     <div id="iniciado" hidden>
-      <h1>Bienvenido de nuevo {{this.email}}</h1>
       <RouterLink to="/" id="inicio" class="btn btn-dark">Volver a la pagina de inicio</RouterLink>
     </div>
   </div>
@@ -20,6 +19,7 @@
 </template>
 
 <script>
+  import Swal from 'sweetalert2';
   import Navegador from './Navegador.vue';
   import { sessioStore } from '@/stores/sessioStore'
   import { mapStores } from 'pinia'
@@ -47,6 +47,9 @@
             }).then(response => response.json())
               .then(data => this.datos = data);
             if (this.datos != "Contraseña incorrecta" && this.datos != "No existe usuario" && this.datos != "") {
+               Swal.fire({
+                title: `Bienvenido de nuevo ${this.email}`,
+              });
               document.getElementById("iniciado").removeAttribute("hidden");
               document.getElementById("login").setAttribute("style","display: none;");
               this.logueado = true;

@@ -7,8 +7,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">{{ses.nombre}}</h5>
-            <img :src="ses.imagen" alt="Producto">
-            <p class="card-subtitle mb-2 text-muted">{{ses.descripcion}}</p>
+            <p class="card-subtitle mb-2 text-muted" id="desc">{{ses.descripcion}}</p>
             <p class="card-text">Stock :  {{ses.cantidad}}</p>
             <p class="card-text">Precio : {{ses.precio}} €</p>
             <button class="btn btn-dark" @click="sumar(ses.nombre, ses.cantidad, ses.precio)">+</button>
@@ -24,14 +23,14 @@
       <div id="lista-producto"></div>
       <hr>
       <h4 id="precio_total">Precio total: {{this.precio_total}}€</h4>
-      <button class="btn btn-dark" id="btn-comprar" @click="comprar()" disabled>Comprar</button>
-      <h3 id="compra" hidden>Compra acceptada</h3>
+      <button class="btn btn-success" id="btn-comprar" @click="comprar()" disabled>Comprar</button>
     </div>
   </div>
   <br><br>
 </template>
 
 <script>
+  import Swal from 'sweetalert2';
   import { sessioStore } from '@/stores/sessioStore'
   import { mapStores } from 'pinia'
   import Navegador from './Navegador.vue';
@@ -76,7 +75,10 @@
               this.actualizar(nombre, num_total, precio);
             }
             else {
-              alert("No hay suficiente stock");
+              Swal.fire({
+                title: 'Stocks del producto',
+                text: 'No hay suficiente stock',
+              });
             }
         },
         actualizar(nombre, num_total, precio) {
@@ -115,7 +117,10 @@
               this.actualizar(nombre, num_total, precio);
             }
             else if (num == 0) {
-              alert("No puedes restar mas");
+              Swal.fire({
+                title: 'Unidades',
+                text: 'No puedes restar mas',
+              });
             }
         },
         comprar() {
@@ -133,11 +138,19 @@
               }).then(function (res) {
                   return res.json();
               });
-              document.getElementById("compra").removeAttribute("hidden");
-              document.getElementById("btn-comprar").setAttribute("style","display: none;");
+              Swal.fire({
+                position: 'top-end',
+                title: 'Compra acceptada',
+                showConfirmButton: false,
+                timer: 1500
+              });
             }
             else {
-              alert("Tienes que iniciar sesion para poder comprar");
+              Swal.fire({
+                title: 'Unidades',
+                text: 'Tienes que iniciar sesion para poder comprar',
+                icon: 'warning',
+              });
             }
         }
     },
@@ -148,6 +161,9 @@
 <style>
   h2, h4, .art, #compra, #precio_total {
     color: white;
+  }
+  .card-title, #desc {
+    color: black;
   }
   #title-tienda {
     color: black;

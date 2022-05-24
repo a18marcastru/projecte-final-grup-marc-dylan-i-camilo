@@ -11,7 +11,7 @@
               <h4 class="card-title">{{ses.nombre_servicio}}</h4>
               <p class="card-text">Precio : {{ses.precio}} €</p>
               <button class="btn btn-dark" :id="ses.id" @click="anadir(ses.nombre_servicio, ses.precio, ses.id)">Añadir</button>
-              <button class="btn btn-anadido btn-success" :id="ses.id+'c'" @click="anadido(ses.nombre_servicio, ses.precio, ses.id)">Añadido</button>
+              <button class="btn btn-anadido btn-success" :id="ses.id+'c'" @click="descartar(ses.nombre_servicio, ses.precio, ses.id)">Descartar</button>
             </div>
           </div>
         </div>
@@ -21,33 +21,35 @@
       <h2>Mes: {{this.mes}}</h2>
       <div id="container-fecha">
         <div id="nombre-dias">
-          <div>Lunes</div>
-          <div>Martes</div>
-          <div>Miercoles</div>
-          <div>Jueves</div>
-          <div>Viernes</div>
-          <div>Sabado</div>
-          <div>Domingo</div>
+          <div class="n-dia">Lunes</div>
+          <div class="n-dia">Martes</div>
+          <div class="n-dia">Miercoles</div>
+          <div class="n-dia">Jueves</div>
+          <div class="n-dia">Viernes</div>
+          <div class="n-dia">Sabado</div>
+          <div class="n-dia">Domingo</div>
           <div v-for="index in 31">
-            <div class="dia btn-dark" :id="index+'p'" @click="fecha(index)">{{index}}</div>
+            <button class="btn btn-warning" :id="index+'p'" @click="fecha(index)">{{index}}</button>
           </div>
         </div>
         <br>
         <h2 id="title-horas">Horas</h2>
         <div id="horas">
           <div id="lista-horas" v-for="index in horas">
-            <div class="dia btn-dark" :id="index.hora" @click="selecion_hora(index.hora)">{{index.hora}}</div>
-            <br>
+            <button class="btn btn-outline-warning" :id="index.hora" @click="selecion_hora(index.hora)">{{index.hora}}</button>
+            <br><br>
           </div>
         </div>
       </div>
     </div>
-    <button id="btn-reservar" class="btn btn-dark" @click="reservar()" disabled>Reservar</button>
+    <br>
+    <button id="btn-reservar" class="btn btn-success" @click="reservar()" disabled>Reservar</button>
     <br><br>
 </template>
 
 <script>
-  import { sessioStore } from '@/stores/sessioStore'
+  import Swal from 'sweetalert2';
+  import { sessioStore } from '@/stores/sessioStore';
   import { mapStores } from 'pinia'
   import Navegador from './Navegador.vue';
     export default {
@@ -79,7 +81,6 @@
             for(let i = 0;i < this.reservas.length;i++) {
               this.horasOcupadas.push({"dia": this.reservas[i].dia, "hora": this.reservas[i].hora});
             }
-            console.log(this.horasOcupadas)
         });
         
         const meses = ["Junio", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -92,144 +93,168 @@
       ...mapStores(sessioStore)
     },
     methods: {
-        anadir(nombre, precio, id) {
-            let encontrado = false;
-            for (let i = 0; i < this.total.length; i++) {
-              if (this.total[i].nombre_servicio == nombre) {
-                encontrado = true;
-              }
+      anadir(nombre, precio, id) {
+        //En esta parte es comprobar si el servicio ya fue seleccionado, sino se añadira a una array que se utilizara para enviarlo a la base de datos.
+        let encontrado = false;
+        for (let i = 0; i < this.total.length; i++) {
+          if (this.total[i].nombre_servicio == nombre) {
+            encontrado = true;
+          }
+        }
+        if (encontrado == false) {
+          this.total.push({ "nombre_servicio": nombre });
+          this.precio_total += precio;
+          document.getElementById(id + "c").setAttribute("style","display: block");
+          document.getElementById(id).setAttribute("style", "display: none;");
+          document.getElementById("btn-reservar").removeAttribute("disabled");
+        }
+      },
+      descartar(nombre, precio, id) {
+        //En esta parte es comprobar si, ya hay un servicio, se quitara de la array.
+        for (let i = 0; i < this.total.length; i++) {
+          if (this.total[i].nombre_servicio == nombre) {
+            this.total = this.total.filter(obj => obj.nombre_servicio != nombre);
+            document.getElementById(id + "c").setAttribute("style", "display: none;");
+            document.getElementById(id).removeAttribute("style", "display: none;");
+            this.precio_total -= precio;
+          }
+        }
+      },
+      fecha(index) {
+        //En esta funcion se encarga de comprobar si el dia esta seleccionado, el dia esta en el array de horasOcupadas o no y pintarlo.
+        if(this.dia == 0) {
+          this.dia = index;
+          let encontrado = false;
+          document.getElementById(index + "p").setAttribute("style", "background: green;");
+          for(let i = 0;i < this.horasOcupadas.length;i++) {
+            if(this.horasOcupadas[i].dia == this.dia) {
+              encontrado = true
             }
-            if (encontrado == false) {
-                this.total.push({ "nombre_servicio": nombre });
-                this.precio_total += precio;
-                document.getElementById(id + "c").setAttribute("style","display: block");
-                document.getElementById(id).setAttribute("style", "display: none;");
-                document.getElementById("btn-reservar").removeAttribute("disabled");
-            }
-            console.log(this.precio_total);
-        },
-        anadido(nombre, precio, id) {
-            for (let i = 0; i < this.total.length; i++) {
-                if (this.total[i].nombre_servicio == nombre) {
-                    this.total = this.total.filter(obj => obj.nombre_servicio != nombre);
-                    document.getElementById(id + "c").setAttribute("style", "display: none;");
-                    document.getElementById(id).removeAttribute("style", "display: none;");
-                    this.precio_total -= precio;
-                    console.log(this.precio_total);
-                }
-            }
-        },
-        fecha(index) {
-            if(this.dia == 0) {
-              console.log("Hola1")
-              this.dia = index;
-              let encontrado = false;
-              document.getElementById(index + "p").setAttribute("style", "background: green;");
-              for(let i = 0;i < this.horasOcupadas.length;i++) {
-                if(this.horasOcupadas[i].dia == this.dia) {
-                  encontrado = true
-                }
+          }
+          //En esta aperte es para saber si el dia tiene horas ocupadas se mostraran en rojo o no en negro.
+          if(encontrado == true) {
+            for(let i = 0;i < this.horasOcupadas.length;i++) {
+              if(this.horasOcupadas[i].dia == this.dia) {
+                document.getElementById(this.horasOcupadas[i].hora).setAttribute("style","background-color: red;");
               }
-              if(encontrado == true) {
-                for(let i = 0;i < this.horasOcupadas.length;i++) {
-                  if(this.horasOcupadas[i].dia == this.dia) {
-                    document.getElementById(this.horasOcupadas[i].hora).setAttribute("style","background-color: red;");
-                  }
-                }
-              }
-              else {
-                for(let i = 0;i < this.horasOcupadas.length;i++) {
-                    document.getElementById(this.horasOcupadas[i].hora).setAttribute("style","background-color: dark;");
-                }
-              }
-            }
-            else if(this.dia != index){
-              document.getElementById(this.dia + "p").setAttribute("style", "background: dark;");
-              document.getElementById(index + "p").setAttribute("style", "background: green;");
-              for(let i = 0;i < this.horasOcupadas.length;i++) {
-                if(this.dia == this.horasOcupadas[i].dia) {
-                  document.getElementById(this.horasOcupadas[i].hora).setAttribute("style","background-color: dark;");
-                }
-              }
-              this.dia = index;
-              for(let i = 0;i < this.horasOcupadas.length;i++) {
-                if(index == this.horasOcupadas[i].dia) {
-                  document.getElementById(this.horasOcupadas[i].hora).setAttribute("style","background-color: red;");
-                }
-              }
-            }
-            else if(this.dia == index) {
-              document.getElementById(index + "p").setAttribute("style", "background: dark;");
-              for(let i = 0;i < this.horasOcupadas.length;i++) {
-                if(index == this.horasOcupadas[i].dia) {
-                  document.getElementById(this.horasOcupadas[i].hora).setAttribute("style","background-color: dark;");
-                }
-              }
-              this.dia = 0;
-            }
-        },
-        selecion_hora(index) {
-          if(this.dia != 0) {
-            if(this.hora == index || this.hora == "") {
-              let num = 0;
-              for(let i = 0;i < this.horasOcupadas.length;i++) {
-                if(this.dia == this.horasOcupadas[i].dia && this.hora == "" && index == this.horasOcupadas[i].hora) {
-                  num = 1;
-                }
-                else if(this.hora != "" && index != this.horasOcupadas[i].hora){
-                  num = 2;
-                }
-              }
-              console.log(num)
-              if(num == 1) {
-                alert("Ya esta reservado");
-              }
-              else if(num == 2) {
-                document.getElementById(index).setAttribute("style", "background: dark;");
-                this.hora = "";
-              }
-              else {
-                document.getElementById(index).setAttribute("style", "background: green;");
-                this.hora = index;
-              }
-            }
-            else if(this.hora != index) {
-              alert("Solo puedes coger una hora")
             }
           }
           else {
-            alert("Escoge primero el dia");
+            for(let i = 0;i < this.horasOcupadas.length;i++) {
+              document.getElementById(this.horasOcupadas[i].hora).setAttribute("style","background-color: dark;");
+            }
           }
-        },
-        reservar() {
-          this.email = this.sessioStore.get.email;
-          if(this.email != null) {
-            if(this.hora != 0 && this.dia != "") {
-              const servicio = JSON.stringify(this.total);
-              const datosEnvio = new FormData();
-              datosEnvio.append("email", this.email);
-              datosEnvio.append("servicios", servicio);
-              datosEnvio.append("dia", this.dia);
-              datosEnvio.append("hora", this.hora);
-              datosEnvio.append("mes", this.mes);
-              datosEnvio.append("precio_total", this.precio_total);
-              fetch("http://192.168.210.154:8000/reservas/nueva/reserva", {
-                  method: "POST",
-                  body: datosEnvio
-              }).then(function (res) {
-                  return res.json();
-              }).then(function (data) {
-                  console.log(data);
+        }
+        else if(this.dia != index){
+          document.getElementById(this.dia + "p").setAttribute("style", "background: dark;");
+          document.getElementById(index + "p").setAttribute("style", "background: green;");
+          for(let i = 0;i < this.horasOcupadas.length;i++) {
+            if(this.dia == this.horasOcupadas[i].dia) {
+              document.getElementById(this.horasOcupadas[i].hora).setAttribute("style","background-color: dark;");
+            }
+          }
+          this.dia = index;
+          for(let i = 0;i < this.horasOcupadas.length;i++) {
+            if(index == this.horasOcupadas[i].dia) {
+              document.getElementById(this.horasOcupadas[i].hora).setAttribute("style","background-color: red;");
+            }
+          }
+        }
+        else if(this.dia == index) {
+          document.getElementById(index + "p").setAttribute("style", "background: dark;");
+          for(let i = 0;i < this.horasOcupadas.length;i++) {
+            if(index == this.horasOcupadas[i].dia) {
+              document.getElementById(this.horasOcupadas[i].hora).setAttribute("style","background-color: dark;");
+            }
+          }
+          this.dia = 0;
+        }
+      },
+      selecion_hora(index) {
+        //La primera condicion es en que si el usuario escoge primero una la hora y no el dia saldra un mensaje de alert.
+        if(this.dia != 0) {
+          if(this.hora == index || this.hora == "") {
+            let num = 0;
+            for(let i = 0;i < this.horasOcupadas.length;i++) {
+              if(this.dia == this.horasOcupadas[i].dia && this.hora == "" && index == this.horasOcupadas[i].hora || this.dia == this.horasOcupadas[i].dia && this.hora != "" && index == this.horasOcupadas[i].hora) {
+                num = 1;
+              }
+              else if(this.hora != "" && index != this.horasOcupadas[i].hora || this.hora != "" && index == this.horasOcupadas[i].hora || this.dia != this.horasOcupadas[i].dia && this.hora != "" && index != this.horasOcupadas[i].hora){
+                num = 2;
+              }
+            }
+            console.log(num)
+            if(num == 1) {
+              Swal.fire({
+                title: 'Reserva ocupada',
+                text: 'Ya esta reservado',
               });
             }
+            else if(num == 2) {
+              document.getElementById(index).setAttribute("style", "background: dark;");
+              this.hora = "";
+            }
             else {
-              alert("Porfavor escoga un dia y hora");
+              document.getElementById(index).setAttribute("style", "background: green;");
+              this.hora = index;
             }
           }
           else {
-            alert("Tienes que iniciar sesion para poder reservar");
+            Swal.fire({
+              title: 'Hora reserva',
+              text: 'Solo puedes reservar una hora',
+            });
           }
-        },
+        }
+        else {
+          Swal.fire({
+            title: 'Dia reserva',
+              text: 'Tienes que escoger primero el dia',
+          });
+        }
+      },
+      reservar() {
+        this.email = this.sessioStore.get.email;
+        if(this.email != null) {
+          if(this.hora != 0 && this.dia != "") {
+            const servicio = JSON.stringify(this.total);
+            const datosEnvio = new FormData();
+            datosEnvio.append("email", this.email);
+            datosEnvio.append("servicios", servicio);
+            datosEnvio.append("dia", this.dia);
+            datosEnvio.append("hora", this.hora);
+            datosEnvio.append("mes", this.mes);
+            datosEnvio.append("precio_total", this.precio_total);
+            fetch("http://192.168.210.154:8000/reservas/nueva/reserva", {
+              method: "POST",
+              body: datosEnvio
+            }).then(function (res) {
+              return res.json();
+            }).then(function (data) {
+              console.log(data);
+              Swal.fire({
+                position: 'top-end',
+                title: 'Reserva acceptada',
+                showConfirmButton: false,
+                timer: 1500
+              });
+            });
+          }
+          else {
+            Swal.fire({
+                title: 'Dia y hora reserva',
+                text: 'Porfavor escoga un dia y hora',
+            });
+          }
+        }
+        else {
+          Swal.fire({
+            title: 'Iniciar sesion',
+            text: "Tienes que iniciar sesion para poder comprar",
+            icon: 'warning',
+          });
+        }
+      },
     },
     components: { Navegador }
 }
@@ -272,11 +297,6 @@
   }
   .btn-anadido {
     display: none;
-  }
-  .dia {
-    padding: 5px;
-    font-size: 15px;
-    text-align: center;
   }
   #horas {
     display: grid;
