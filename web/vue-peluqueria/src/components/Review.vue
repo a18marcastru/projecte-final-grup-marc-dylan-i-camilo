@@ -1,9 +1,8 @@
 <template>
-    <div class="card-body">
-      <p class="card-title">{{infoComent.nombre}}</p>
-      <p class="card-subtitle mb-2 text-muted">{{infoComent.apellido}}</p>
+    <div class="card-body-1">
+      <p  class="card-title">{{infoComent.nombre}}</p>
+      <p class="card-titles">{{infoComent.apellido}}</p>
       <p class="card-text">{{infoComent.descripcion}}</p>
-      valoración: 
       <big class="hola" v-for="ses in infoComent.valoracion">
         ⭐
       </big>
@@ -25,5 +24,19 @@ export default{
   .hola{
     margin : 0px;
     padding : 0px;
+    
   }
+  .card-body-1{
+    justify-content: center;
+    text-align: center;
+    width: 480px;
+    color: white;
+}
+.card-title{
+  color: white;
+}
+.card-subtitle{
+  color: white;
+}
+
 </style>
