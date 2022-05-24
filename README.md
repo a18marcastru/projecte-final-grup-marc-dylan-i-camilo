@@ -17,7 +17,7 @@ Un cop comenceu heu de canviar aquesta explicació amb la corresponent al vostre
 - Trello: https://trello.com/invite/b/ugFwFni0/35326dd879ee8721776f0514fb58cdfb/tareas-peluqueria
 
 # Descripció
-Local donde se vende productos y servicios relacionados con la peluqueria.
+És una aplicació web que tracta sobre una perruqueria, en què es pot; enviar comentaris, registrar-se, reservar un servei de diversos talls de cabells i comprar un o diversos productes.
 
 # URLs de producció
 - http://peluqueriahappy.alumnes.inspedralbes.cat/
