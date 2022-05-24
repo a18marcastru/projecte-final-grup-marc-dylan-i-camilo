@@ -3,8 +3,7 @@
   <div class="hola">
     <h1 class="adios">Peluquería Happy</h1>
   </div>
-  
-    <br>
+  <br>
   <div class="cont-video">
     <video controls="" loop="loop" autoplay="" playsinline="" muted="" src="/video_peluqueria.mp4">
       <source src="/video_peluqueria.mp4" type="video/mp4">
@@ -63,8 +62,8 @@ export default {
   text-align: center;
   padding-top:370px;
 }
-.adios{
-
+p, h3{
+  color: black;
 }
 body {
   margin: 0;

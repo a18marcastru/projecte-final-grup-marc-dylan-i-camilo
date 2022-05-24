@@ -38,7 +38,8 @@
             <button class="btn btn-success" type="submit" id="perfilBtn" @click="cambios()">Guardar cambios<br>{{this.datos.nombre}}</button>
         </div>
         <div class="user-item3">
-            <h2 style="color: white;">Datos de reservas y compras</h2>
+            <h2 style="color: white;">Historial de reservas y compras</h2>
+            <br>
             <div id="reservas">
                 <h2 style="color: white;">Reservas</h2>
                 <div v-for="ses in reservas">
@@ -48,12 +49,15 @@
                             <p class="card-subtitle">- Hora: {{ses.hora}} <br> - Dia: {{ses.dia}} <br> - Mes: {{ses.mes}}</p>
                             <p class="card-text">- Precio total: {{ses.precio_total}} €</p>
                         </div>
-                    </div>    
-                    <button class="btn btn-danger" @click="cancelar(ses.id)">Cancelar reserva</button>
+                    <button class="btn btn-danger" @click="cancelar(ses.servicio_id)">Cancelar reserva</button>
+                    <h3 id="contra" hidden>Contraseña cambiada con exito</h3>
+                    </div>
+                    <br>  
                 </div>
             </div>
         </div>
         <div class="user-item4">
+            <br><br>
             <h2 style="color: white;">Compras</h2>
             <div v-for="ses in tickets">
                 <div class="card" style="width: 20rem;">
@@ -90,39 +94,36 @@
             ...mapStores(sessioStore)
     },
     mounted() {
-        this.actualizar();
+        console.log(this.$route.params.id)
+        this.id_user = this.sessioStore.get.id_user;
+        if(this.id_user == this.$route.params.id) {
+            fetch(`http://192.168.210.154:8000/usuarios/perfil/${this.$route.params.id}`)
+            .then(res => res.json())
+            .then((data) => {
+                this.datos = data;
+                console.log(this.datos)
+                for(let i = 0;i < this.datos.reservas.length;i++) {
+                    this.reservas = this.datos.reservas;
+                }
+                for(let i = 0;i < this.datos.tickets.length;i++) {
+                    this.tickets = this.datos.tickets;
+                }
+            });
+        }   
+        else {
+            alert("Tienes que iniciar sesion");
+        }
     },
     methods: {
-        actualizar() {
-            console.log(this.$route.params.id)
-            this.id_user = this.sessioStore.get.id_user;
-            if(this.id_user == this.$route.params.id) {
-                fetch(`http://192.168.210.154:8000/usuarios/perfil/${this.$route.params.id}`)
-                .then(res => res.json())
-                .then((data) => {
-                    this.datos = data;
-                    console.log(this.datos)
-                    for(let i = 0;i < this.datos.reservas.length;i++) {
-                        this.reservas = this.datos.reservas;
-                    }
-                    this.reservas.sort();
-                    for(let i = 0;i < this.datos.tickets.length;i++) {
-                        this.tickets = this.datos.tickets;
-                    }
-                });
-            }   
-            else {
-                alert("Tienes que iniciar sesion");
-            }
-        },
+            
         cambios() {
             if(this.id_user == this.$route.params.id) {
-            const datosEnvio = new FormData();
-            datosEnvio.append("contrasena", this.contrasena);
-            fetch(`http://192.168.210.154:8000/usuarios/cambiar/contrasena/${this.$route.params.id}`, {
-                method: "POST",
-                body: datosEnvio
-            }).then(response => response.json())
+                const datosEnvio = new FormData();
+                datosEnvio.append("contrasena", this.contrasena);
+                fetch(`http://192.168.210.154:8000/usuarios/cambiar/contrasena/${this.$route.params.id}`, {
+                    method: "POST",
+                    body: datosEnvio
+                }).then(response => response.json())
                 .then(data => this.datos = data);
             }
             else {
@@ -134,7 +135,6 @@
             fetch(`http://192.168.210.154:8000/reservas/cancelar/reserva/${id}`, {
                 method: "DELETE"
             }).then(response => response.json());
-
         }
     },
     components: { Navegador }
@@ -146,12 +146,17 @@
         display: grid;
         grid-template-columns: auto auto;
     }
+    table {
+        margin-left: 20rem;
+    }
     .user-item1, .user-item2, .user-item3, .user-item4 {
         padding: 50px;
         font-size: 20px;
         text-align: center;
     }
-
+    #contra {
+        color: green;
+    }
     span {
         margin-left: 20px;
     }

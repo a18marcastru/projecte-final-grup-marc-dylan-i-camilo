@@ -130,20 +130,36 @@ class ReservasController extends AbstractController
         return new JsonResponse("Gracias por reservar", Response::HTTP_OK);
     }
 
-    /*#[Route('/cancelar/reserva/{id}', name: 'app_delete', methods: ['DELETE','GET'])]
-    public function cancelar($id, ReservasRepository $reservasRepository, ReservaServicioRepository $reservaServicioRepository): JsonResponse
+    #[Route('/cancelar/reserva/{id}', name: 'app_delete', methods: ['DELETE','GET'])]
+    public function cancelar($id, ReservasRepository $reservasRepository, ReservaServicioRepository $reservaServicioRepository, ServiciosRepository $serviciosRepository): JsonResponse
     {
-        $data_id = $reservaServicioRepository->coger_id_reserva_servicio($id);
-        for($i = 0;$i < count($data_id);$i++) {
-            $id_reserva = $data_id[$i]['id'];
-            $restos = $reservaServicioRepository->findOneBy(['id' => $id_reserva]);
-            $reservaServicioRepository->remove($restos);
+        $data_reserva_servicio = $reservaServicioRepository->coger_id_reserva_servicio($id);
+
+        $id_reserva = $data_reserva_servicio[0]['reserva_id'];
+        $id_servicio = $data_reserva_servicio[0]['servicio_id'];
+        $id_reserva_servicio = $data_reserva_servicio[0]['id'];
+
+        $data_servicio = $serviciosRepository->findOneBy(['id' => $id_servicio]);
+
+        $precio = $data_servicio->getPrecio();
+        $data_reserva = $reservasRepository->findOneBy(['id' => $id_reserva]);
+        $precio_total = $data_reserva->getPrecioTotal();
+
+        $precio_total = $precio_total - $precio;
+        empty($precio_total) ? true : $data_reserva->setPrecioTotal($precio_total);
+
+        $data_reserva_servicio = $reservaServicioRepository->findOneBy(['id' => $id_reserva_servicio]);
+        $reservaServicioRepository->remove($data_reserva_servicio);
+
+        $data_reserva_servicio = $reservaServicioRepository->coger_id_reserva_servicio($id_reserva);
+
+        if(empty($data_reserva_servicio)) {
+            $data_reserva = $reservasRepository->findOneBy(['id' => $id_reserva]);
+            $reservasRepository->remove($data_reserva);
         }
-        $id_reserva2 = $data_id[0]['reserva_id'];
-        $restos2 = $reservasRepository->findOneBy(['id' => $id_reserva2]);
-        $reservasRepository->remove($restos2);
+
         return new JsonResponse("Se ha eliminado reserva", Response::HTTP_OK);
-    }*/
+    }
 
     #[Route('/{id}', name: 'app_reservas_show', methods: ['GET'])]
     public function show(Reservas $reserva): Response

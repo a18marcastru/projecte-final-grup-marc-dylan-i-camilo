@@ -23,8 +23,9 @@
       <h2>Lista de productos:</h2>
       <div id="lista-producto"></div>
       <hr>
-      <p id="precio_total">Precio total: {{this.precio_total}}€</p>
+      <h4 id="precio_total">Precio total: {{this.precio_total}}€</h4>
       <button class="btn btn-dark" id="btn-comprar" @click="comprar()" disabled>Comprar</button>
+      <h3 id="compra" hidden>Compra acceptada</h3>
     </div>
   </div>
   <br><br>
@@ -49,7 +50,7 @@
       ...mapStores(sessioStore)
     },
     mounted() {
-        fetch(`http://localhost:8000/productos/catalogo`)
+        fetch(`http://192.168.210.154:8000/productos/catalogo`)
             .then(res => res.json())
             .then((data) => {
             this.datos = data;
@@ -131,9 +132,9 @@
                   body: datosEnvio
               }).then(function (res) {
                   return res.json();
-              }).then(function (data) {
-                  console.log(data);
               });
+              document.getElementById("compra").removeAttribute("hidden");
+              document.getElementById("btn-comprar").setAttribute("style","display: none;");
             }
             else {
               alert("Tienes que iniciar sesion para poder comprar");
@@ -145,13 +146,7 @@
 </script> 
 
 <style>
-  h2 {
-    color: white;
-  }
-  h4 {
-    color: white;
-  }
-  .art {
+  h2, h4, .art, #compra, #precio_total {
     color: white;
   }
   #title-tienda {
@@ -180,8 +175,11 @@
   #btn-comprar {
     margin-left: 10rem;
   }
+  #compra {
+    margin-left: 5rem;
+  }
 
-/* Tablet */
+/* Tablet-vertical */
   @media screen and (max-width: 992px) {
     #container-tienda {
       display: flow-root;
@@ -189,7 +187,6 @@
     #productos {
       display: grid;
       grid-template-columns: repeat(2,1fr);
-      margin-left: 3rem;
     }
     #lista-producto {
       display: grid;
@@ -207,6 +204,9 @@
     h2 {
       text-align: center;
     }
+    #precio_total {
+      margin-left: 45%;
+    }
     #btn-comprar {
       margin-left: 25rem;
     }
@@ -220,7 +220,7 @@
     #productos {
       display: grid;
       grid-template-columns: repeat(3,32%);
-      margin-left: 2rem;
+      margin-right: 2rem;
     }
     #lista-producto {
       display: grid;
@@ -238,6 +238,9 @@
     h2 {
       text-align: center;
     }
+    #precio_total {
+      margin-left: 42%;
+    }
     #btn-comprar {
       margin-left: 31rem;
     }
@@ -251,7 +254,6 @@
     #productos {
       display: grid;
       grid-template-columns: repeat(1,1fr);
-      margin-left: 2.5rem;
     }
     .card {
       margin-left: 50px;
@@ -261,6 +263,9 @@
     }
     h2 {
       text-align: center;
+    }
+    #precio_total {
+      margin-left: 30%;
     }
     #btn-comprar {
       margin-left: 10rem;

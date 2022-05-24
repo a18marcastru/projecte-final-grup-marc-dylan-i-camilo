@@ -42,14 +42,14 @@ class ReservaServicioRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    /*public function coger_id_reserva_servicio($id): array
+    public function coger_id_reserva_servicio($id): array
     {
         $conn = $this->getEntityManager()->getConnection();
-        $sql = "SELECT reserva_servicio.* FROM reserva_servicio WHERE reserva_servicio.reserva_id = $id;";
+        $sql = "SELECT reserva_servicio.* FROM reserva_servicio WHERE reserva_servicio.servicio_id = $id;";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
         return $resultSet->fetchAllAssociative();
-    }*/
+    }
 
     /**
      * @throws ORMException
@@ -58,7 +58,7 @@ class ReservaServicioRepository extends ServiceEntityRepository
     public function coger_reserva_servicio($id): array
     {
         $conn = $this->getEntityManager()->getConnection();
-        $sql = "SELECT reservas.dia, reservas.hora, reservas.mes, reservas.precio_total, usuarios.telefono, usuarios.email, servicios.nombre_servicio, reserva_servicio.id 
+        $sql = "SELECT reservas.dia, reservas.hora, reservas.mes, reservas.precio_total, usuarios.telefono, usuarios.email, servicios.nombre_servicio, reserva_servicio.servicio_id 
                 FROM reservas join usuarios on reservas.usuario_id=usuarios.id join reserva_servicio on reservas.id=reserva_servicio.reserva_id 
                 join servicios on servicios.id = reserva_servicio.servicio_id WHERE usuario_id=$id;";
         $stmt = $conn->prepare($sql);

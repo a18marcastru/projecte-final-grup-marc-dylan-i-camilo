@@ -8,7 +8,7 @@
         <div v-for="ses in servicios">
           <div class="card" id="card-servicios">
             <div class="card-body">
-              <p class="card-title">{{ses.nombre_servicio}}</p>
+              <h4 class="card-title">{{ses.nombre_servicio}}</h4>
               <p class="card-text">Precio : {{ses.precio}} €</p>
               <button class="btn btn-dark" :id="ses.id" @click="anadir(ses.nombre_servicio, ses.precio, ses.id)">Añadir</button>
               <button class="btn btn-anadido btn-success" :id="ses.id+'c'" @click="anadido(ses.nombre_servicio, ses.precio, ses.id)">Añadido</button>
@@ -66,13 +66,13 @@
         };
     },
     mounted() {
-        fetch(`http://localhost:8000/servicios/mostrar`)
+        fetch(`http://192.168.210.154:8000/servicios/mostrar`)
             .then(res => res.json())
             .then((data) => {
             this.servicios = data;
         });
 
-        fetch(`http://localhost:8000/reservas/todas`)
+        fetch(`http://192.168.210.154:8000/reservas/todas`)
             .then(res => res.json())
             .then((data) => {
             this.reservas = data;
@@ -81,6 +81,7 @@
             }
             console.log(this.horasOcupadas)
         });
+        
         const meses = ["Junio", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
         const d = new Date();
         this.mes = meses[d.getUTCMonth()];
@@ -94,9 +95,9 @@
         anadir(nombre, precio, id) {
             let encontrado = false;
             for (let i = 0; i < this.total.length; i++) {
-                if (this.total[i].nombre_servicio == nombre) {
-                    encontrado = true;
-                }
+              if (this.total[i].nombre_servicio == nombre) {
+                encontrado = true;
+              }
             }
             if (encontrado == false) {
                 this.total.push({ "nombre_servicio": nombre });
@@ -212,7 +213,7 @@
               datosEnvio.append("hora", this.hora);
               datosEnvio.append("mes", this.mes);
               datosEnvio.append("precio_total", this.precio_total);
-              fetch("http://localhost:8000/reservas/nueva/reserva", {
+              fetch("http://192.168.210.154:8000/reservas/nueva/reserva", {
                   method: "POST",
                   body: datosEnvio
               }).then(function (res) {
@@ -262,6 +263,9 @@
     column-gap: 20px;
     row-gap: 20px;
     margin-left: 20em;
+  }
+  .card-title, .card-text{
+    color: black;
   }
   .card {
     margin: 5px;
