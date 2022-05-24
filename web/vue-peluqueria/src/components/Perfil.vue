@@ -38,7 +38,7 @@
             <button class="btn btn-success" type="submit" id="perfilBtn" @click="cambios()">Guardar cambios<br>{{this.datos.nombre}}</button>
         </div>
         <div class="user-item3">
-            <h2 style="color: white;">Historial de reservas y compras</h2>
+            <h2 style="color: black;">Historial de reservas y compras</h2>
             <br>
             <div id="reservas">
                 <h2 style="color: white;">Reservas</h2>
