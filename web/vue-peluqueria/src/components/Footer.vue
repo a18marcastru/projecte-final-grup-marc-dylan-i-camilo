@@ -88,7 +88,7 @@
         </div>
       </div>
       <div>
-        <a href="http://peluqueriahappyback.alumnes.inspedralbes.cat/homepage" class="btn btn-dark">Administracion</a>
+        <a href="http://peluqueriahappyback.alumnes.inspedralbes.cat/inicio" class="btn btn-dark">Administracion</a>
       </div>
       <div class="text-center p-3 bg-dark" style="color: white;">
         © 2020 Copyright:
