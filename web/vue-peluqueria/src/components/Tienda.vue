@@ -6,8 +6,9 @@
       <div v-for="ses in datos">
         <div class="card">
           <div class="card-body">
-            <h3 id="title-articulo" style="color:white" class="card-title">{{ses.nombre}}</h3>
-            <p class="card-subtitle mb-2 text-muted" id="desc">{{ses.descripcion}}</p>
+            <h3 id="title-articulo" style="color:white" class="card-title ">{{ses.nombre}}</h3>
+            <p class="card-subtitle " id="desc">{{ses.descripcion}}</p>
+            <br>
             <p class="card-text" style="color:white">Unidades :  {{ses.cantidad}}</p>
             <p class="card-text" style="color:white">Precio : {{ses.precio}} €</p>
             <button class="btn btn-dark" @click="sumar(ses.nombre, ses.cantidad, ses.precio)">+</button>
