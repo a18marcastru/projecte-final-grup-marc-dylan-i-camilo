@@ -310,6 +310,9 @@
     column-gap: 20px;
     margin-top: 50px;
   }
+  #btn-reservar {
+    margin-left: 50%;
+  }
 
   /* Tablet */
   @media screen and (max-width: 992px) and (min-width: 600px) {
@@ -340,7 +343,6 @@
       margin-top: 20px;
     }
     #btn-reservar {
-      margin-left: 0em;
       margin-left: 45%;
     }
     .btn-descartar {
@@ -412,7 +414,6 @@
       margin-left: 7em;
     }
     #horas {
-      padding-left: 3em;
       margin-top: 20px;
     }
     #btn-reservar {
