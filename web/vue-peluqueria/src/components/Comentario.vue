@@ -23,7 +23,7 @@
       Si notaste algún problemas con nuestro servicio , nuestro equipo hará todo lo posible para corregirlo.Vuelve en unos dias. <cite title="Source Title">Equipo Happy</cite>
   </figcaption></li>
       <li class="list-group-item">
-         <label for="valoracion" class="form-label"><b>Valoración:</b></label><br>
+         <label for="valoracion" class="form-label" style="color: white;"><b>Valoración:</b></label><br>
     <input v-model="valoracion" type="range"  class="multi-range" min="0" max="5" step="0.5" id="valoracion" width="50%"><br><br>
     <div class="container">
       <span id="rateMe1"></span>

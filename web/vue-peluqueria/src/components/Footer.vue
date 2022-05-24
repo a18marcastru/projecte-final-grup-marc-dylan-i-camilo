@@ -17,7 +17,7 @@
     
             <ul class="list-unstyled mb-0">
               <li>
-                <p>Institut públic (08076391) del districte de Les Corts, amb oferta d'ESO, Batxillerat, CF d'Informàtica, i d'Imatge i so, i PFI (Programes de formació i inserció).</p>
+                <p>Peluquería Happy (08076391) del distrito de Les Corts, con ofertas de diferentes cortes de pelo para hombres, mujeres y niños, también disponemos de una tienda online para que puedas adquirir tus propios productos de estética</p>
               </li>
             </ul>
           </div>
@@ -42,7 +42,7 @@
             <h1 class="titles-footer text-uppercase">Contacto</h1><br>
             <ul class="list-unstyled mb-0">
               <li>
-                <p>93 203 33 32<br>93 203 36 42<br>93 203 83 86<br>inspedralbes@xtec.cat</p>
+                <p>☎️ 932 033 332<br>☎️ 635 866 502<br>📧 a17campermor@inspedralbes.cat<br>📧 a18marcastru@inspedralbes.cat<br>📧 a18dylvargar@inspedralbes.cat</p>
               </li>
             </ul>
           </div>
