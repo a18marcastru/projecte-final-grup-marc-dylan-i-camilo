@@ -32,25 +32,10 @@ import Comentario from "@/components/Comentario.vue";
 import Navegador from "@/components/Navegador.vue";
 import Galeria from './Galeria.vue';
 export default {
-    data() {
-      return {
-        email: '',
-        valoracion: '',
-        descripcion: '',
-        datos: [],
-      }
-    },
     components: {
       Comentario,
       Navegador,
       Galeria
-    },
-    mounted() {
-      fetch("http://peluqueriahappyback.alumnes.inspedralbes.cat/comentarios/mostrar/comentarios")
-      .then(res => res.json())
-      .then((data) => {
-        this.datos = data;
-      });
     },
   }
 </script>

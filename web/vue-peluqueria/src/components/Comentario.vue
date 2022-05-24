@@ -7,8 +7,6 @@
         <Review :infoComent="ses"/>
       </div>
     </div>
-
-   
     <div class="card" style="width: 50rem;">
       <div class="card-body">
         <h5 class="card-title">Valoracion de los usuarios</h5>
@@ -67,7 +65,7 @@
             Review
         },
         mounted() {
-          fetch("http://peluqueriahappyback.alumnes.inspedralbes.cat/comentarios/mostrar/comentarios")
+          fetch("http://localhost:8000/comentarios/mostrar/comentarios")
           .then(res => res.json())
           .then((data) => {
             this.datos = data;
