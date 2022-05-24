@@ -21,7 +21,7 @@ Un cop comenceu heu de canviar aquesta explicació amb la corresponent al vostre
 
 # URLs de producció
 - http://peluqueriahappy.alumnes.inspedralbes.cat/
-- http://peluqueriahappyback.alumnes.inspedralbes.cat/homepage
+- http://peluqueriahappyback.alumnes.inspedralbes.cat/inicio
 
 # Estat
 PRODUCCIÓ
