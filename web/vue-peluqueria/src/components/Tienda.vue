@@ -6,7 +6,7 @@
       <div v-for="ses in datos">
         <div class="card">
           <div class="card-body">
-            <h2 id="title-articulo" style="color:white" class="card-title">{{ses.nombre}}</h2>
+            <h3 id="title-articulo" style="color:white" class="card-title">{{ses.nombre}}</h3>
             <p class="card-subtitle mb-2 text-muted" id="desc">{{ses.descripcion}}</p>
             <p class="card-text" style="color:white">Unidades :  {{ses.cantidad}}</p>
             <p class="card-text" style="color:white">Precio : {{ses.precio}} €</p>
@@ -19,7 +19,7 @@
     </div>
     <div id="barra"></div>
     <div id="lista">
-      <h2>Lista de productos:</h2>
+      <h3>Lista de productos:</h3>
       <div id="lista-producto"></div>
       <hr>
       <p id="precio_total">Precio total: {{this.precio_total}}€</p>
@@ -162,7 +162,7 @@
 </script> 
 
 <style>
-  h2, h4, .art, #compra, #precio_total {
+  h3, h4, .art, #compra, #precio_total {
     color: white;
   }
   .card-title, #desc, .title-articulo {
