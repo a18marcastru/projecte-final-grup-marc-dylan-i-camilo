@@ -19,7 +19,7 @@ Un cop comenceu heu de canviar aquesta explicació amb la corresponent al vostre
 # Descripció
 Local donde se vende productos y servicios relacionados con la peluqueria.
 
-#URLs de producció
+# URLs de producció
 http://peluqueriahappy.alumnes.inspedralbes.cat/
 http://peluqueriahappyback.alumnes.inspedralbes.cat/
 
