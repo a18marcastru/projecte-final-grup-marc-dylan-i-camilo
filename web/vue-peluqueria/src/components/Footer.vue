@@ -13,7 +13,7 @@
         <div class="row">
           <!--Grid column-->
           <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-            <h5 class="text-uppercase">Local</h5><br>
+            <h1 class="titles-footer text-uppercase">Local</h1><br>
     
             <ul class="list-unstyled mb-0">
               <li>
@@ -25,7 +25,7 @@
     
           <!--Grid column-->
           <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-            <h5 class="text-uppercase mb-0">Legal</h5><br>
+            <h1 class="titles-footer text-uppercase mb-0">Legal</h1><br>
             <ul class="list-unstyled">
               <li>
                 <p>Cookies, Aviso legal</p>
@@ -39,7 +39,7 @@
     
           <!--Grid column-->
           <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-            <h5 class="text-uppercase">Contacto</h5><br>
+            <h1 class="titles-footer text-uppercase">Contacto</h1><br>
             <ul class="list-unstyled mb-0">
               <li>
                 <p>93 203 33 32<br>93 203 36 42<br>93 203 83 86<br>inspedralbes@xtec.cat</p>
@@ -50,7 +50,7 @@
     
           <!--Grid column-->
           <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-            <h5 class="horario text-uppercase mb-0">Horario de apertura</h5><br>
+            <h1 class="titles-footer text-uppercase mb-0">Horario de apertura</h1><br>
             <table>
               <tbody>
                 <tr>
@@ -92,7 +92,7 @@
                 <tr>
                   <th>Domingo:</th>
                   <td>
-                    <span class="dia-apertura">Festivo</span>
+                    <span class="dia-apertura">10:00 - 14:00, 15:00 - 20:00</span>
                   </td>
                 </tr>
               </tbody>
@@ -104,7 +104,7 @@
       </div>
       <!-- Grid container -->
       <div>
-        <a href="http://peluqueriahappyback.alumnes.inspedralbes.cat/usuarios" class="btn btn-dark">Administracion</a>
+        <a href="http://peluqueriahappyback.alumnes.inspedralbes.cat/inicio" class="btn btn-dark">Administracion</a>
       </div>
       <!-- Copyright -->
       <div class="text-center p-3 bg-dark" style="color: white;">
@@ -123,7 +123,7 @@
     table {
       color: black;
     }
-    h5 {
+    .titles-footer {
       color: black;
     }
 </style>

@@ -6,7 +6,7 @@
       <div v-for="ses in datos">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">{{ses.nombre}}</h5>
+            <h2 id="title-articulo" class="card-title">{{ses.nombre}}</h2>
             <p class="card-subtitle mb-2 text-muted" id="desc">{{ses.descripcion}}</p>
             <p class="card-text">Stock :  {{ses.cantidad}}</p>
             <p class="card-text">Precio : {{ses.precio}} €</p>
@@ -22,7 +22,7 @@
       <h2>Lista de productos:</h2>
       <div id="lista-producto"></div>
       <hr>
-      <h4 id="precio_total">Precio total: {{this.precio_total}}€</h4>
+      <p id="precio_total">Precio total: {{this.precio_total}}€</p>
       <button class="btn btn-success" id="btn-comprar" @click="comprar()" disabled>Comprar</button>
     </div>
   </div>
@@ -162,8 +162,11 @@
   h2, h4, .art, #compra, #precio_total {
     color: white;
   }
-  .card-title, #desc {
+  .card-title, #desc, .title-articulo {
     color: black;
+  }
+  p {
+    font-size: 20px;
   }
   #title-tienda {
     color: black;
