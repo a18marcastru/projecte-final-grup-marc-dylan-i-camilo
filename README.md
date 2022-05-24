@@ -8,15 +8,20 @@ Esquema mínim de carpetes pels projectes transversals
 Un cop comenceu heu de canviar aquesta explicació amb la corresponent al vostre projecte (utilitzant markdown)
 
 # Nom dels integrants
-- Camilo
-- Dylan
-- Marc Castro
+- Marc Castro Trullà
+- Camilo Pérez Morán
+- Dylan Vargas García
 
 # Projecte Peluqueria Happy
 - Figma: https://www.figma.com/file/FnQITUL47ts9ofVnkAsXV9/Projecto-final?node-id=0%3A1
--  https://trello.com/invite/b/ugFwFni0/35326dd879ee8721776f0514fb58cdfb/tareas-peluqueria
+- Trello: https://trello.com/invite/b/ugFwFni0/35326dd879ee8721776f0514fb58cdfb/tareas-peluqueria
+
 # Descripció
 Local donde se vende productos y servicios relacionados con la peluqueria.
 
+#URLs de producció
+http://peluqueriahappy.alumnes.inspedralbes.cat/
+http://peluqueriahappyback.alumnes.inspedralbes.cat/
+
 # Estat
-BETA
+PRODUCCIÓ
