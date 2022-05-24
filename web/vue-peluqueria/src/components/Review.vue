@@ -5,7 +5,7 @@
       <p class="card-text">{{infoComent.descripcion}}</p>
       valoración: 
       <big class="hola" v-for="ses in infoComent.valoracion">
-        ★
+        ⭐
       </big>
     </div>
 </template>

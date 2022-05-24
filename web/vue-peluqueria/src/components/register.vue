@@ -53,3 +53,22 @@ import Navegador from './Navegador.vue';
     components: { Navegador }
 }
 </script>
+
+<style>
+    body {
+        align-items: center;
+        background-color: #000;
+        display: flex;
+        justify-content: center;
+        height: 100vh;
+    }      
+    .registro {
+        background-color: #15172b;
+        border-radius: 20px;
+        box-sizing: border-box;
+        height: 500px;
+        padding: 20px;
+        width: 320px;
+    }
+
+</style>
