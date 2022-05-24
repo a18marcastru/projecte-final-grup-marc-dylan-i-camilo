@@ -310,9 +310,6 @@
     column-gap: 20px;
     margin-top: 50px;
   }
-  .btn-descartar {
-    margin-right: 23rem;
-  }
 
   /* Tablet */
   @media screen and (max-width: 992px) and (min-width: 600px) {
