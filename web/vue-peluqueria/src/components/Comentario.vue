@@ -65,7 +65,7 @@
             Review
         },
         mounted() {
-          fetch("http://localhost:8000/comentarios/mostrar/comentarios")
+          fetch("http://peluqueriahappyback.alumnes.inspedralbes.cat/comentarios/mostrar/comentarios")
           .then(res => res.json())
           .then((data) => {
             this.datos = data;
