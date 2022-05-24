@@ -109,7 +109,7 @@
             else {
               Swal.fire({
                 title: 'Iniciar sesion',
-                text: "Tienes que iniciar sesion para poder comprar",
+                text: "Tienes que iniciar sesion para poder hacer valoraciones",
                 icon: 'warning',
               });
             }
