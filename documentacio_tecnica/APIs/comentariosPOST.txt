@@ -1,7 +1,0 @@
-Ruta: ./nuevo/comentario
-
-Parametros:
-
-- email: 
-- valoracion:
-- desccripcion: 

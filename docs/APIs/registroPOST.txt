@@ -1,0 +1,9 @@
+Ruta ./usuarios/nuevo/usuario
+
+Formulario:
+
+- nombre:
+- apellido:
+- telefono:
+- email:
+- Contrasena:
